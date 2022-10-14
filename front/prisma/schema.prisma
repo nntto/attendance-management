@@ -11,3 +11,28 @@ datasource db {
   url                  = env("DATABASE_URL")
   referentialIntegrity = "prisma"
 }
+
+model User {
+  id       Int      @id @default(autoincrement())
+  name     String
+  grade    String
+  icon_url String
+  devices  Device[]
+}
+
+model Room {
+  id     Int      @id @default(autoincrement())
+  name   String
+  Device Device[]
+}
+
+model Device {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  mac_address          String
+  last_connection_time DateTime
+  room                 Room     @relation(fields: [roomId], references: [id])
+  roomId               Int
+  user                 User     @relation(fields: [userId], references: [id])
+  userId               Int
+}
