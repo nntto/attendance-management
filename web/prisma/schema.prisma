@@ -27,12 +27,12 @@ model Room {
 }
 
 model Device {
-  id                   Int      @id @default(autoincrement())
-  name                 String?
-  mac_address          String
-  last_connection_time DateTime
-  room                 Room?    @relation(fields: [room_id], references: [id])
-  room_id              Int?
-  user                 User?    @relation(fields: [user_id], references: [id])
-  user_id              Int?
+  id                Int      @id @default(autoincrement())
+  name              String?
+  mac_address       String
+  last_connected_at DateTime
+  room              Room?    @relation(fields: [room_id], references: [id])
+  room_id           Int?
+  user              User?    @relation(fields: [user_id], references: [id])
+  user_id           Int?
 }
