@@ -7,5 +7,5 @@ wifi に接続されたデバイスの MAC_ADDRESS を元に，データベー�
 ### 使い方．
 
 1. .env.example のコピーを作成し，.env にリネームした後，必要な情報を記述
-2. .conf.example のコピーを作成し，.conf にリネームした後， DB との接続情報を記述
+2. ./etc/.conf.example のコピーを作成し，./etc/.conf にリネームした後， DB との接続情報を記述
 3. MACOS: `bash main.sh`で実行
