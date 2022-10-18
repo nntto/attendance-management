@@ -16,9 +16,10 @@ do
 		device_id=${ary[1]}
 		# DBのタイムゾーンが変更できないので無理矢理
 		$CMD_MYSQL"UPDATE Device SET last_connected_at=(now() + interval 9 hour) WHERE id=${device_id};"
-		echo 'update'
+		echo $mac_address' update'
 	# 登録されていなければ無視
-	# else
+	else
+		echo $mac_address
 	# 	$CMD_MYSQL`INSERT INTO Device \
 	# 	(mac_address, last_connected_at, room_id) \
 	# 	VALUES \
