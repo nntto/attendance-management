@@ -14,7 +14,7 @@ export default async function handler(
 ) {
   /* ユーザー，デバイステーブルを結合して返す */
   const users = await prisma.user.findMany({
-    include: { devices: true },
+    include: { devices: { include: { room: true } } },
   });
   res.status(200).json(users);
 }
