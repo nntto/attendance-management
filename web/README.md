@@ -1,5 +1,16 @@
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
+## ローカル検証の準備
+
+### DB との接続
+
+1. planetscale のデータベースを開く(権限がない方は slack で dm してください)
+2. Connect ボタンをクリック
+3. Connect with Prisma を選択
+4. New password をクリックして，パスワードを生成．
+5. 生成された DATABASE_URL=...をコピー
+6. .env.example を複製して，ファイル名を.example に変更．5 でコピーした内容を.env の DATABASE_URL=に上書き
+
 ## Getting Started
 
 First, run the development server:
