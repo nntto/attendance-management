@@ -13,26 +13,57 @@ datasource db {
 }
 
 model User {
-  id       Int      @id @default(autoincrement())
+  userId   Int        @id @default(autoincrement()) @map("user_id")
   name     String
   grade    String?
-  icon_url String?
-  devices  Device[]
+  iconUrl  String?    @map("icon_url")
+  Device   Device[]
+  Comment  Comment[]
+  Nickname Nickname[]
 }
 
 model Room {
-  id     Int      @id @default(autoincrement())
-  name   String
-  Device Device[]
+  roomId  Int       @id @default(autoincrement()) @map("room_id")
+  name    String
+  Network Network[]
 }
 
 model Device {
-  id                Int      @id @default(autoincrement())
-  name              String?
-  mac_address       String
-  last_connected_at DateTime
-  room              Room?    @relation(fields: [room_id], references: [id])
-  room_id           Int?
-  user              User?    @relation(fields: [user_id], references: [id])
-  user_id           Int?
+  deviceId        Int          @id @default(autoincrement()) @map("device_id")
+  name            String?
+  lastConnectedAt DateTime     @default(now()) @map("last_connected_at")
+  userId          Int?         @map("user_id")
+  User            User?        @relation(fields: [userId], references: [userId])
+  MacAddress      MacAddress[]
+}
+
+model MacAddress {
+  macAddressId Int      @id @default(autoincrement()) @map("mac_address_id")
+  address      String
+  networkId    Int?     @map("network_id")
+  Network      Network? @relation(fields: [networkId], references: [networkId])
+  deviceId     Int?     @map("device_id")
+  Device       Device?  @relation(fields: [deviceId], references: [deviceId])
+}
+
+model Nickname {
+  nicknameId   Int  @id @default(autoincrement()) @map("nickname_id")
+  userId       Int  @map("user_id")
+  targetUserId Int  @map("target_user_id")
+  User         User @relation(fields: [userId], references: [userId])
+}
+
+model Comment {
+  commentId Int    @id @default(autoincrement()) @map("comment_id")
+  userId    Int    @map("user_id")
+  User      User   @relation(fields: [userId], references: [userId])
+  body      String
+}
+
+model Network {
+  networkId  Int          @id @default(autoincrement()) @map("network_id")
+  name       String
+  roomId     Int          @map("room_id")
+  Room       Room         @relation(fields: [roomId], references: [roomId])
+  MacAddress MacAddress[]
 }

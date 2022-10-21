@@ -1,0 +1,98 @@
+openapi: 3.0.0
+info:
+  title: attendance-management-api
+  version: "1.0"
+servers:
+  - url: "http://localhost:3000"
+paths:
+  "/rooms":
+    get:
+      summary: 部屋情報を全て取得
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemes/room"
+      operationId: get-user_id
+      description: ""
+    post:
+      summary: ユーザー更新
+      operationId: post-users-user_id
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  user:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+                    email:
+                      type: string
+          application/xml:
+            schema:
+              type: object
+              properties:
+                user:
+                  type: object
+                  properties:
+                    name:
+                      type: string
+        description: ""
+components:
+  schemas:
+    room:
+      type: object
+      required:
+        - id
+        - name
+        - macAddress
+      properties:
+        id:
+          type: integer
+          description: 部屋の識別ID
+          example: 1
+        name:
+          type: string
+          description: 部屋の名前
+          example: 部屋１
+    network:
+      type: object
+      required:
+        - id
+        - name
+        - roomId
+      properties:
+        id:
+          type: integer
+          description: ネットワークの識別ID
+          example: 1
+        name:
+          type: string
+          description: ネットワークの名前
+          example: ネットワーク１
+        roomId:
+          type: integer
+          description: ネットワークが存在する部屋の識別ID
+          example: 1
+      
+
