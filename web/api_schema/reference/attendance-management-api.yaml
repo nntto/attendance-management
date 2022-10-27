@@ -24,6 +24,9 @@ paths:
             application/json:
               schema:
                 type: object
+                required:
+                  - inRoom
+                  - outRoom
                 properties:
                   inRoom:
                     type: array
@@ -31,6 +34,8 @@ paths:
                       allOf:
                         - $ref: "./components/room.yaml"
                         - type: object
+                          required:
+                            - users
                           properties:
                             users:
                               type: array
@@ -101,7 +106,8 @@ paths:
         content:
           application/json:
             schema:
-                $ref: "./components/user.yaml"
+                $ref: "./requestBody/user.yaml"
+                required:
 
   "/api/setting/devices/{user_id}":
     parameters:
@@ -123,6 +129,8 @@ paths:
                   allOf:
                     - $ref: "./components/room.yaml"
                     - type: object
+                      required:
+                        - network
                       properties:
                         network:
                           type: array
@@ -130,6 +138,8 @@ paths:
                             allOf:
                               - $ref: "./components/network.yaml"
                               - type: object
+                                required:
+                                  - devices
                                 properties:
                                   devices:
                                     type: array
@@ -151,4 +161,4 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./components/device.yaml"
+              $ref: "./requestBody/device.yaml"

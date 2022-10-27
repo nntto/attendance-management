@@ -13,3 +13,8 @@ properties:
   nickname:
     type: string
     description: ニックネーム
+required:
+  - nicknameId
+  - fromId
+  - toId
+  - nickname

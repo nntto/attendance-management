@@ -1,9 +1,5 @@
 type: object
 properties:
-  deviceId:
-    type: integer
-    description: デバイスの識別ID
-    readOnly: true
   userId:
     type: integer
     description: デバイスを所持しているユーザーのID
@@ -18,9 +14,3 @@ properties:
     type: string
     description: デバイスのmacaddress
     example: 00:03:93:00:00:00
-required:
-  - deviceId
-  - userId
-  - name
-  - networkId
-  - macAddress

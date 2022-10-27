@@ -15,4 +15,9 @@ properties:
     type: string
     format: date-time
     description: 投稿日時
+required:
+  - commentId
+  - userId
+  - comment
+  - createdAt
   

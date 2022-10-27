@@ -10,3 +10,7 @@ properties:
     type: string
     description: ネットワークの名前
     example: wifi-a
+required:
+  - networkId
+  - roomId
+  - name

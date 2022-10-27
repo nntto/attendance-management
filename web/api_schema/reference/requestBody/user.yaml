@@ -1,9 +1,5 @@
 type: object
 properties:
-  userId:
-    type: integer
-    description: ユーザーの識別ID
-    readOnly: true
   name:
     type: string
     description: ユーザーの名前
@@ -14,8 +10,3 @@ properties:
   iconUrl: 
     type: string 
     description: ユーザーのプロフィール画像
-required:
-  - userId
-  - name
-  - grade
-  - iconUrl
