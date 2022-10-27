@@ -1,0 +1,6 @@
+in: path
+name: user_id
+required: true
+schema:
+  type: integer
+description: ユーザーID

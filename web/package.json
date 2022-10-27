@@ -9,7 +9,8 @@
     "lint": "next lint --dir src",
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
-    "generate-typescript-axios": "openapi-generator-cli generate -g typescript-axios -i ./api_schema/reference/attendance-management-api.yaml -o ./types/typescript-axios"
+    "generate-typescript-axios": "openapi-generator-cli generate -g typescript-axios -i ./api_schema/reference/attendance-management-api.yaml -o ./types/typescript-axios",
+    "generate-document": "openapi-generator-cli generate -g openapi-yaml -i ./api_schema/reference/attendance-management-api.yaml -o ./api_schema/dist"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",

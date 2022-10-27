@@ -1,0 +1,18 @@
+type: object
+properties:
+  commentId:
+    type: integer
+    description: コメントの識別ID
+    readOnly: true
+  userId:
+    type: integer 
+    description: コメント主のユーザーID
+  comment:
+    type: string
+    description: コメント本文
+    example: don't disturb
+  createdAt:
+    type: string
+    format: date-time
+    description: 投稿日時
+  
