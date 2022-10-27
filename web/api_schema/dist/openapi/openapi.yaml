@@ -153,11 +153,6 @@ components:
           type: string
       type: object
     user:
-      example:
-        grade: grade
-        name: name
-        iconUrl: iconUrl
-        userId: 0
       properties:
         userId:
           description: ユーザーの識別ID
@@ -268,13 +263,6 @@ components:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf'
     getUsersInRoom_200_response:
-      example:
-        inRoom:
-        - null
-        - null
-        outRoom:
-        - null
-        - null
       properties:
         inRoom:
           items:
