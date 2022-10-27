@@ -165,7 +165,7 @@ components:
         name:
           description: ユーザーの名前
           type: string
-          x-faker: name.findName
+          x-faker: fullName
         grade:
           description: ユーザーの学年
           enum:

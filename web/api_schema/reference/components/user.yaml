@@ -7,7 +7,7 @@ properties:
   name:
     type: string
     description: ユーザーの名前
-    x-faker: name.findName
+    x-faker: fullName
   grade:
     type: string
     description: ユーザーの学年
