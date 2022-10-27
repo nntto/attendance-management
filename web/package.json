@@ -10,7 +10,8 @@
     "lint:fix": "yarn lint --fix",
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
     "generate-typescript-axios": "openapi-generator-cli generate -g typescript-axios -i ./api_schema/reference/attendance-management-api.yaml -o ./types/typescript-axios",
-    "generate-document": "openapi-generator-cli generate -g openapi-yaml -i ./api_schema/reference/attendance-management-api.yaml -o ./api_schema/dist"
+    "generate-document": "openapi-generator-cli generate -g openapi-yaml -i ./api_schema/reference/attendance-management-api.yaml -o ./api_schema/dist",
+    "start-mock": "prism mock ./api_schema/dist/openapi/openapi.yaml"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
@@ -20,6 +21,7 @@
   },
   "devDependencies": {
     "@openapitools/openapi-generator-cli": "^2.5.2",
+    "@stoplight/prism-cli": "^4.10.5",
     "@types/node": "18.8.3",
     "@types/react": "18.0.21",
     "@types/react-dom": "18.0.6",

@@ -9,7 +9,6 @@ properties:
     description: ユーザーの名前
   grade:
     type: string
-    enum: [B1,B2,B3,B4,M1,M2,D1,D2,D3,助教授,准教授,教授]
     description: ユーザーの学年
     examples: "M1"
   iconUrl: 

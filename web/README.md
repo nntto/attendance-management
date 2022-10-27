@@ -11,6 +11,15 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 5. 生成された DATABASE_URL=...をコピー
 6. .env.example を複製して，ファイル名を.example に変更．5 でコピーした内容を.env の DATABASE_URL=に上書き
 
+### フロントエンド
+
+#### モックサーバーの起動
+```bash
+npm run start-mock
+# or
+yarn start-mock
+```
+
 ## Getting Started
 
 First, run the development server:
