@@ -16,33 +16,53 @@ paths:
         - rooms
       summary: 各部屋のユーザーとニックネームを取得
       operationId: getUsersInRoom
-      description: "部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．**部屋ID=-1は不在**"
+      description: "部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．"
       responses:
         "200":
           description: OK
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  allOf:
-                    - $ref: "./components/room.yaml"
-                    - type: object
-                      properties:
-                        users:
-                          type: array
-                          items:
-                            allOf:
-                              - $ref: "./components/user.yaml"
-                              - type: object
-                                properties:
-                                  comment:
-                                    $ref: "./components/comment.yaml"
+                type: object
+                properties:
+                  inRoom:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "./components/room.yaml"
+                        - type: object
+                          properties:
+                            users:
+                              type: array
+                              items:
+                                allOf:
+                                  - $ref: "./components/user.yaml"
+                                  - type: object
+                                    properties:
+                                      comment:
+                                        $ref: "./components/comment.yaml"
+                                  - type: object
+                                    properties:
+                                      nickname:
+                                        $ref: "./components/nickname.yaml"
+                  outRoom:
+                    type: array
+                    items:
+                      allOf:
+                        - $ref: "./components/user.yaml"
+                        - type: object
+                          properties:
+                            comment:
+                              $ref: "./components/comment.yaml"
+                        - type: object
+                          properties:
+                            nickname:
+                              $ref: "./components/nickname.yaml"
   "/api/rooms/nickname":
     put:
       tags: 
         - rooms
-      summary: ニックネームを新たに設定，また更新
+      summary: ニックネームを新たに設定，または更新
       operationId: createUserNickname
       responses:
         "200":
@@ -115,3 +135,20 @@ paths:
                                     type: array
                                     items:
                                       $ref: "./components/device.yaml"
+  "/api/setting/device/{device_id}":
+    parameters:
+      - $ref: "./parameters/device_id.yaml"
+    put:
+      summary: 指定したデバイスの情報を変更
+      tags:
+        - setting
+      operationId: putDevices
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./components/device.yaml"
