@@ -1,0 +1,271 @@
+openapi: 3.0.0
+info:
+  title: attendance-management-api
+  version: "1.0"
+servers:
+- url: http://localhost:3000
+tags:
+- description: 在室一覧(/rooms)ページで用いるAPI群
+  name: rooms
+- description: ユーザー情報設定(/setting)ページで用いるAPI群
+  name: setting
+paths:
+  /api/rooms/users:
+    get:
+      description: 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．**部屋ID=-1は不在**
+      operationId: getUsersInRoom
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/getUsersInRoom_200_response_inner'
+                type: array
+          description: OK
+      summary: 各部屋のユーザーとニックネームを取得
+      tags:
+      - rooms
+  /api/rooms/nickname:
+    put:
+      operationId: createUserNickname
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/nickname'
+      responses:
+        "200":
+          description: OK
+      summary: ニックネームを新たに設定，また更新
+      tags:
+      - rooms
+  /api/setting/user/{user_id}:
+    get:
+      description: ""
+      operationId: getUser
+      parameters:
+      - description: ユーザーID
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+          description: OK
+      summary: 指定したユーザーの情報を取得
+      tags:
+      - setting
+    put:
+      description: ""
+      operationId: updateUser
+      parameters:
+      - description: ユーザーID
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/user'
+      responses:
+        "200":
+          description: OK
+      summary: 指定したユーザーの情報を更新
+      tags:
+      - setting
+  /api/setting/devices/{user_id}:
+    get:
+      description: 部屋，wifiの順で階層化されている．
+      operationId: getDevices
+      parameters:
+      - description: ユーザーID
+        in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/getDevices_200_response_inner'
+                type: array
+          description: OK
+      summary: 指定したユーザーの持つデバイス一覧を取得
+      tags:
+      - setting
+components:
+  parameters:
+    user_id:
+      description: ユーザーID
+      in: path
+      name: user_id
+      required: true
+      schema:
+        type: integer
+  schemas:
+    room:
+      properties:
+        roomId:
+          description: 部屋の識別ID
+          type: integer
+        name:
+          description: 部屋の名前
+          example: 部屋１
+          type: string
+      type: object
+    user:
+      example:
+        grade: B1
+        name: name
+        iconUrl: iconUrl
+        userId: 0
+      properties:
+        userId:
+          description: ユーザーの識別ID
+          readOnly: true
+          type: integer
+        name:
+          description: ユーザーの名前
+          type: string
+        grade:
+          description: ユーザーの学年
+          enum:
+          - B1
+          - B2
+          - B3
+          - B4
+          - M1
+          - M2
+          - D1
+          - D2
+          - D3
+          - 助教授
+          - 准教授
+          - 教授
+          type: string
+        iconUrl:
+          description: ユーザーのプロフィール画像
+          type: string
+      type: object
+    comment:
+      properties:
+        commentId:
+          description: コメントの識別ID
+          readOnly: true
+          type: integer
+        userId:
+          description: コメント主のユーザーID
+          type: integer
+        comment:
+          description: コメント本文
+          example: don't disturb
+          type: string
+        createdAt:
+          description: 投稿日時
+          format: date-time
+          type: string
+      type: object
+    nickname:
+      properties:
+        nicknameId:
+          description: ニックネームの識別ID
+          readOnly: true
+          type: integer
+        fromId:
+          description: ニックネームを付けたユーザーのID
+          type: integer
+        toId:
+          description: ニックネームの付けられたユーザーのID
+          type: integer
+        nickname:
+          description: ニックネーム
+          type: string
+      type: object
+    wifi:
+      properties:
+        wifiId:
+          description: wifiの識別ID
+          type: integer
+        roomId:
+          description: wifiの置かれている部屋のID
+          type: integer
+        name:
+          description: wifiの名前
+          example: wifi-a
+          type: string
+      type: object
+    device:
+      properties:
+        deviceId:
+          description: デバイスの識別ID
+          readOnly: true
+          type: integer
+        userId:
+          description: デバイスを所持しているユーザーのID
+          type: integer
+        name:
+          description: デバイスの名前
+          example: 僕のiphone
+          type: string
+        wifiId:
+          description: 接続先のwifiのID
+          type: integer
+        macAddress:
+          description: デバイスのmacaddress
+          example: 00:03:93:00:00:00
+          type: string
+      type: object
+    getUsersInRoom_200_response_inner_allOf_users_inner_allOf:
+      properties:
+        comment:
+          $ref: '#/components/schemas/comment'
+      type: object
+    getUsersInRoom_200_response_inner_allOf_users_inner:
+      allOf:
+      - $ref: '#/components/schemas/user'
+      - $ref: '#/components/schemas/getUsersInRoom_200_response_inner_allOf_users_inner_allOf'
+    getUsersInRoom_200_response_inner_allOf:
+      properties:
+        users:
+          items:
+            $ref: '#/components/schemas/getUsersInRoom_200_response_inner_allOf_users_inner'
+          type: array
+      type: object
+    getUsersInRoom_200_response_inner:
+      allOf:
+      - $ref: '#/components/schemas/room'
+      - $ref: '#/components/schemas/getUsersInRoom_200_response_inner_allOf'
+    getDevices_200_response_inner_allOf_wifi_inner_allOf:
+      properties:
+        devices:
+          items:
+            $ref: '#/components/schemas/device'
+          type: array
+      type: object
+    getDevices_200_response_inner_allOf_wifi_inner:
+      allOf:
+      - $ref: '#/components/schemas/wifi'
+      - $ref: '#/components/schemas/getDevices_200_response_inner_allOf_wifi_inner_allOf'
+    getDevices_200_response_inner_allOf:
+      properties:
+        wifi:
+          items:
+            $ref: '#/components/schemas/getDevices_200_response_inner_allOf_wifi_inner'
+          type: array
+      type: object
+    getDevices_200_response_inner:
+      allOf:
+      - $ref: '#/components/schemas/room'
+      - $ref: '#/components/schemas/getDevices_200_response_inner_allOf'

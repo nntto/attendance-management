@@ -1,0 +1,9 @@
+type: object
+properties:
+  roomId:
+    type: integer
+    description: 部屋の識別ID
+  name:
+    type: string
+    description: 部屋の名前
+    example: 部屋１

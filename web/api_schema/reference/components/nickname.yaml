@@ -1,0 +1,15 @@
+type: object
+properties:
+  nicknameId:
+    type: integer
+    description: ニックネームの識別ID
+    readOnly: true
+  fromId:
+    type: integer
+    description: ニックネームを付けたユーザーのID
+  toId:
+    type: integer
+    description: ニックネームの付けられたユーザーのID
+  nickname:
+    type: string
+    description: ニックネーム

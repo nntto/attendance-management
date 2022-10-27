@@ -1,0 +1,6 @@
+in: path
+name: device_id
+required: true
+schema:
+  type: integer
+description: デバイスID

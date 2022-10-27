@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: attendance-management-api
+  version: "1.0"
+servers:
+  - url: "http://localhost:3000"
+tags:
+  - name: rooms
+    description: 在室一覧(/rooms)ページで用いるAPI群
+  - name: setting
+    description: ユーザー情報設定(/setting)ページで用いるAPI群
+paths:
+  "/api/rooms/users":
+    get:
+      tags:
+        - rooms
+      summary: 各部屋のユーザーとニックネームを取得
+      operationId: getUsersInRoom
+      description: "部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．**部屋ID=-1は不在**"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "./components/room.yaml"
+                    - type: object
+                      properties:
+                        users:
+                          type: array
+                          items:
+                            allOf:
+                              - $ref: "./components/user.yaml"
+                              - type: object
+                                properties:
+                                  comment:
+                                    $ref: "./components/comment.yaml"
+  "/api/rooms/nickname":
+    put:
+      tags: 
+        - rooms
+      summary: ニックネームを新たに設定，また更新
+      operationId: createUserNickname
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: "./components/nickname.yaml"
+  "/api/setting/user/{user_id}":
+    parameters:
+      - $ref: "./parameters/user_id.yaml"
+    get:
+      summary: 指定したユーザーの情報を取得
+      tags:
+        - setting
+      operationId: getUser
+      description: ""
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "./components/user.yaml"
+    put:
+      summary: 指定したユーザーの情報を更新
+      tags:
+        - setting
+      operationId: updateUser
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+                $ref: "./components/user.yaml"
+
+  "/api/setting/devices/{user_id}":
+    parameters:
+      - $ref: "./parameters/user_id.yaml"
+    get:
+      summary: 指定したユーザーの持つデバイス一覧を取得
+      tags:
+        - setting
+      operationId: getDevices
+      description: 部屋，wifiの順で階層化されている．
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                    - $ref: "./components/room.yaml"
+                    - type: object
+                      properties:
+                        wifi:
+                          type: array
+                          items:
+                            allOf:
+                              - $ref: "./components/wifi.yaml"
+                              - type: object
+                                properties:
+                                  devices:
+                                    type: array
+                                    items:
+                                      $ref: "./components/device.yaml"
