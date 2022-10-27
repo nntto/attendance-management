@@ -3,7 +3,7 @@ info:
   title: attendance-management-api
   version: "1.0"
 servers:
-- url: http://localhost:3000
+- url: http://localhost:4010
 tags:
 - description: 在室一覧(/rooms)ページで用いるAPI群
   name: rooms
@@ -12,16 +12,14 @@ tags:
 paths:
   /api/rooms/users:
     get:
-      description: 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．**部屋ID=-1は不在**
+      description: 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．
       operationId: getUsersInRoom
       responses:
         "200":
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/getUsersInRoom_200_response_inner'
-                type: array
+                $ref: '#/components/schemas/getUsersInRoom_200_response'
           description: OK
       summary: 各部屋のユーザーとニックネームを取得
       tags:
@@ -37,7 +35,7 @@ paths:
       responses:
         "200":
           description: OK
-      summary: ニックネームを新たに設定，また更新
+      summary: ニックネームを新たに設定，または更新
       tags:
       - rooms
   /api/setting/user/{user_id}:
@@ -84,7 +82,7 @@ paths:
       - setting
   /api/setting/devices/{user_id}:
     get:
-      description: 部屋，wifiの順で階層化されている．
+      description: 部屋，ネットワークの順で階層化されている．
       operationId: getDevices
       parameters:
       - description: ユーザーID
@@ -105,12 +103,41 @@ paths:
       summary: 指定したユーザーの持つデバイス一覧を取得
       tags:
       - setting
+  /api/setting/device/{device_id}:
+    put:
+      description: ""
+      operationId: putDevices
+      parameters:
+      - description: デバイスID
+        in: path
+        name: device_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/device'
+      responses:
+        "200":
+          description: OK
+      summary: 指定したデバイスの情報を変更
+      tags:
+      - setting
 components:
   parameters:
     user_id:
       description: ユーザーID
       in: path
       name: user_id
+      required: true
+      schema:
+        type: integer
+    device_id:
+      description: デバイスID
+      in: path
+      name: device_id
       required: true
       schema:
         type: integer
@@ -127,7 +154,7 @@ components:
       type: object
     user:
       example:
-        grade: B1
+        grade: grade
         name: name
         iconUrl: iconUrl
         userId: 0
@@ -141,19 +168,6 @@ components:
           type: string
         grade:
           description: ユーザーの学年
-          enum:
-          - B1
-          - B2
-          - B3
-          - B4
-          - M1
-          - M2
-          - D1
-          - D2
-          - D3
-          - 助教授
-          - 准教授
-          - 教授
           type: string
         iconUrl:
           description: ユーザーのプロフィール画像
@@ -193,16 +207,16 @@ components:
           description: ニックネーム
           type: string
       type: object
-    wifi:
+    network:
       properties:
-        wifiId:
-          description: wifiの識別ID
+        networkId:
+          description: ネットワークの識別ID
           type: integer
         roomId:
-          description: wifiの置かれている部屋のID
+          description: ネットワークの置かれている部屋のID
           type: integer
         name:
-          description: wifiの名前
+          description: ネットワークの名前
           example: wifi-a
           type: string
       type: object
@@ -219,50 +233,74 @@ components:
           description: デバイスの名前
           example: 僕のiphone
           type: string
-        wifiId:
-          description: 接続先のwifiのID
+        networkId:
+          description: 接続先のネットワークのID
           type: integer
         macAddress:
           description: デバイスのmacaddress
           example: 00:03:93:00:00:00
           type: string
       type: object
-    getUsersInRoom_200_response_inner_allOf_users_inner_allOf:
+    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf:
       properties:
         comment:
           $ref: '#/components/schemas/comment'
       type: object
-    getUsersInRoom_200_response_inner_allOf_users_inner:
+    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_1:
+      properties:
+        nickname:
+          $ref: '#/components/schemas/nickname'
+      type: object
+    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner:
       allOf:
       - $ref: '#/components/schemas/user'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inner_allOf_users_inner_allOf'
-    getUsersInRoom_200_response_inner_allOf:
+      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf'
+      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_1'
+    getUsersInRoom_200_response_inRoom_inner_allOf:
       properties:
         users:
           items:
-            $ref: '#/components/schemas/getUsersInRoom_200_response_inner_allOf_users_inner'
+            $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner'
           type: array
       type: object
-    getUsersInRoom_200_response_inner:
+    getUsersInRoom_200_response_inRoom_inner:
       allOf:
       - $ref: '#/components/schemas/room'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inner_allOf'
-    getDevices_200_response_inner_allOf_wifi_inner_allOf:
+      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf'
+    getUsersInRoom_200_response:
+      example:
+        inRoom:
+        - null
+        - null
+        outRoom:
+        - null
+        - null
+      properties:
+        inRoom:
+          items:
+            $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner'
+          type: array
+        outRoom:
+          items:
+            $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner'
+          type: array
+      type: object
+    getDevices_200_response_inner_allOf_network_inner_allOf:
       properties:
         devices:
           items:
             $ref: '#/components/schemas/device'
           type: array
       type: object
-    getDevices_200_response_inner_allOf_wifi_inner:
+    getDevices_200_response_inner_allOf_network_inner:
       allOf:
-      - $ref: '#/components/schemas/wifi'
-      - $ref: '#/components/schemas/getDevices_200_response_inner_allOf_wifi_inner_allOf'
+      - $ref: '#/components/schemas/network'
+      - $ref: '#/components/schemas/getDevices_200_response_inner_allOf_network_inner_allOf'
     getDevices_200_response_inner_allOf:
       properties:
-        wifi:
+        network:
           items:
-            $ref: '#/components/schemas/getDevices_200_response_inner_allOf_wifi_inner'
+            $ref: '#/components/schemas/getDevices_200_response_inner_allOf_network_inner'
           type: array
       type: object
     getDevices_200_response_inner:
