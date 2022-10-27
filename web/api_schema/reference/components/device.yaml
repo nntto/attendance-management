@@ -11,9 +11,9 @@ properties:
     type: string
     description: デバイスの名前
     example: 僕のiphone
-  wifiId:
+  networkId:
     type: integer
-    description: 接続先のwifiのID
+    description: 接続先のネットワークのID
   macAddress:
     type: string
     description: デバイスのmacaddress

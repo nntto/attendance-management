@@ -1,0 +1,12 @@
+type: object
+properties:
+  networkId:
+    type: integer
+    description: ネットワークの識別ID
+  roomId:
+    type: integer
+    description: ネットワークの置かれている部屋のID
+  name:
+    type: string
+    description: ネットワークの名前
+    example: wifi-a

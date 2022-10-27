@@ -111,7 +111,7 @@ paths:
       tags:
         - setting
       operationId: getDevices
-      description: 部屋，wifiの順で階層化されている．
+      description: 部屋，ネットワークの順で階層化されている．
       responses:
         "200":
           description: OK
@@ -124,11 +124,11 @@ paths:
                     - $ref: "./components/room.yaml"
                     - type: object
                       properties:
-                        wifi:
+                        network:
                           type: array
                           items:
                             allOf:
-                              - $ref: "./components/wifi.yaml"
+                              - $ref: "./components/network.yaml"
                               - type: object
                                 properties:
                                   devices:
