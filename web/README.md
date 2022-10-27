@@ -14,10 +14,50 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 ### フロントエンド
 
 #### モックサーバーの起動
+
 ```bash
 npm run start-mock
 # or
 yarn start-mock
+```
+
+#### リクエストの自動生成
+
+```bash
+npm run generate-typescript-axios
+# or
+yarn generate-typescript-axios
+```
+
+#### API の叩き方の例
+
+```typescript
+import { RoomsApi } from '../types/typescript-axios'
+const roomsApi = new RoomsApi()
+roomsApi.getUsersInRoom().then((res) => {
+  console.log(res.data)
+})
+```
+
+```json
+{
+  "roomId": 0,
+  "name": "部屋１",
+  "users": [
+    {
+      "grade": "B1",
+      "name": "name",
+      "iconUrl": "iconUrl",
+      "userId": 0,
+      "comment": {
+        "commentId": 0,
+        "userId": 0,
+        "comment": "don't disturb",
+        "createdAt": "2019-08-24T14:15:22Z"
+      }
+    }
+  ]
+}
 ```
 
 ## Getting Started
