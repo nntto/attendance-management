@@ -10,11 +10,12 @@ properties:
   comment:
     type: string
     description: コメント本文
-    example: don't disturb
+    x-faker: word.conjunction
   createdAt:
     type: string
     format: date-time
     description: 投稿日時
+    x-faker: datatype.datetime
 required:
   - commentId
   - userId

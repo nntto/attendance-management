@@ -151,6 +151,7 @@ components:
           description: 部屋の名前
           example: 部屋１
           type: string
+          x-faker: company.name
       required:
       - name
       - roomId
@@ -164,12 +165,24 @@ components:
         name:
           description: ユーザーの名前
           type: string
+          x-faker: name.findName
         grade:
           description: ユーザーの学年
+          enum:
+          - B1
+          - B2
+          - B3
+          - B4
+          - M1
+          - M2
+          - D1
+          - D2
+          - D3
           type: string
         iconUrl:
           description: ユーザーのプロフィール画像
           type: string
+          x-faker: image.imageUrl
       required:
       - grade
       - iconUrl
@@ -187,12 +200,13 @@ components:
           type: integer
         comment:
           description: コメント本文
-          example: don't disturb
           type: string
+          x-faker: word.conjunction
         createdAt:
           description: 投稿日時
           format: date-time
           type: string
+          x-faker: datatype.datetime
       required:
       - comment
       - commentId
@@ -214,6 +228,7 @@ components:
         nickname:
           description: ニックネーム
           type: string
+          x-faker: internet.userName
       required:
       - fromId
       - nickname
@@ -244,6 +259,7 @@ components:
           description: ネットワークの名前
           example: wifi-a
           type: string
+          x-faker: system.networkInterface
       required:
       - name
       - networkId
@@ -262,13 +278,14 @@ components:
           description: デバイスの名前
           example: 僕のiphone
           type: string
+          x-faker: commerce.productMaterial
         networkId:
           description: 接続先のネットワークのID
           type: integer
         macAddress:
           description: デバイスのmacaddress
-          example: 00:03:93:00:00:00
           type: string
+          x-faker: internet.mac
       required:
       - deviceId
       - macAddress

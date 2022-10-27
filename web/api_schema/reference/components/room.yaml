@@ -7,6 +7,7 @@ properties:
     type: string
     description: 部屋の名前
     example: 部屋１
+    x-faker: company.name
 required:
   - roomId
   - name

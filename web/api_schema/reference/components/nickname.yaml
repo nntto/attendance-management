@@ -13,6 +13,7 @@ properties:
   nickname:
     type: string
     description: ニックネーム
+    x-faker: internet.userName
 required:
   - nicknameId
   - fromId

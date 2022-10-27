@@ -11,7 +11,7 @@
     "format": "prettier --write --ignore-path .gitignore './**/*.{js,jsx,ts,tsx,json}'",
     "generate-typescript-axios": "openapi-generator-cli generate -g typescript-axios -i ./api_schema/reference/attendance-management-api.yaml -o ./types/typescript-axios",
     "generate-document": "npx openapi-generator-cli generate -g openapi-yaml -i ./api_schema/reference/attendance-management-api.yaml -o ./api_schema/dist --skip-operation-example",
-    "start-mock": "prism mock ./api_schema/dist/openapi/openapi.yaml"
+    "start-mock": "prism mock ./api_schema/dist/openapi/openapi.yaml -d"
   },
   "dependencies": {
     "@prisma/client": "^4.4.0",
