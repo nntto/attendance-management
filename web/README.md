@@ -32,11 +32,21 @@ yarn generate-typescript-axios
 #### API の叩き方の例
 
 ```typescript
-import { RoomsApi } from '../types/typescript-axios'
-const roomsApi = new RoomsApi()
-roomsApi.getUsersInRoom().then((res) => {
-  console.log(res.data)
-})
+import { NextPage } from 'next'
+import { useEffect, useState } from 'react'
+import { GetUsersInRoom200Response, RoomsApi } from '../types/typescript-axios'
+
+const Rooms: NextPage = () => {
+  const [users, setUsers] = useState<GetUsersInRoom200Response>({ inRoom: [], outRoom: [] })
+  useEffect(() => {
+    const roomsApi = new RoomsApi()
+    roomsApi.getUsersInRoom().then((res) => {
+      setUsers(res.data)
+    })
+  }, [])
+
+  ...
+
 ```
 
 ```json
