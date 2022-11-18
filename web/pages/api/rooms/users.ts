@@ -40,6 +40,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       users: [] as (User & {
         Comment: Comment[]
         Nickname: Nickname[]
+        lastConnectedAt: Date
       })[],
     }))
     // 在室していないユーザーを格納する変数
@@ -55,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (userMacAddress) {
         const userRoom = inRoom.find((room) => room.roomId == userMacAddress.Network?.roomId)
         if (userRoom) {
-          userRoom.users.push(user)
+          userRoom.users.push({ ...user, lastConnectedAt: userMacAddress.lastConnectedAt })
           return
         }
         throw new Error('macAddressが部屋に紐づいていない')
