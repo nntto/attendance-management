@@ -16,7 +16,7 @@ paths:
         - rooms
       summary: 各部屋のユーザーとニックネームを取得
       operationId: getUsersInRoom
-      description: "部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．"
+      description: "部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．"
       responses:
         "200":
           description: OK
@@ -50,6 +50,12 @@ paths:
                                     properties:
                                       nickname:
                                         $ref: "./components/nickname.yaml"
+                                  - type: object
+                                    properties:
+                                      lastConnectedAt:
+                                        type: string
+                                        format: date-time
+                                        x-faker: datatype.datetime
                   outRoom:
                     type: array
                     items:

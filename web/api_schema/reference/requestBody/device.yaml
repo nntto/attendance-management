@@ -14,3 +14,8 @@ properties:
     type: string
     description: デバイスのmacaddress
     example: 00:03:93:00:00:00
+  lastConnectedAt:
+    type: string
+    format: date-time
+    x-faker: datatype.datetime
+    description: デバイスの最終接続日時
