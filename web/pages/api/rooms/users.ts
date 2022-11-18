@@ -28,7 +28,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const users = await prisma.user.findMany({
       where: {},
       include: {
-        Comment: true,
+        Comment: { orderBy: { createdAt: 'desc' } },
         Nickname: true,
       },
     })
