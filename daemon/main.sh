@@ -9,13 +9,13 @@ CMD_MYSQL="mysql --defaults-extra-file=./etc/.conf -e "
 while read mac_address
 do
 	# デバイスIDを取得
-	result=$($CMD_MYSQL"SELECT Device.device_id FROM Device inner join MacAddress on Device.device_id=MacAddress.device_id inner join Network on MacAddress.network_id=Network.network_id WHERE room_id=${ROOM_ID} AND address='${mac_address}'")
+	result=$($CMD_MYSQL"SELECT MacAddress.mac_address_id from MacAddress inner join Network on MacAddress.network_id=Network.network_id WHERE room_id=${ROOM_ID} AND address='${mac_address}'")
 	ary=(`echo $result`) 
 	# デバイスが登録されていれば時間を更新
 	if [ ${#ary[@]} -eq 2 ]; then
-		device_id=${ary[1]}
+		mac_address_id=${ary[1]}
 		# DBのタイムゾーンが変更できないので無理矢理
-		$CMD_MYSQL"UPDATE Device SET last_connected_at=(now() + interval 9 hour) WHERE device_id=${device_id};"
+		$CMD_MYSQL"UPDATE MacAddress SET last_connected_at=(now() + interval 9 hour) WHERE mac_address_id=${mac_address_id};"
 		echo $mac_address' update'
 	# 登録されていなければ無視
 	else

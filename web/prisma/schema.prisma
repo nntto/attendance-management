@@ -29,21 +29,21 @@ model Room {
 }
 
 model Device {
-  deviceId        Int          @id @default(autoincrement()) @map("device_id")
-  name            String?
-  lastConnectedAt DateTime     @default(now()) @map("last_connected_at")
-  userId          Int?         @map("user_id")
-  User            User?        @relation(fields: [userId], references: [userId])
-  MacAddress      MacAddress[]
+  deviceId   Int          @id @default(autoincrement()) @map("device_id")
+  name       String?
+  userId     Int?         @map("user_id")
+  User       User?        @relation(fields: [userId], references: [userId])
+  MacAddress MacAddress[]
 }
 
 model MacAddress {
-  macAddressId Int      @id @default(autoincrement()) @map("mac_address_id")
-  address      String
-  networkId    Int?     @map("network_id")
-  Network      Network? @relation(fields: [networkId], references: [networkId])
-  deviceId     Int?     @map("device_id")
-  Device       Device?  @relation(fields: [deviceId], references: [deviceId])
+  macAddressId    Int      @id @default(autoincrement()) @map("mac_address_id")
+  address         String
+  networkId       Int?     @map("network_id")
+  Network         Network? @relation(fields: [networkId], references: [networkId])
+  deviceId        Int?     @map("device_id")
+  Device          Device?  @relation(fields: [deviceId], references: [deviceId])
+  lastConnectedAt DateTime @default(now()) @map("last_connected_at")
 }
 
 model Nickname {
