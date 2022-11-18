@@ -47,17 +47,19 @@ model MacAddress {
 }
 
 model Nickname {
-  nicknameId   Int  @id @default(autoincrement()) @map("nickname_id")
-  userId       Int  @map("user_id")
-  targetUserId Int  @map("target_user_id")
-  User         User @relation(fields: [userId], references: [userId])
+  nicknameId Int    @id @default(autoincrement()) @map("nickname_id")
+  fromId     Int    @map("from_id")
+  toId       Int    @map("to_id")
+  nickname   String
+  User       User   @relation(fields: [toId], references: [userId])
 }
 
 model Comment {
-  commentId Int    @id @default(autoincrement()) @map("comment_id")
-  userId    Int    @map("user_id")
-  User      User   @relation(fields: [userId], references: [userId])
-  body      String
+  commentId Int      @id @default(autoincrement()) @map("comment_id")
+  userId    Int      @map("user_id")
+  User      User     @relation(fields: [userId], references: [userId])
+  comment   String
+  createdAt DateTime @default(now()) @map("created_at")
 }
 
 model Network {
