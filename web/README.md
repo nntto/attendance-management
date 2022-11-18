@@ -92,3 +92,22 @@ npm run dev
 # or
 yarn dev
 ```
+
+#### ドキュメントの更新方法
+
+1. web/api_schema/reference の内容を変更
+2.
+
+```bash
+npm run generate-document
+or
+yarn generate-document
+```
+
+#### API クライアントの自動生成方法
+
+```bash
+npm run generate-typescript-axios
+or
+yarn generate-typescript-axios
+```
