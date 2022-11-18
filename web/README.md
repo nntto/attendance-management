@@ -13,6 +13,24 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 5. 生成された DATABASE_URL=...をコピー
 6. .env.example を複製して，ファイル名を.example に変更．5 でコピーした内容を.env の DATABASE_URL=に上書き
 
+#### DB を GUI で操作
+
+```bash
+npx prisma studio
+```
+
+#### prisma がうまく動かない時
+
+```bash
+npx prisma generate
+```
+
+#### prisma で定義したスキーマを planetscale に反映するとき
+
+```bash
+npx prisma db push
+```
+
 ### フロントエンド
 
 #### モックサーバーの起動
