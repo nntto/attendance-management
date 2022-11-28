@@ -59,35 +59,35 @@ export interface Comment {
  */
 export interface Device {
     /**
-     * デバイスの識別ID
-     * @type {number}
-     * @memberof Device
-     */
-    'deviceId': number;
-    /**
      * デバイスを所持しているユーザーのID
      * @type {number}
      * @memberof Device
      */
-    'userId': number;
+    'userId'?: number;
     /**
      * デバイスの名前
      * @type {string}
      * @memberof Device
      */
-    'name': string;
+    'name'?: string;
     /**
      * 接続先のネットワークのID
      * @type {number}
      * @memberof Device
      */
-    'networkId': number;
+    'networkId'?: number;
     /**
      * デバイスのmacaddress
      * @type {string}
      * @memberof Device
      */
-    'macAddress': string;
+    'macAddress'?: string;
+    /**
+     * デバイスの最終接続日時
+     * @type {string}
+     * @memberof Device
+     */
+    'lastConnectedAt'?: string;
 }
 /**
  * 
@@ -96,214 +96,144 @@ export interface Device {
  */
 export interface Device1 {
     /**
+     * デバイスの識別ID
+     * @type {number}
+     * @memberof Device1
+     */
+    'deviceId': number;
+    /**
      * デバイスを所持しているユーザーのID
      * @type {number}
      * @memberof Device1
      */
-    'userId'?: number;
+    'userId': number;
     /**
      * デバイスの名前
      * @type {string}
      * @memberof Device1
      */
-    'name'?: string;
+    'name': string;
     /**
      * 接続先のネットワークのID
      * @type {number}
      * @memberof Device1
      */
-    'networkId'?: number;
+    'networkId': number;
     /**
      * デバイスのmacaddress
      * @type {string}
      * @memberof Device1
      */
-    'macAddress'?: string;
+    'macAddress': string;
 }
 /**
  * 
  * @export
- * @interface GetDevices200ResponseInner
+ * @interface InroomAndOutroomUsers
  */
-export interface GetDevices200ResponseInner {
+export interface InroomAndOutroomUsers {
+    /**
+     * 
+     * @type {Array<InroomAndOutroomUsersInRoomInner>}
+     * @memberof InroomAndOutroomUsers
+     */
+    'inRoom': Array<InroomAndOutroomUsersInRoomInner>;
+    /**
+     * 
+     * @type {Array<InroomAndOutroomUsersOutRoomInner>}
+     * @memberof InroomAndOutroomUsers
+     */
+    'outRoom': Array<InroomAndOutroomUsersOutRoomInner>;
+}
+/**
+ * 
+ * @export
+ * @interface InroomAndOutroomUsersInRoomInner
+ */
+export interface InroomAndOutroomUsersInRoomInner {
     /**
      * 部屋の識別ID
      * @type {number}
-     * @memberof GetDevices200ResponseInner
+     * @memberof InroomAndOutroomUsersInRoomInner
      */
     'roomId': number;
     /**
      * 部屋の名前
      * @type {string}
-     * @memberof GetDevices200ResponseInner
+     * @memberof InroomAndOutroomUsersInRoomInner
      */
     'name': string;
     /**
      * 
-     * @type {Array<GetDevices200ResponseInnerAllOfNetworkInner>}
-     * @memberof GetDevices200ResponseInner
+     * @type {Array<InroomAndOutroomUsersInRoomInnerAllOfUsersInner>}
+     * @memberof InroomAndOutroomUsersInRoomInner
      */
-    'network': Array<GetDevices200ResponseInnerAllOfNetworkInner>;
+    'users': Array<InroomAndOutroomUsersInRoomInnerAllOfUsersInner>;
 }
 /**
  * 
  * @export
- * @interface GetDevices200ResponseInnerAllOf
+ * @interface InroomAndOutroomUsersInRoomInnerAllOf
  */
-export interface GetDevices200ResponseInnerAllOf {
+export interface InroomAndOutroomUsersInRoomInnerAllOf {
     /**
      * 
-     * @type {Array<GetDevices200ResponseInnerAllOfNetworkInner>}
-     * @memberof GetDevices200ResponseInnerAllOf
+     * @type {Array<InroomAndOutroomUsersInRoomInnerAllOfUsersInner>}
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOf
      */
-    'network': Array<GetDevices200ResponseInnerAllOfNetworkInner>;
+    'users': Array<InroomAndOutroomUsersInRoomInnerAllOfUsersInner>;
 }
 /**
  * 
  * @export
- * @interface GetDevices200ResponseInnerAllOfNetworkInner
+ * @interface InroomAndOutroomUsersInRoomInnerAllOfUsersInner
  */
-export interface GetDevices200ResponseInnerAllOfNetworkInner {
-    /**
-     * ネットワークの識別ID
-     * @type {number}
-     * @memberof GetDevices200ResponseInnerAllOfNetworkInner
-     */
-    'networkId': number;
-    /**
-     * ネットワークの置かれている部屋のID
-     * @type {number}
-     * @memberof GetDevices200ResponseInnerAllOfNetworkInner
-     */
-    'roomId': number;
-    /**
-     * ネットワークの名前
-     * @type {string}
-     * @memberof GetDevices200ResponseInnerAllOfNetworkInner
-     */
-    'name': string;
-    /**
-     * 
-     * @type {Array<Device>}
-     * @memberof GetDevices200ResponseInnerAllOfNetworkInner
-     */
-    'devices': Array<Device>;
-}
-/**
- * 
- * @export
- * @interface GetDevices200ResponseInnerAllOfNetworkInnerAllOf
- */
-export interface GetDevices200ResponseInnerAllOfNetworkInnerAllOf {
-    /**
-     * 
-     * @type {Array<Device>}
-     * @memberof GetDevices200ResponseInnerAllOfNetworkInnerAllOf
-     */
-    'devices': Array<Device>;
-}
-/**
- * 
- * @export
- * @interface GetUsersInRoom200Response
- */
-export interface GetUsersInRoom200Response {
-    /**
-     * 
-     * @type {Array<GetUsersInRoom200ResponseInRoomInner>}
-     * @memberof GetUsersInRoom200Response
-     */
-    'inRoom': Array<GetUsersInRoom200ResponseInRoomInner>;
-    /**
-     * 
-     * @type {Array<GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner>}
-     * @memberof GetUsersInRoom200Response
-     */
-    'outRoom': Array<GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner>;
-}
-/**
- * 
- * @export
- * @interface GetUsersInRoom200ResponseInRoomInner
- */
-export interface GetUsersInRoom200ResponseInRoomInner {
-    /**
-     * 部屋の識別ID
-     * @type {number}
-     * @memberof GetUsersInRoom200ResponseInRoomInner
-     */
-    'roomId': number;
-    /**
-     * 部屋の名前
-     * @type {string}
-     * @memberof GetUsersInRoom200ResponseInRoomInner
-     */
-    'name': string;
-    /**
-     * 
-     * @type {Array<GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner>}
-     * @memberof GetUsersInRoom200ResponseInRoomInner
-     */
-    'users': Array<GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner>;
-}
-/**
- * 
- * @export
- * @interface GetUsersInRoom200ResponseInRoomInnerAllOf
- */
-export interface GetUsersInRoom200ResponseInRoomInnerAllOf {
-    /**
-     * 
-     * @type {Array<GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner>}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOf
-     */
-    'users': Array<GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner>;
-}
-/**
- * 
- * @export
- * @interface GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
- */
-export interface GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner {
+export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInner {
     /**
      * ユーザーの識別ID
      * @type {number}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
     'userId': number;
     /**
      * ユーザーの名前
      * @type {string}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
     'name': string;
     /**
      * ユーザーの学年
      * @type {string}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
-    'grade': GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerGradeEnum;
+    'grade': InroomAndOutroomUsersInRoomInnerAllOfUsersInnerGradeEnum;
     /**
      * ユーザーのプロフィール画像
      * @type {string}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
     'iconUrl': string;
     /**
      * 
      * @type {Comment}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
     'comment'?: Comment;
     /**
      * 
      * @type {Nickname}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInner
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
     'nickname'?: Nickname;
+    /**
+     * 
+     * @type {string}
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
+     */
+    'lastConnectedAt'?: string;
 }
 
-export const GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerGradeEnum = {
+export const InroomAndOutroomUsersInRoomInnerAllOfUsersInnerGradeEnum = {
     B1: 'B1',
     B2: 'B2',
     B3: 'B3',
@@ -315,34 +245,105 @@ export const GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerGradeEnum = {
     D3: 'D3'
 } as const;
 
-export type GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerGradeEnum = typeof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerGradeEnum[keyof typeof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerGradeEnum];
+export type InroomAndOutroomUsersInRoomInnerAllOfUsersInnerGradeEnum = typeof InroomAndOutroomUsersInRoomInnerAllOfUsersInnerGradeEnum[keyof typeof InroomAndOutroomUsersInRoomInnerAllOfUsersInnerGradeEnum];
 
 /**
  * 
  * @export
- * @interface GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerAllOf
+ * @interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf
  */
-export interface GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerAllOf {
+export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf {
     /**
      * 
      * @type {Comment}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerAllOf
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf
      */
     'comment'?: Comment;
 }
 /**
  * 
  * @export
- * @interface GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerAllOf1
+ * @interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf1
  */
-export interface GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerAllOf1 {
+export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf1 {
     /**
      * 
      * @type {Nickname}
-     * @memberof GetUsersInRoom200ResponseInRoomInnerAllOfUsersInnerAllOf1
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf1
      */
     'nickname'?: Nickname;
 }
+/**
+ * 
+ * @export
+ * @interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf2
+ */
+export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf2 {
+    /**
+     * 
+     * @type {string}
+     * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf2
+     */
+    'lastConnectedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface InroomAndOutroomUsersOutRoomInner
+ */
+export interface InroomAndOutroomUsersOutRoomInner {
+    /**
+     * ユーザーの識別ID
+     * @type {number}
+     * @memberof InroomAndOutroomUsersOutRoomInner
+     */
+    'userId': number;
+    /**
+     * ユーザーの名前
+     * @type {string}
+     * @memberof InroomAndOutroomUsersOutRoomInner
+     */
+    'name': string;
+    /**
+     * ユーザーの学年
+     * @type {string}
+     * @memberof InroomAndOutroomUsersOutRoomInner
+     */
+    'grade': InroomAndOutroomUsersOutRoomInnerGradeEnum;
+    /**
+     * ユーザーのプロフィール画像
+     * @type {string}
+     * @memberof InroomAndOutroomUsersOutRoomInner
+     */
+    'iconUrl': string;
+    /**
+     * 
+     * @type {Comment}
+     * @memberof InroomAndOutroomUsersOutRoomInner
+     */
+    'comment'?: Comment;
+    /**
+     * 
+     * @type {Nickname}
+     * @memberof InroomAndOutroomUsersOutRoomInner
+     */
+    'nickname'?: Nickname;
+}
+
+export const InroomAndOutroomUsersOutRoomInnerGradeEnum = {
+    B1: 'B1',
+    B2: 'B2',
+    B3: 'B3',
+    B4: 'B4',
+    M1: 'M1',
+    M2: 'M2',
+    D1: 'D1',
+    D2: 'D2',
+    D3: 'D3'
+} as const;
+
+export type InroomAndOutroomUsersOutRoomInnerGradeEnum = typeof InroomAndOutroomUsersOutRoomInnerGradeEnum[keyof typeof InroomAndOutroomUsersOutRoomInnerGradeEnum];
+
 /**
  * 
  * @export
@@ -489,6 +490,88 @@ export interface User1 {
      */
     'iconUrl'?: string;
 }
+/**
+ * 
+ * @export
+ * @interface UserDeviceInner
+ */
+export interface UserDeviceInner {
+    /**
+     * 部屋の識別ID
+     * @type {number}
+     * @memberof UserDeviceInner
+     */
+    'roomId': number;
+    /**
+     * 部屋の名前
+     * @type {string}
+     * @memberof UserDeviceInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<UserDeviceInnerAllOfNetworkInner>}
+     * @memberof UserDeviceInner
+     */
+    'network': Array<UserDeviceInnerAllOfNetworkInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceInnerAllOf
+ */
+export interface UserDeviceInnerAllOf {
+    /**
+     * 
+     * @type {Array<UserDeviceInnerAllOfNetworkInner>}
+     * @memberof UserDeviceInnerAllOf
+     */
+    'network': Array<UserDeviceInnerAllOfNetworkInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceInnerAllOfNetworkInner
+ */
+export interface UserDeviceInnerAllOfNetworkInner {
+    /**
+     * ネットワークの識別ID
+     * @type {number}
+     * @memberof UserDeviceInnerAllOfNetworkInner
+     */
+    'networkId': number;
+    /**
+     * ネットワークの置かれている部屋のID
+     * @type {number}
+     * @memberof UserDeviceInnerAllOfNetworkInner
+     */
+    'roomId': number;
+    /**
+     * ネットワークの名前
+     * @type {string}
+     * @memberof UserDeviceInnerAllOfNetworkInner
+     */
+    'name': string;
+    /**
+     * 
+     * @type {Array<Device1>}
+     * @memberof UserDeviceInnerAllOfNetworkInner
+     */
+    'devices': Array<Device1>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceInnerAllOfNetworkInnerAllOf
+ */
+export interface UserDeviceInnerAllOfNetworkInnerAllOf {
+    /**
+     * 
+     * @type {Array<Device1>}
+     * @memberof UserDeviceInnerAllOfNetworkInnerAllOf
+     */
+    'devices': Array<Device1>;
+}
 
 /**
  * RoomsApi - axios parameter creator
@@ -531,7 +614,7 @@ export const RoomsApiAxiosParamCreator = function (configuration?: Configuration
             };
         },
         /**
-         * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．
+         * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．
          * @summary 各部屋のユーザーとニックネームを取得
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -582,12 +665,12 @@ export const RoomsApiFp = function(configuration?: Configuration) {
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
-         * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．
+         * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．
          * @summary 各部屋のユーザーとニックネームを取得
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUsersInRoom(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<GetUsersInRoom200Response>> {
+        async getUsersInRoom(options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<InroomAndOutroomUsers>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUsersInRoom(options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -612,12 +695,12 @@ export const RoomsApiFactory = function (configuration?: Configuration, basePath
             return localVarFp.createUserNickname(nickname, options).then((request) => request(axios, basePath));
         },
         /**
-         * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．
+         * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．
          * @summary 各部屋のユーザーとニックネームを取得
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUsersInRoom(options?: any): AxiosPromise<GetUsersInRoom200Response> {
+        getUsersInRoom(options?: any): AxiosPromise<InroomAndOutroomUsers> {
             return localVarFp.getUsersInRoom(options).then((request) => request(axios, basePath));
         },
     };
@@ -643,7 +726,7 @@ export class RoomsApi extends BaseAPI {
     }
 
     /**
-     * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．
+     * 部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．
      * @summary 各部屋のユーザーとニックネームを取得
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -733,11 +816,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
-         * @param {Device1} [device1] 
+         * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putDevices: async (deviceId: number, device1?: Device1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putDevices: async (deviceId: number, device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deviceId' is not null or undefined
             assertParamExists('putDevices', 'deviceId', deviceId)
             const localVarPath = `/api/setting/device/{device_id}`
@@ -760,7 +843,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(device1, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(device, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -822,7 +905,7 @@ export const SettingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDevices(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<GetDevices200ResponseInner>>> {
+        async getDevices(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDeviceInner>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDevices(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -841,12 +924,12 @@ export const SettingApiFp = function(configuration?: Configuration) {
          * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
-         * @param {Device1} [device1] 
+         * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putDevices(deviceId: number, device1?: Device1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putDevices(deviceId, device1, options);
+        async putDevices(deviceId: number, device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putDevices(deviceId, device, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -878,7 +961,7 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevices(userId: number, options?: any): AxiosPromise<Array<GetDevices200ResponseInner>> {
+        getDevices(userId: number, options?: any): AxiosPromise<Array<UserDeviceInner>> {
             return localVarFp.getDevices(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -895,12 +978,12 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
-         * @param {Device1} [device1] 
+         * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putDevices(deviceId: number, device1?: Device1, options?: any): AxiosPromise<void> {
-            return localVarFp.putDevices(deviceId, device1, options).then((request) => request(axios, basePath));
+        putDevices(deviceId: number, device?: Device, options?: any): AxiosPromise<void> {
+            return localVarFp.putDevices(deviceId, device, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -951,13 +1034,13 @@ export class SettingApi extends BaseAPI {
      * 
      * @summary 指定したデバイスの情報を変更
      * @param {number} deviceId デバイスID
-     * @param {Device1} [device1] 
+     * @param {Device} [device] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public putDevices(deviceId: number, device1?: Device1, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).putDevices(deviceId, device1, options).then((request) => request(this.axios, this.basePath));
+    public putDevices(deviceId: number, device?: Device, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).putDevices(deviceId, device, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

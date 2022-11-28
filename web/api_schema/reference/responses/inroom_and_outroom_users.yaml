@@ -1,0 +1,47 @@
+
+type: object
+required:
+  - inRoom
+  - outRoom
+properties:
+  inRoom:
+    type: array
+    items:
+      allOf:
+        - $ref: "../components/room.yaml"
+        - type: object
+          required:
+            - users
+          properties:
+            users:
+              type: array
+              items:
+                allOf:
+                  - $ref: "../components/user.yaml"
+                  - type: object
+                    properties:
+                      comment:
+                        $ref: "../components/comment.yaml"
+                  - type: object
+                    properties:
+                      nickname:
+                        $ref: "../components/nickname.yaml"
+                  - type: object
+                    properties:
+                      lastConnectedAt:
+                        type: string
+                        format: date-time
+                        x-faker: datatype.datetime
+  outRoom:
+    type: array
+    items:
+      allOf:
+        - $ref: "../components/user.yaml"
+        - type: object
+          properties:
+            comment:
+              $ref: "../components/comment.yaml"
+        - type: object
+          properties:
+            nickname:
+              $ref: "../components/nickname.yaml"

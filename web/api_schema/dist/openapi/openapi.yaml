@@ -19,7 +19,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/getUsersInRoom_200_response'
+                $ref: '#/components/schemas/inroom_and_outroom_users'
           description: OK
       summary: 各部屋のユーザーとニックネームを取得
       tags:
@@ -96,9 +96,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/getDevices_200_response_inner'
-                type: array
+                $ref: '#/components/schemas/user_device'
           description: OK
       summary: 指定したユーザーの持つデバイス一覧を取得
       tags:
@@ -118,7 +116,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/device_1'
+              $ref: '#/components/schemas/device'
       responses:
         "200":
           description: OK
@@ -142,19 +140,41 @@ components:
       schema:
         type: integer
   schemas:
-    room:
+    inroom_and_outroom_users:
       properties:
-        roomId:
-          description: 部屋の識別ID
-          type: integer
-        name:
-          description: 部屋の名前
-          example: 部屋１
-          type: string
-          x-faker: company.name
+        inRoom:
+          items:
+            $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner'
+          type: array
+        outRoom:
+          items:
+            $ref: '#/components/schemas/inroom_and_outroom_users_outRoom_inner'
+          type: array
       required:
-      - name
-      - roomId
+      - inRoom
+      - outRoom
+      type: object
+    nickname:
+      properties:
+        nicknameId:
+          description: ニックネームの識別ID
+          readOnly: true
+          type: integer
+        fromId:
+          description: ニックネームを付けたユーザーのID
+          type: integer
+        toId:
+          description: ニックネームの付けられたユーザーのID
+          type: integer
+        nickname:
+          description: ニックネーム
+          type: string
+          x-faker: internet.userName
+      required:
+      - fromId
+      - nickname
+      - nicknameId
+      - toId
       type: object
     user:
       properties:
@@ -189,6 +209,58 @@ components:
       - name
       - userId
       type: object
+    user_1:
+      properties:
+        name:
+          description: ユーザーの名前
+          type: string
+        grade:
+          description: ユーザーの学年
+          type: string
+        iconUrl:
+          description: ユーザーのプロフィール画像
+          type: string
+      type: object
+    user_device:
+      items:
+        $ref: '#/components/schemas/user_device_inner'
+      type: array
+    device:
+      properties:
+        userId:
+          description: デバイスを所持しているユーザーのID
+          type: integer
+        name:
+          description: デバイスの名前
+          example: 僕のiphone
+          type: string
+        networkId:
+          description: 接続先のネットワークのID
+          type: integer
+        macAddress:
+          description: デバイスのmacaddress
+          example: 00:03:93:00:00:00
+          type: string
+        lastConnectedAt:
+          description: デバイスの最終接続日時
+          format: date-time
+          type: string
+          x-faker: datatype.datetime
+      type: object
+    room:
+      properties:
+        roomId:
+          description: 部屋の識別ID
+          type: integer
+        name:
+          description: 部屋の名前
+          example: 部屋１
+          type: string
+          x-faker: company.name
+      required:
+      - name
+      - roomId
+      type: object
     comment:
       properties:
         commentId:
@@ -213,40 +285,6 @@ components:
       - createdAt
       - userId
       type: object
-    nickname:
-      properties:
-        nicknameId:
-          description: ニックネームの識別ID
-          readOnly: true
-          type: integer
-        fromId:
-          description: ニックネームを付けたユーザーのID
-          type: integer
-        toId:
-          description: ニックネームの付けられたユーザーのID
-          type: integer
-        nickname:
-          description: ニックネーム
-          type: string
-          x-faker: internet.userName
-      required:
-      - fromId
-      - nickname
-      - nicknameId
-      - toId
-      type: object
-    user_1:
-      properties:
-        name:
-          description: ユーザーの名前
-          type: string
-        grade:
-          description: ユーザーの学年
-          type: string
-        iconUrl:
-          description: ユーザーのプロフィール画像
-          type: string
-      type: object
     network:
       properties:
         networkId:
@@ -265,7 +303,7 @@ components:
       - networkId
       - roomId
       type: object
-    device:
+    device_1:
       properties:
         deviceId:
           description: デバイスの識別ID
@@ -293,106 +331,70 @@ components:
       - networkId
       - userId
       type: object
-    device_1:
-      properties:
-        userId:
-          description: デバイスを所持しているユーザーのID
-          type: integer
-        name:
-          description: デバイスの名前
-          example: 僕のiphone
-          type: string
-        networkId:
-          description: 接続先のネットワークのID
-          type: integer
-        macAddress:
-          description: デバイスのmacaddress
-          example: 00:03:93:00:00:00
-          type: string
-        lastConnectedAt:
-          description: デバイスの最終接続日時
-          format: date-time
-          type: string
-          x-faker: datatype.datetime
-      type: object
-    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf:
+    inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf:
       properties:
         comment:
           $ref: '#/components/schemas/comment'
       type: object
-    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_1:
+    inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1:
       properties:
         nickname:
           $ref: '#/components/schemas/nickname'
       type: object
-    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_2:
+    inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_2:
       properties:
         lastConnectedAt:
           format: date-time
           type: string
           x-faker: datatype.datetime
       type: object
-    getUsersInRoom_200_response_inRoom_inner_allOf_users_inner:
+    inroom_and_outroom_users_inRoom_inner_allOf_users_inner:
       allOf:
       - $ref: '#/components/schemas/user'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_1'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_2'
-    getUsersInRoom_200_response_inRoom_inner_allOf:
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf'
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1'
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_2'
+    inroom_and_outroom_users_inRoom_inner_allOf:
       properties:
         users:
           items:
-            $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner'
+            $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner'
           type: array
       required:
       - users
       type: object
-    getUsersInRoom_200_response_inRoom_inner:
+    inroom_and_outroom_users_inRoom_inner:
       allOf:
       - $ref: '#/components/schemas/room'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf'
-    getUsersInRoom_200_response_outRoom_inner:
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
+    inroom_and_outroom_users_outRoom_inner:
       allOf:
       - $ref: '#/components/schemas/user'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf'
-      - $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner_allOf_users_inner_allOf_1'
-    getUsersInRoom_200_response:
-      properties:
-        inRoom:
-          items:
-            $ref: '#/components/schemas/getUsersInRoom_200_response_inRoom_inner'
-          type: array
-        outRoom:
-          items:
-            $ref: '#/components/schemas/getUsersInRoom_200_response_outRoom_inner'
-          type: array
-      required:
-      - inRoom
-      - outRoom
-      type: object
-    getDevices_200_response_inner_allOf_network_inner_allOf:
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf'
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1'
+    user_device_inner_allOf_network_inner_allOf:
       properties:
         devices:
           items:
-            $ref: '#/components/schemas/device'
+            $ref: '#/components/schemas/device_1'
           type: array
       required:
       - devices
       type: object
-    getDevices_200_response_inner_allOf_network_inner:
+    user_device_inner_allOf_network_inner:
       allOf:
       - $ref: '#/components/schemas/network'
-      - $ref: '#/components/schemas/getDevices_200_response_inner_allOf_network_inner_allOf'
-    getDevices_200_response_inner_allOf:
+      - $ref: '#/components/schemas/user_device_inner_allOf_network_inner_allOf'
+    user_device_inner_allOf:
       properties:
         network:
           items:
-            $ref: '#/components/schemas/getDevices_200_response_inner_allOf_network_inner'
+            $ref: '#/components/schemas/user_device_inner_allOf_network_inner'
           type: array
       required:
       - network
       type: object
-    getDevices_200_response_inner:
+    user_device_inner:
       allOf:
       - $ref: '#/components/schemas/room'
-      - $ref: '#/components/schemas/getDevices_200_response_inner_allOf'
+      - $ref: '#/components/schemas/user_device_inner_allOf'
