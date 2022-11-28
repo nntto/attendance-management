@@ -1,9 +1,9 @@
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
-import { GetUsersInRoom200Response, RoomsApi } from '../types/typescript-axios'
+import { InroomAndOutroomUsers, RoomsApi } from '../types/typescript-axios'
 
 const Rooms: NextPage = () => {
-  const [users, setUsers] = useState<GetUsersInRoom200Response>({ inRoom: [], outRoom: [] })
+  const [users, setUsers] = useState<InroomAndOutroomUsers>({ inRoom: [], outRoom: [] })
   useEffect(() => {
     const roomsApi = new RoomsApi()
     roomsApi.getUsersInRoom().then((res) => {

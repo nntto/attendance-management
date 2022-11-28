@@ -1,0 +1,21 @@
+type: array
+items:
+  allOf:
+    - $ref: "../components/room.yaml"
+    - type: object
+      required:
+        - network
+      properties:
+        network:
+          type: array
+          items:
+            allOf:
+              - $ref: "../components/network.yaml"
+              - type: object
+                required:
+                  - devices
+                properties:
+                  devices:
+                    type: array
+                    items:
+                      $ref: "../components/device.yaml"

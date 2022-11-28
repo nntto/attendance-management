@@ -23,52 +23,7 @@ paths:
           content:
             application/json:
               schema:
-                type: object
-                required:
-                  - inRoom
-                  - outRoom
-                properties:
-                  inRoom:
-                    type: array
-                    items:
-                      allOf:
-                        - $ref: "./components/room.yaml"
-                        - type: object
-                          required:
-                            - users
-                          properties:
-                            users:
-                              type: array
-                              items:
-                                allOf:
-                                  - $ref: "./components/user.yaml"
-                                  - type: object
-                                    properties:
-                                      comment:
-                                        $ref: "./components/comment.yaml"
-                                  - type: object
-                                    properties:
-                                      nickname:
-                                        $ref: "./components/nickname.yaml"
-                                  - type: object
-                                    properties:
-                                      lastConnectedAt:
-                                        type: string
-                                        format: date-time
-                                        x-faker: datatype.datetime
-                  outRoom:
-                    type: array
-                    items:
-                      allOf:
-                        - $ref: "./components/user.yaml"
-                        - type: object
-                          properties:
-                            comment:
-                              $ref: "./components/comment.yaml"
-                        - type: object
-                          properties:
-                            nickname:
-                              $ref: "./components/nickname.yaml"
+                $ref: './responses/inroom_and_outroom_users.yaml'
   "/api/rooms/nickname":
     put:
       tags: 
@@ -130,27 +85,7 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  allOf:
-                    - $ref: "./components/room.yaml"
-                    - type: object
-                      required:
-                        - network
-                      properties:
-                        network:
-                          type: array
-                          items:
-                            allOf:
-                              - $ref: "./components/network.yaml"
-                              - type: object
-                                required:
-                                  - devices
-                                properties:
-                                  devices:
-                                    type: array
-                                    items:
-                                      $ref: "./components/device.yaml"
+                $ref: './responses/user_device.yaml'
   "/api/setting/device/{device_id}":
     parameters:
       - $ref: "./parameters/device_id.yaml"
