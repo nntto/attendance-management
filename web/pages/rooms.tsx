@@ -21,24 +21,9 @@ const Rooms: NextPage = () => {
         </div>
       ))}
       <h1>不在</h1>
-      <table key={'不在'}>
-        <tbody>
-          <tr>
-            <th>学年</th>
-            <th>名前</th>
-            <th>ニックネーム</th>
-            <th>コメント</th>
-          </tr>
-          {users.outRoom.map((user) => (
-            <tr key={user.userId}>
-              <td>{user.grade}</td>
-              <td>{user.name}</td>
-              <td>{user.nickname?.nickname}</td>
-              <td>{user.comment?.comment}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+      <div key={'不在'}>
+        <RoomTable users={users.outRoom} />
+      </div>
     </>
   )
 }
