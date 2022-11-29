@@ -140,10 +140,10 @@ export interface InroomAndOutroomUsers {
     'inRoom': Array<InroomAndOutroomUsersInRoomInner>;
     /**
      * 
-     * @type {Array<InroomAndOutroomUsersOutRoomInner>}
+     * @type {Array<InroomAndOutroomUsersInRoomInnerAllOfUsersInner>}
      * @memberof InroomAndOutroomUsers
      */
-    'outRoom': Array<InroomAndOutroomUsersOutRoomInner>;
+    'outRoom': Array<InroomAndOutroomUsersInRoomInnerAllOfUsersInner>;
 }
 /**
  * 
@@ -286,64 +286,6 @@ export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf2 {
      */
     'lastConnectedAt'?: string;
 }
-/**
- * 
- * @export
- * @interface InroomAndOutroomUsersOutRoomInner
- */
-export interface InroomAndOutroomUsersOutRoomInner {
-    /**
-     * ユーザーの識別ID
-     * @type {number}
-     * @memberof InroomAndOutroomUsersOutRoomInner
-     */
-    'userId': number;
-    /**
-     * ユーザーの名前
-     * @type {string}
-     * @memberof InroomAndOutroomUsersOutRoomInner
-     */
-    'name': string;
-    /**
-     * ユーザーの学年
-     * @type {string}
-     * @memberof InroomAndOutroomUsersOutRoomInner
-     */
-    'grade': InroomAndOutroomUsersOutRoomInnerGradeEnum;
-    /**
-     * ユーザーのプロフィール画像
-     * @type {string}
-     * @memberof InroomAndOutroomUsersOutRoomInner
-     */
-    'iconUrl': string;
-    /**
-     * 
-     * @type {Comment}
-     * @memberof InroomAndOutroomUsersOutRoomInner
-     */
-    'comment'?: Comment;
-    /**
-     * 
-     * @type {Nickname}
-     * @memberof InroomAndOutroomUsersOutRoomInner
-     */
-    'nickname'?: Nickname;
-}
-
-export const InroomAndOutroomUsersOutRoomInnerGradeEnum = {
-    B1: 'B1',
-    B2: 'B2',
-    B3: 'B3',
-    B4: 'B4',
-    M1: 'M1',
-    M2: 'M2',
-    D1: 'D1',
-    D2: 'D2',
-    D3: 'D3'
-} as const;
-
-export type InroomAndOutroomUsersOutRoomInnerGradeEnum = typeof InroomAndOutroomUsersOutRoomInnerGradeEnum[keyof typeof InroomAndOutroomUsersOutRoomInnerGradeEnum];
-
 /**
  * 
  * @export
