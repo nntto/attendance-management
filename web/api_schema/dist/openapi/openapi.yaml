@@ -3,7 +3,7 @@ info:
   title: attendance-management-api
   version: "1.0"
 servers:
-- url: http://localhost:4010
+- url: http://localhost:3000
 tags:
 - description: 在室一覧(/rooms)ページで用いるAPI群
   name: rooms
