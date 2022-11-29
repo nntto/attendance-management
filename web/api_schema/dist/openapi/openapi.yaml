@@ -148,7 +148,7 @@ components:
           type: array
         outRoom:
           items:
-            $ref: '#/components/schemas/inroom_and_outroom_users_outRoom_inner'
+            $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner'
           type: array
       required:
       - inRoom
