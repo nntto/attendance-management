@@ -9,13 +9,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const { method } = req
 
   if (method === 'GET') {
-    // 基準時刻inRoomTime()以降に接続された端末一覧を取得
     const macAddressInRoom = await prisma.macAddress.findMany({
-      where: {
-        lastConnectedAt: {
-          gte: inRoomTime(),
-        },
-      },
+      // where: {
+      //   lastConnectedAt: {
+      //     gte: inRoomTime(),
+      //   },
+      // },
       orderBy: {
         lastConnectedAt: 'desc', // 最終接続時刻が現在時刻から近い順
       },
@@ -47,6 +46,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     const outRoom = [] as (User & {
       Comment: Comment[]
       Nickname: Nickname[]
+      lastConnectedAt?: Date
     })[]
 
     users.forEach((user) => {
@@ -56,11 +56,18 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (userMacAddress) {
         const userRoom = inRoom.find((room) => room.roomId == userMacAddress.Network?.roomId)
         if (userRoom) {
-          userRoom.users.push({ ...user, lastConnectedAt: userMacAddress.lastConnectedAt })
+          if (userMacAddress.lastConnectedAt > inRoomTime()) {
+            // 基準時刻inRoomTime()以降に接続された端末の場合，在室
+            userRoom.users.push({ ...user, lastConnectedAt: userMacAddress.lastConnectedAt })
+          } else {
+            // それ以外の場合，不在
+            outRoom.push({ ...user, lastConnectedAt: userMacAddress.lastConnectedAt })
+          }
           return
         }
         throw new Error('macAddressが部屋に紐づいていない')
       }
+      // デバイスが登録されていない場合，最終更新時刻はundefined
       outRoom.push(user)
     })
 
