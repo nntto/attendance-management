@@ -148,7 +148,7 @@ components:
           type: array
         outRoom:
           items:
-            $ref: '#/components/schemas/inroom_and_outroom_users_outRoom_inner'
+            $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner'
           type: array
       required:
       - inRoom
@@ -367,11 +367,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
-    inroom_and_outroom_users_outRoom_inner:
-      allOf:
-      - $ref: '#/components/schemas/user'
-      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf'
-      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1'
     user_device_inner_allOf_network_inner_allOf:
       properties:
         devices:

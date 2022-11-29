@@ -45,3 +45,9 @@ properties:
           properties:
             nickname:
               $ref: "../components/nickname.yaml"
+        - type: object
+          properties:
+            lastConnectedAt:
+              type: string
+              format: date-time
+              x-faker: datatype.datetime
