@@ -1,0 +1,28 @@
+type: object
+properties:
+  macAddressId:
+    type: integer
+    description: MacAddressの識別ID
+    readOnly: true
+  address:
+    type: string
+    description: デバイスのmacaddress
+    x-faker: internet.mac
+  networkId:
+    type: integer
+    description: 接続先のネットワークのID
+  deviceId:
+    type: integer
+    description: デバイスの識別ID
+    readOnly: true
+  lastConnectedAt:
+    type: string
+    format: date-time
+    description: 最終接続日時
+    x-faker: datatype.datetime
+required:
+  - macAddressId
+  - address
+  - networkId
+  - deviceId
+  - lastConnectedAt

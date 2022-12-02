@@ -82,7 +82,7 @@ paths:
       - setting
   /api/setting/devices/{user_id}:
     get:
-      description: 部屋，ネットワークの順で階層化されている．
+      description: 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
       operationId: getDevices
       parameters:
       - description: ユーザーID
@@ -285,24 +285,6 @@ components:
       - createdAt
       - userId
       type: object
-    network:
-      properties:
-        networkId:
-          description: ネットワークの識別ID
-          type: integer
-        roomId:
-          description: ネットワークの置かれている部屋のID
-          type: integer
-        name:
-          description: ネットワークの名前
-          example: wifi-a
-          type: string
-          x-faker: system.networkInterface
-      required:
-      - name
-      - networkId
-      - roomId
-      type: object
     device_1:
       properties:
         deviceId:
@@ -330,6 +312,53 @@ components:
       - name
       - networkId
       - userId
+      type: object
+    network:
+      properties:
+        networkId:
+          description: ネットワークの識別ID
+          type: integer
+        roomId:
+          description: ネットワークの置かれている部屋のID
+          type: integer
+        name:
+          description: ネットワークの名前
+          example: wifi-a
+          type: string
+          x-faker: system.networkInterface
+      required:
+      - name
+      - networkId
+      - roomId
+      type: object
+    mac_address:
+      properties:
+        macAddressId:
+          description: MacAddressの識別ID
+          readOnly: true
+          type: integer
+        address:
+          description: デバイスのmacaddress
+          type: string
+          x-faker: internet.mac
+        networkId:
+          description: 接続先のネットワークのID
+          type: integer
+        deviceId:
+          description: デバイスの識別ID
+          readOnly: true
+          type: integer
+        lastConnectedAt:
+          description: 最終接続日時
+          format: date-time
+          type: string
+          x-faker: datatype.datetime
+      required:
+      - address
+      - deviceId
+      - lastConnectedAt
+      - macAddressId
+      - networkId
       type: object
     inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf:
       properties:
@@ -367,27 +396,40 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
-    user_device_inner_allOf_network_inner_allOf:
+    inroom_and_outroom_users_outRoom_inner:
+      allOf:
+      - $ref: '#/components/schemas/user'
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf'
+      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1'
+    user_device_inner_allOf_devices_inner_allOf_addresses_inner_allOf:
+      properties:
+        network:
+          $ref: '#/components/schemas/network'
+        macAddress:
+          $ref: '#/components/schemas/mac_address'
+      type: object
+    user_device_inner_allOf_devices_inner_allOf_addresses_inner:
+      allOf:
+      - $ref: '#/components/schemas/user_device_inner_allOf_devices_inner_allOf_addresses_inner_allOf'
+    user_device_inner_allOf_devices_inner_allOf:
+      properties:
+        addresses:
+          items:
+            $ref: '#/components/schemas/user_device_inner_allOf_devices_inner_allOf_addresses_inner'
+          type: array
+      type: object
+    user_device_inner_allOf_devices_inner:
+      allOf:
+      - $ref: '#/components/schemas/device_1'
+      - $ref: '#/components/schemas/user_device_inner_allOf_devices_inner_allOf'
+    user_device_inner_allOf:
       properties:
         devices:
           items:
-            $ref: '#/components/schemas/device_1'
+            $ref: '#/components/schemas/user_device_inner_allOf_devices_inner'
           type: array
       required:
       - devices
-      type: object
-    user_device_inner_allOf_network_inner:
-      allOf:
-      - $ref: '#/components/schemas/network'
-      - $ref: '#/components/schemas/user_device_inner_allOf_network_inner_allOf'
-    user_device_inner_allOf:
-      properties:
-        network:
-          items:
-            $ref: '#/components/schemas/user_device_inner_allOf_network_inner'
-          type: array
-      required:
-      - network
       type: object
     user_device_inner:
       allOf:
