@@ -4,18 +4,22 @@ items:
     - $ref: "../components/room.yaml"
     - type: object
       required:
-        - network
+        - devices
       properties:
-        network:
+        devices:
           type: array
           items:
             allOf:
-              - $ref: "../components/network.yaml"
+              - $ref: "../components/device.yaml"
               - type: object
-                required:
-                  - devices
                 properties:
-                  devices:
+                  addresses:
                     type: array
                     items:
-                      $ref: "../components/device.yaml"
+                      allOf:
+                        - type: object
+                          properties:
+                            network:
+                              $ref: "../components/network.yaml"
+                            macAddress:
+                              $ref: "../components/mac_address.yaml"
