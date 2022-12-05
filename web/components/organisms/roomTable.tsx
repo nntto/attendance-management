@@ -6,10 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import * as React from 'react'
-import {
-  InroomAndOutroomUsersInRoomInnerAllOfUsersInner,
-  InroomAndOutroomUsersOutRoomInner,
-} from '../../types/typescript-axios'
+import { InroomAndOutroomUsers } from '../../types/typescript-axios'
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
   return { name, calories, fat, carbs, protein }
@@ -24,7 +21,7 @@ const rows = [
 ]
 
 export default function RoomTable(props: {
-  users: InroomAndOutroomUsersInRoomInnerAllOfUsersInner[] & InroomAndOutroomUsersOutRoomInner[]
+  users: InroomAndOutroomUsers['inRoom'][number]['users'] & InroomAndOutroomUsers['outRoom']
 }) {
   const { users } = props
   return (
