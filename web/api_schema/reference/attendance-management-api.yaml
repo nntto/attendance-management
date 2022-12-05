@@ -78,7 +78,7 @@ paths:
       tags:
         - setting
       operationId: getDevices
-      description: 部屋，ネットワークの順で階層化されている．
+      description: 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
       responses:
         "200":
           description: OK
