@@ -396,12 +396,7 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
-    inroom_and_outroom_users_outRoom_inner:
-      allOf:
-      - $ref: '#/components/schemas/user'
-      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf'
-      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1'
-    user_device_inner_allOf_devices_inner_allOf_addresses_inner_allOf:
+    user_device_inner_allOf_network_inner_allOf:
       properties:
         network:
           $ref: '#/components/schemas/network'
