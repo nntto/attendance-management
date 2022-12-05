@@ -1,3 +1,4 @@
+import { Container } from '@mui/material'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import RoomTable from '../components/organisms/roomTable'
@@ -12,7 +13,7 @@ const Rooms: NextPage = () => {
     })
   }, [])
   return (
-    <>
+    <Container>
       <h1>在室</h1>
       {users.inRoom.map((room) => (
         <div key={room.roomId}>
@@ -24,7 +25,7 @@ const Rooms: NextPage = () => {
       <div key={'不在'}>
         <RoomTable users={users.outRoom} />
       </div>
-    </>
+    </Container>
   )
 }
 
