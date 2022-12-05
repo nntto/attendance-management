@@ -289,6 +289,43 @@ export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInnerAllOf2 {
 /**
  * 
  * @export
+ * @interface MacAddress
+ */
+export interface MacAddress {
+    /**
+     * MacAddressの識別ID
+     * @type {number}
+     * @memberof MacAddress
+     */
+    'macAddressId': number;
+    /**
+     * デバイスのmacaddress
+     * @type {string}
+     * @memberof MacAddress
+     */
+    'address': string;
+    /**
+     * 接続先のネットワークのID
+     * @type {number}
+     * @memberof MacAddress
+     */
+    'networkId': number;
+    /**
+     * デバイスの識別ID
+     * @type {number}
+     * @memberof MacAddress
+     */
+    'deviceId': number;
+    /**
+     * 最終接続日時
+     * @type {string}
+     * @memberof MacAddress
+     */
+    'lastConnectedAt': string;
+}
+/**
+ * 
+ * @export
  * @interface Network
  */
 export interface Network {
@@ -452,10 +489,10 @@ export interface UserDeviceInner {
     'name': string;
     /**
      * 
-     * @type {Array<UserDeviceInnerAllOfNetworkInner>}
+     * @type {Array<UserDeviceInnerAllOfDevicesInner>}
      * @memberof UserDeviceInner
      */
-    'network': Array<UserDeviceInnerAllOfNetworkInner>;
+    'devices': Array<UserDeviceInnerAllOfDevicesInner>;
 }
 /**
  * 
@@ -465,54 +502,104 @@ export interface UserDeviceInner {
 export interface UserDeviceInnerAllOf {
     /**
      * 
-     * @type {Array<UserDeviceInnerAllOfNetworkInner>}
+     * @type {Array<UserDeviceInnerAllOfDevicesInner>}
      * @memberof UserDeviceInnerAllOf
      */
-    'network': Array<UserDeviceInnerAllOfNetworkInner>;
+    'devices': Array<UserDeviceInnerAllOfDevicesInner>;
 }
 /**
  * 
  * @export
- * @interface UserDeviceInnerAllOfNetworkInner
+ * @interface UserDeviceInnerAllOfDevicesInner
  */
-export interface UserDeviceInnerAllOfNetworkInner {
+export interface UserDeviceInnerAllOfDevicesInner {
     /**
-     * ネットワークの識別ID
+     * デバイスの識別ID
      * @type {number}
-     * @memberof UserDeviceInnerAllOfNetworkInner
+     * @memberof UserDeviceInnerAllOfDevicesInner
      */
-    'networkId': number;
+    'deviceId': number;
     /**
-     * ネットワークの置かれている部屋のID
+     * デバイスを所持しているユーザーのID
      * @type {number}
-     * @memberof UserDeviceInnerAllOfNetworkInner
+     * @memberof UserDeviceInnerAllOfDevicesInner
      */
-    'roomId': number;
+    'userId': number;
     /**
-     * ネットワークの名前
+     * デバイスの名前
      * @type {string}
-     * @memberof UserDeviceInnerAllOfNetworkInner
+     * @memberof UserDeviceInnerAllOfDevicesInner
      */
     'name': string;
     /**
-     * 
-     * @type {Array<Device1>}
-     * @memberof UserDeviceInnerAllOfNetworkInner
+     * 接続先のネットワークのID
+     * @type {number}
+     * @memberof UserDeviceInnerAllOfDevicesInner
      */
-    'devices': Array<Device1>;
+    'networkId': number;
+    /**
+     * デバイスのmacaddress
+     * @type {string}
+     * @memberof UserDeviceInnerAllOfDevicesInner
+     */
+    'macAddress': string;
+    /**
+     * 
+     * @type {Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>}
+     * @memberof UserDeviceInnerAllOfDevicesInner
+     */
+    'addresses'?: Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>;
 }
 /**
  * 
  * @export
- * @interface UserDeviceInnerAllOfNetworkInnerAllOf
+ * @interface UserDeviceInnerAllOfDevicesInnerAllOf
  */
-export interface UserDeviceInnerAllOfNetworkInnerAllOf {
+export interface UserDeviceInnerAllOfDevicesInnerAllOf {
     /**
      * 
-     * @type {Array<Device1>}
-     * @memberof UserDeviceInnerAllOfNetworkInnerAllOf
+     * @type {Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>}
+     * @memberof UserDeviceInnerAllOfDevicesInnerAllOf
      */
-    'devices': Array<Device1>;
+    'addresses'?: Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner
+ */
+export interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner {
+    /**
+     * 
+     * @type {Network}
+     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner
+     */
+    'network'?: Network;
+    /**
+     * 
+     * @type {MacAddress}
+     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner
+     */
+    'macAddress'?: MacAddress;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
+ */
+export interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf {
+    /**
+     * 
+     * @type {Network}
+     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
+     */
+    'network'?: Network;
+    /**
+     * 
+     * @type {MacAddress}
+     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
+     */
+    'macAddress'?: MacAddress;
 }
 
 /**
@@ -687,7 +774,7 @@ export class RoomsApi extends BaseAPI {
 export const SettingApiAxiosParamCreator = function (configuration?: Configuration) {
     return {
         /**
-         * 部屋，ネットワークの順で階層化されている．
+         * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
          * @param {number} userId ユーザーID
          * @param {*} [options] Override http request option.
@@ -841,7 +928,7 @@ export const SettingApiFp = function(configuration?: Configuration) {
     const localVarAxiosParamCreator = SettingApiAxiosParamCreator(configuration)
     return {
         /**
-         * 部屋，ネットワークの順で階層化されている．
+         * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
          * @param {number} userId ユーザーID
          * @param {*} [options] Override http request option.
@@ -897,7 +984,7 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
     const localVarFp = SettingApiFp(configuration)
     return {
         /**
-         * 部屋，ネットワークの順で階層化されている．
+         * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
          * @param {number} userId ユーザーID
          * @param {*} [options] Override http request option.
@@ -949,7 +1036,7 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
  */
 export class SettingApi extends BaseAPI {
     /**
-     * 部屋，ネットワークの順で階層化されている．
+     * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
      * @summary 指定したユーザーの持つデバイス一覧を取得
      * @param {number} userId ユーザーID
      * @param {*} [options] Override http request option.
