@@ -1,3 +1,4 @@
+import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import { PrismaClient } from '@prisma/client'
 import NextAuth from 'next-auth'
 import GoogleProvider from 'next-auth/providers/google'
@@ -7,7 +8,10 @@ if (!SECRET) throw new Error('You must provide SECRET env var.')
 if (!GOOGLE_CLIENT_ID) throw new Error('You must provide GOOGLE_ID env var.')
 if (!GOOGLE_CLIENT_SECRET) throw new Error('You must provide GOOGLE_SECRET env var.')
 
+const prisma = new PrismaClient()
+
 export default NextAuth({
+  adapter: PrismaAdapter(prisma),
   providers: [
     GoogleProvider({
       clientId: GOOGLE_CLIENT_ID,
