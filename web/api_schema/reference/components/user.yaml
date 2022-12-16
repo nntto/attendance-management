@@ -1,7 +1,7 @@
 type: object
 properties:
-  userId:
-    type: integer
+  id:
+    type: string
     description: ユーザーの識別ID
     readOnly: true
   name:
@@ -17,7 +17,7 @@ properties:
     description: ユーザーのプロフィール画像
     x-faker: image.imageUrl
 required:
-  - userId
+  - id
   - name
   - grade
   - iconUrl

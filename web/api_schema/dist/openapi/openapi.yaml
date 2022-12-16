@@ -156,32 +156,32 @@ components:
       type: object
     nickname:
       properties:
-        nicknameId:
+        id:
           description: ニックネームの識別ID
           readOnly: true
           type: integer
         fromId:
           description: ニックネームを付けたユーザーのID
-          type: integer
+          type: string
         toId:
           description: ニックネームの付けられたユーザーのID
-          type: integer
+          type: string
         nickname:
           description: ニックネーム
           type: string
           x-faker: internet.userName
       required:
       - fromId
+      - id
       - nickname
-      - nicknameId
       - toId
       type: object
     user:
       properties:
-        userId:
+        id:
           description: ユーザーの識別ID
           readOnly: true
-          type: integer
+          type: string
         name:
           description: ユーザーの名前
           type: string
@@ -206,8 +206,8 @@ components:
       required:
       - grade
       - iconUrl
+      - id
       - name
-      - userId
       type: object
     user_1:
       properties:
@@ -249,7 +249,7 @@ components:
       type: object
     room:
       properties:
-        roomId:
+        id:
           description: 部屋の識別ID
           type: integer
         name:
@@ -258,18 +258,18 @@ components:
           type: string
           x-faker: company.name
       required:
+      - id
       - name
-      - roomId
       type: object
     comment:
       properties:
-        commentId:
+        id:
           description: コメントの識別ID
           readOnly: true
           type: integer
         userId:
           description: コメント主のユーザーID
-          type: integer
+          type: string
         comment:
           description: コメント本文
           type: string
@@ -281,19 +281,19 @@ components:
           x-faker: datatype.datetime
       required:
       - comment
-      - commentId
       - createdAt
+      - id
       - userId
       type: object
     device_1:
       properties:
-        deviceId:
+        id:
           description: デバイスの識別ID
           readOnly: true
           type: integer
         userId:
           description: デバイスを所持しているユーザーのID
-          type: integer
+          type: string
         name:
           description: デバイスの名前
           example: 僕のiphone
@@ -307,7 +307,7 @@ components:
           type: string
           x-faker: internet.mac
       required:
-      - deviceId
+      - id
       - macAddress
       - name
       - networkId
@@ -315,7 +315,7 @@ components:
       type: object
     network:
       properties:
-        networkId:
+        id:
           description: ネットワークの識別ID
           type: integer
         roomId:
@@ -327,13 +327,13 @@ components:
           type: string
           x-faker: system.networkInterface
       required:
+      - id
       - name
-      - networkId
       - roomId
       type: object
     mac_address:
       properties:
-        macAddressId:
+        id:
           description: MacAddressの識別ID
           readOnly: true
           type: integer
@@ -357,7 +357,6 @@ components:
       - address
       - deviceId
       - lastConnectedAt
-      - macAddressId
       - networkId
       type: object
     inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf:
@@ -396,11 +395,6 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
-    inroom_and_outroom_users_outRoom_inner:
-      allOf:
-      - $ref: '#/components/schemas/user'
-      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf'
-      - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf_1'
     user_device_inner_allOf_devices_inner_allOf_addresses_inner_allOf:
       properties:
         network:

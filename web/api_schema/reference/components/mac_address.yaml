@@ -1,6 +1,6 @@
 type: object
 properties:
-  macAddressId:
+  id:
     type: integer
     description: MacAddressの識別ID
     readOnly: true

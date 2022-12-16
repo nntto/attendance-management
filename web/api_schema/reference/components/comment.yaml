@@ -1,11 +1,11 @@
 type: object
 properties:
-  commentId:
+  id:
     type: integer
     description: コメントの識別ID
     readOnly: true
   userId:
-    type: integer 
+    type: string 
     description: コメント主のユーザーID
   comment:
     type: string
@@ -17,7 +17,7 @@ properties:
     description: 投稿日時
     x-faker: datatype.datetime
 required:
-  - commentId
+  - id
   - userId
   - comment
   - createdAt

@@ -1,11 +1,11 @@
 type: object
 properties:
-  deviceId:
+  id:
     type: integer
     description: デバイスの識別ID
     readOnly: true
   userId:
-    type: integer
+    type: string
     description: デバイスを所持しているユーザーのID
   name:
     type: string
@@ -20,7 +20,7 @@ properties:
     description: デバイスのmacaddress
     x-faker: internet.mac
 required:
-  - deviceId
+  - id
   - userId
   - name
   - networkId

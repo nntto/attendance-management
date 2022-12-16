@@ -1,21 +1,21 @@
 type: object
 properties:
-  nicknameId:
+  id:
     type: integer
     description: ニックネームの識別ID
     readOnly: true
   fromId:
-    type: integer
+    type: string
     description: ニックネームを付けたユーザーのID
   toId:
-    type: integer
+    type: string
     description: ニックネームの付けられたユーザーのID
   nickname:
     type: string
     description: ニックネーム
     x-faker: internet.userName
 required:
-  - nicknameId
+  - id
   - fromId
   - toId
   - nickname

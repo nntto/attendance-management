@@ -22,8 +22,8 @@ const Rooms: NextPage = () => {
       <Container>
         <h1>在室</h1>
         {(data?.inRoom || []).map((room) => (
-          <div key={room.roomId}>
-            <h2 key={room.roomId}>{room.name}</h2>
+          <div key={room.id}>
+            <h2 key={room.id}>{room.name}</h2>
             <RoomTable users={room.users} />
           </div>
         ))}

@@ -1,6 +1,6 @@
 type: object
 properties:
-  roomId:
+  id:
     type: integer
     description: 部屋の識別ID
   name:
@@ -9,5 +9,5 @@ properties:
     example: 部屋１
     x-faker: company.name
 required:
-  - roomId
+  - id
   - name

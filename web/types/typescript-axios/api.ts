@@ -32,13 +32,13 @@ export interface Comment {
      * @type {number}
      * @memberof Comment
      */
-    'commentId': number;
+    'id': number;
     /**
      * コメント主のユーザーID
-     * @type {number}
+     * @type {string}
      * @memberof Comment
      */
-    'userId': number;
+    'userId': string;
     /**
      * コメント本文
      * @type {string}
@@ -100,13 +100,13 @@ export interface Device1 {
      * @type {number}
      * @memberof Device1
      */
-    'deviceId': number;
+    'id': number;
     /**
      * デバイスを所持しているユーザーのID
-     * @type {number}
+     * @type {string}
      * @memberof Device1
      */
-    'userId': number;
+    'userId': string;
     /**
      * デバイスの名前
      * @type {string}
@@ -156,7 +156,7 @@ export interface InroomAndOutroomUsersInRoomInner {
      * @type {number}
      * @memberof InroomAndOutroomUsersInRoomInner
      */
-    'roomId': number;
+    'id': number;
     /**
      * 部屋の名前
      * @type {string}
@@ -191,10 +191,10 @@ export interface InroomAndOutroomUsersInRoomInnerAllOf {
 export interface InroomAndOutroomUsersInRoomInnerAllOfUsersInner {
     /**
      * ユーザーの識別ID
-     * @type {number}
+     * @type {string}
      * @memberof InroomAndOutroomUsersInRoomInnerAllOfUsersInner
      */
-    'userId': number;
+    'id': string;
     /**
      * ユーザーの名前
      * @type {string}
@@ -297,7 +297,7 @@ export interface MacAddress {
      * @type {number}
      * @memberof MacAddress
      */
-    'macAddressId': number;
+    'id'?: number;
     /**
      * デバイスのmacaddress
      * @type {string}
@@ -334,7 +334,7 @@ export interface Network {
      * @type {number}
      * @memberof Network
      */
-    'networkId': number;
+    'id': number;
     /**
      * ネットワークの置かれている部屋のID
      * @type {number}
@@ -359,19 +359,19 @@ export interface Nickname {
      * @type {number}
      * @memberof Nickname
      */
-    'nicknameId': number;
+    'id': number;
     /**
      * ニックネームを付けたユーザーのID
-     * @type {number}
+     * @type {string}
      * @memberof Nickname
      */
-    'fromId': number;
+    'fromId': string;
     /**
      * ニックネームの付けられたユーザーのID
-     * @type {number}
+     * @type {string}
      * @memberof Nickname
      */
-    'toId': number;
+    'toId': string;
     /**
      * ニックネーム
      * @type {string}
@@ -390,7 +390,7 @@ export interface Room {
      * @type {number}
      * @memberof Room
      */
-    'roomId': number;
+    'id': number;
     /**
      * 部屋の名前
      * @type {string}
@@ -406,10 +406,10 @@ export interface Room {
 export interface User {
     /**
      * ユーザーの識別ID
-     * @type {number}
+     * @type {string}
      * @memberof User
      */
-    'userId': number;
+    'id': string;
     /**
      * ユーザーの名前
      * @type {string}
@@ -480,7 +480,7 @@ export interface UserDeviceInner {
      * @type {number}
      * @memberof UserDeviceInner
      */
-    'roomId': number;
+    'id': number;
     /**
      * 部屋の名前
      * @type {string}
@@ -518,13 +518,13 @@ export interface UserDeviceInnerAllOfDevicesInner {
      * @type {number}
      * @memberof UserDeviceInnerAllOfDevicesInner
      */
-    'deviceId': number;
+    'id': number;
     /**
      * デバイスを所持しているユーザーのID
-     * @type {number}
+     * @type {string}
      * @memberof UserDeviceInnerAllOfDevicesInner
      */
-    'userId': number;
+    'userId': string;
     /**
      * デバイスの名前
      * @type {string}
