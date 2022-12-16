@@ -2,6 +2,7 @@ import { Container } from '@mui/material'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import useSWR from 'swr'
+import Header from '../components/organisms/Header'
 import RoomTable from '../components/organisms/roomTable'
 import { InroomAndOutroomUsers, RoomsApi } from '../types/typescript-axios'
 
@@ -16,19 +17,22 @@ const Rooms: NextPage = () => {
     },
   )
   return (
-    <Container>
-      <h1>在室</h1>
-      {(data?.inRoom || []).map((room) => (
-        <div key={room.roomId}>
-          <h2 key={room.roomId}>{room.name}</h2>
-          <RoomTable users={room.users} />
+    <>
+      <Header />
+      <Container>
+        <h1>在室</h1>
+        {(data?.inRoom || []).map((room) => (
+          <div key={room.roomId}>
+            <h2 key={room.roomId}>{room.name}</h2>
+            <RoomTable users={room.users} />
+          </div>
+        ))}
+        <h1>不在</h1>
+        <div key={'不在'}>
+          <RoomTable users={data?.outRoom || []} />
         </div>
-      ))}
-      <h1>不在</h1>
-      <div key={'不在'}>
-        <RoomTable users={data?.outRoom || []} />
-      </div>
-    </Container>
+      </Container>
+    </>
   )
 }
 
