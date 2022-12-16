@@ -5,16 +5,17 @@ const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
-  const userId = Number(req.query.userId)
+  const userId = req.query.userId
 
-  if (isNaN(userId)) {
+  if (!userId || Array.isArray(userId)) {
     res.status(400).end('Invalid UserId')
+    return
   }
 
   if (method === 'GET') {
     const user = await prisma.user.findUnique({
       where: {
-        userId: Number(userId),
+        id: userId,
       },
     })
 
@@ -27,9 +28,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     try {
       const user = await prisma.user.update({
         where: {
-          userId: Number(userId),
+          id: userId,
         },
-        data: JSON.parse(req.body),
+        data: req.body,
       })
       res.status(200).json(user)
     } catch (e: unknown) {
