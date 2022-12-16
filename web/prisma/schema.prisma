@@ -12,60 +12,126 @@ datasource db {
   referentialIntegrity = "prisma"
 }
 
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@index([userId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique @map("session_token")
+  userId       String   @map("user_id")
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@map("sessions")
+}
+
 model User {
-  userId   Int        @id @default(autoincrement()) @map("user_id")
-  name     String
-  grade    String?
-  iconUrl  String?    @map("icon_url")
-  Device   Device[]
-  Comment  Comment[]
-  Nickname Nickname[]
+  id            String     @id @default(cuid())
+  name          String
+  grade         String?
+  iconUrl       String?    @map("icon_url")
+  Device        Device[]
+  Comment       Comment[]
+  Nickname      Nickname[]
+  email         String?    @unique
+  emailVerified DateTime?  @map("email_verified")
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+
+  @@map("users")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verificationtokens")
 }
 
 model Room {
-  roomId  Int       @id @default(autoincrement()) @map("room_id")
+  id      Int       @id @default(autoincrement())
   name    String
   Network Network[]
+
+  @@map("rooms")
 }
 
 model Device {
-  deviceId   Int          @id @default(autoincrement()) @map("device_id")
+  id         Int          @id @default(autoincrement())
   name       String?
-  userId     Int?         @map("user_id")
-  User       User?        @relation(fields: [userId], references: [userId])
+  userId     String?      @map("user_id")
+  User       User?        @relation(fields: [userId], references: [id])
   MacAddress MacAddress[]
+
+  @@index([userId])
+  @@map("devices")
 }
 
 model MacAddress {
-  macAddressId    Int      @id @default(autoincrement()) @map("mac_address_id")
+  id              Int      @id @default(autoincrement())
   address         String
   networkId       Int?     @map("network_id")
-  Network         Network? @relation(fields: [networkId], references: [networkId])
+  Network         Network? @relation(fields: [networkId], references: [id])
   deviceId        Int?     @map("device_id")
-  Device          Device?  @relation(fields: [deviceId], references: [deviceId])
+  Device          Device?  @relation(fields: [deviceId], references: [id])
   lastConnectedAt DateTime @default(now()) @map("last_connected_at")
+
+  @@index([networkId])
+  @@index([deviceId])
+  @@map("macaddresses")
 }
 
 model Nickname {
-  nicknameId Int    @id @default(autoincrement()) @map("nickname_id")
-  fromId     Int    @map("from_id")
-  toId       Int    @map("to_id")
-  nickname   String
-  User       User   @relation(fields: [toId], references: [userId])
+  id       Int    @id @default(autoincrement())
+  fromId   String @map("from_id")
+  toId     String @map("to_id")
+  nickname String
+  User     User   @relation(fields: [toId], references: [id])
+
+  @@index([toId])
+  @@map("nicknames")
 }
 
 model Comment {
-  commentId Int      @id @default(autoincrement()) @map("comment_id")
-  userId    Int      @map("user_id")
-  User      User     @relation(fields: [userId], references: [userId])
+  id        Int      @id @default(autoincrement())
+  userId    String   @map("user_id")
+  User      User     @relation(fields: [userId], references: [id])
   comment   String
   createdAt DateTime @default(now()) @map("created_at")
+
+  @@index([userId])
+  @@map("comments")
 }
 
 model Network {
-  networkId  Int          @id @default(autoincrement()) @map("network_id")
+  id         Int          @id @default(autoincrement())
   name       String
   roomId     Int          @map("room_id")
-  Room       Room         @relation(fields: [roomId], references: [roomId])
+  Room       Room         @relation(fields: [roomId], references: [id])
   MacAddress MacAddress[]
+
+  @@index([roomId])
+  @@map("networks")
 }
