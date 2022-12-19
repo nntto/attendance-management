@@ -51,10 +51,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
     users.forEach((user) => {
       const userMacAddress = macAddressInRoom.find(
-        (macAddress) => user.userId == macAddress.Device?.userId,
+        (macAddress) => user.id == macAddress.Device?.userId,
       )
       if (userMacAddress) {
-        const userRoom = inRoom.find((room) => room.roomId == userMacAddress.Network?.roomId)
+        const userRoom = inRoom.find((room) => room.id == userMacAddress.Network?.roomId)
         if (userRoom) {
           if (userMacAddress.lastConnectedAt > inRoomTime()) {
             // 基準時刻inRoomTime()以降に接続された端末の場合，在室
