@@ -1,0 +1,6 @@
+in: path
+name: mac_address_id
+required: true
+schema:
+  type: integer
+description: MACアドレスID

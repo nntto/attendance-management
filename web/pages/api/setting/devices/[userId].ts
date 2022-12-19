@@ -5,29 +5,50 @@ const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
-  const userId = Number(req.query.userId)
+  const userId = req.query.userId
 
-  if (isNaN(userId)) {
+  if (!userId || Array.isArray(userId)) {
     res.status(400).end('Invalid UserId')
+    return
   }
 
   if (method === 'GET') {
-    const user = await prisma.user.findUnique({
+    const rooms = await prisma.room.findMany()
+    const devices = await prisma.device.findMany({
       where: {
-        userId: Number(userId),
+        userId: userId,
+      },
+      include: {
+        MacAddress: true,
       },
     })
-
-    if (user === null) {
-      res.status(404).end('User NotFound')
-    } else {
-      res.status(200).json(user)
-    }
+    const networks = await prisma.network.findMany()
+    const user = await prisma.user.findUnique({
+      where: {
+        id: userId,
+      },
+    })
+    res.status(200).json(
+      rooms.map((room) => {
+        const roomNetworks = networks.filter((network) => network.roomId === room.id)
+        return {
+          ...room,
+          devices: devices.map((device) => ({
+            ...device,
+            MacAddress: undefined,
+            addresses: roomNetworks.map((roomNetwork) => ({
+              network: roomNetwork,
+              macAddress: device.MacAddress.find((m) => m.networkId === roomNetwork.id),
+            })),
+          })),
+        }
+      }),
+    )
   } else if (method === 'PUT') {
     try {
       const user = await prisma.user.update({
         where: {
-          userId: Number(userId),
+          id: userId,
         },
         data: JSON.parse(req.body),
       })

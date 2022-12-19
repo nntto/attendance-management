@@ -14,12 +14,12 @@ properties:
   deviceId:
     type: integer
     description: デバイスの識別ID
-    readOnly: true
   lastConnectedAt:
     type: string
     format: date-time
     description: 最終接続日時
     x-faker: datatype.datetime
+    readOnly: true
 required:
   - macAddressId
   - address

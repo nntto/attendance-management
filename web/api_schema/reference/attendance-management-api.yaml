@@ -89,11 +89,11 @@ paths:
   "/api/setting/device/{device_id}":
     parameters:
       - $ref: "./parameters/device_id.yaml"
-    put:
-      summary: 指定したデバイスの情報を変更
+    get:
+      summary: 指定したデバイスの情報を取得
       tags:
         - setting
-      operationId: putDevices
+      operationId: getDevice
       description: ""
       responses:
         "200":
@@ -103,3 +103,78 @@ paths:
           application/json:
             schema:
               $ref: "./requestBody/device.yaml"
+    put:
+      summary: 指定したデバイスの情報を変更
+      tags:
+        - setting
+      operationId: putDevice
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./requestBody/device.yaml"
+  "/api/setting/device":
+    post:
+      summary: 新しいデバイスを追加
+      tags:
+        - setting
+      operationId: postDevice
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./requestBody/device.yaml"
+  "/api/setting/mac_address/{mac_address_id}":
+    parameters:
+      - $ref: "./parameters/mac_address_id.yaml"
+    get:
+      summary: 指定したMACアドレスの情報を取得
+      tags:
+        - setting
+      operationId: getMacAddress
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./components/mac_address.yaml"
+    put:
+      summary: 指定したMACアドレスの情報を変更
+      tags:
+        - setting
+      operationId: putMacAddress
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./components/mac_address.yaml"
+  "/api/setting/mac_address":
+    post:
+      summary: 新しいMACアドレスを追加
+      tags:
+        - setting
+      operationId: postMacAddress
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./components/mac_address.yaml"

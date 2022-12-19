@@ -5,36 +5,33 @@ const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
-  const userId = req.query.userId
+  const macAddressId = Number(req.query.macAddressId)
 
-  if (!userId || Array.isArray(userId)) {
-    res.status(400).end('Invalid UserId')
+  if (!macAddressId || Array.isArray(macAddressId)) {
+    res.status(400).end('Invalid macAddressId')
     return
   }
 
   if (method === 'GET') {
-    const user = await prisma.user.findUnique({
+    const macAddress = await prisma.macAddress.findUnique({
       where: {
-        id: userId,
+        id: macAddressId,
       },
     })
-
-    if (user === null) {
-      res.status(404).end('User NotFound')
-    } else {
-      res.status(200).json(user)
-    }
+    res.status(200).json(macAddress)
   } else if (method === 'PUT') {
     try {
-      const user = await prisma.user.update({
+      console.log(req.body)
+      const macAddress = await prisma.macAddress.update({
         where: {
-          id: userId,
+          id: macAddressId,
         },
         data: req.body,
       })
-      res.status(200).json(user)
+      res.status(200).json(macAddress)
     } catch (e: unknown) {
       if (e instanceof Error) {
+        console.log(e)
         res.status(400).end(e.message)
       }
       res.status(400).end()

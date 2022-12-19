@@ -5,39 +5,35 @@ const prisma = new PrismaClient()
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
-  const userId = req.query.userId
+  const deviceId = Number(req.query.deviceId)
 
-  if (!userId || Array.isArray(userId)) {
-    res.status(400).end('Invalid UserId')
+  if (!deviceId || Array.isArray(deviceId)) {
+    res.status(400).end('Invalid deviceId')
     return
   }
 
   if (method === 'GET') {
-    const user = await prisma.user.findUnique({
+    const device = await prisma.device.findUnique({
       where: {
-        id: userId,
+        id: deviceId,
       },
     })
-
-    if (user === null) {
-      res.status(404).end('User NotFound')
-    } else {
-      res.status(200).json(user)
-    }
+    res.status(200).json(device)
   } else if (method === 'PUT') {
     try {
-      const user = await prisma.user.update({
+      console.log(req.body)
+      const device = await prisma.device.update({
         where: {
-          id: userId,
+          id: deviceId,
         },
         data: req.body,
       })
-      res.status(200).json(user)
+      res.status(200).json(device)
     } catch (e: unknown) {
       if (e instanceof Error) {
+        console.log(e)
         res.status(400).end(e.message)
       }
-      res.status(400).end()
     }
   } else {
     res.status(405).end('Method Not Allowed')
