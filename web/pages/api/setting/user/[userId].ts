@@ -37,6 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       if (e instanceof Error) {
         res.status(400).end(e.message)
       }
+      res.status(400).end()
     }
   } else {
     res.status(405).end('Method Not Allowed')

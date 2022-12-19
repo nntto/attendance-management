@@ -102,6 +102,27 @@ paths:
       tags:
       - setting
   /api/setting/device/{device_id}:
+    get:
+      description: ""
+      operationId: getDevice
+      parameters:
+      - description: デバイスID
+        in: path
+        name: device_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/device'
+      responses:
+        "200":
+          description: OK
+      summary: 指定したデバイスの情報を取得
+      tags:
+      - setting
     put:
       description: ""
       operationId: putDevice
@@ -138,6 +159,64 @@ paths:
       summary: 新しいデバイスを追加
       tags:
       - setting
+  /api/setting/mac_address/{mac_address_id}:
+    get:
+      description: ""
+      operationId: getMacAddress
+      parameters:
+      - description: MACアドレスID
+        in: path
+        name: mac_address_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/mac_address'
+      responses:
+        "200":
+          description: OK
+      summary: 指定したMACアドレスの情報を取得
+      tags:
+      - setting
+    put:
+      description: ""
+      operationId: putMacAddress
+      parameters:
+      - description: MACアドレスID
+        in: path
+        name: mac_address_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/mac_address'
+      responses:
+        "200":
+          description: OK
+      summary: 指定したMACアドレスの情報を変更
+      tags:
+      - setting
+  /api/setting/mac_address:
+    post:
+      description: ""
+      operationId: postMacAddress
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/mac_address'
+      responses:
+        "200":
+          description: OK
+      summary: 新しいMACアドレスを追加
+      tags:
+      - setting
 components:
   parameters:
     user_id:
@@ -151,6 +230,13 @@ components:
       description: デバイスID
       in: path
       name: device_id
+      required: true
+      schema:
+        type: integer
+    mac_address_id:
+      description: MACアドレスID
+      in: path
+      name: mac_address_id
       required: true
       schema:
         type: integer
@@ -250,6 +336,34 @@ components:
           example: 僕のiphone
           type: string
       type: object
+    mac_address:
+      properties:
+        id:
+          description: MacAddressの識別ID
+          readOnly: true
+          type: integer
+        address:
+          description: デバイスのmacaddress
+          type: string
+          x-faker: internet.mac
+        networkId:
+          description: 接続先のネットワークのID
+          type: integer
+        deviceId:
+          description: デバイスの識別ID
+          type: integer
+        lastConnectedAt:
+          description: 最終接続日時
+          format: date-time
+          readOnly: true
+          type: string
+          x-faker: datatype.datetime
+      required:
+      - address
+      - deviceId
+      - lastConnectedAt
+      - networkId
+      type: object
     room:
       properties:
         id:
@@ -333,34 +447,6 @@ components:
       - id
       - name
       - roomId
-      type: object
-    mac_address:
-      properties:
-        id:
-          description: MacAddressの識別ID
-          readOnly: true
-          type: integer
-        address:
-          description: デバイスのmacaddress
-          type: string
-          x-faker: internet.mac
-        networkId:
-          description: 接続先のネットワークのID
-          type: integer
-        deviceId:
-          description: デバイスの識別ID
-          readOnly: true
-          type: integer
-        lastConnectedAt:
-          description: 最終接続日時
-          format: date-time
-          type: string
-          x-faker: datatype.datetime
-      required:
-      - address
-      - deviceId
-      - lastConnectedAt
-      - networkId
       type: object
     inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf:
       properties:
