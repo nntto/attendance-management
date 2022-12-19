@@ -757,6 +757,74 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @summary 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
+         * @param {number} deviceId デバイスID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDevice: async (deviceId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'deviceId' is not null or undefined
+            assertParamExists('deleteDevice', 'deviceId', deviceId)
+            const localVarPath = `/api/setting/device/{device_id}`
+                .replace(`{${"device_id"}}`, encodeURIComponent(String(deviceId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @summary 指定したMACアドレス削除
+         * @param {number} macAddressId MACアドレスID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMacAddress: async (macAddressId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'macAddressId' is not null or undefined
+            assertParamExists('deleteMacAddress', 'macAddressId', macAddressId)
+            const localVarPath = `/api/setting/mac_address/{mac_address_id}`
+                .replace(`{${"mac_address_id"}}`, encodeURIComponent(String(macAddressId)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'DELETE', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary 指定したデバイスの情報を取得
          * @param {number} deviceId デバイスID
          * @param {Device} [device] 
@@ -1093,6 +1161,28 @@ export const SettingApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @summary 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
+         * @param {number} deviceId デバイスID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteDevice(deviceId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteDevice(deviceId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
+         * @summary 指定したMACアドレス削除
+         * @param {number} macAddressId MACアドレスID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async deleteMacAddress(macAddressId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.deleteMacAddress(macAddressId, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary 指定したデバイスの情報を取得
          * @param {number} deviceId デバイスID
          * @param {Device} [device] 
@@ -1207,6 +1297,26 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @summary 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
+         * @param {number} deviceId デバイスID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteDevice(deviceId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteDevice(deviceId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @summary 指定したMACアドレス削除
+         * @param {number} macAddressId MACアドレスID
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        deleteMacAddress(macAddressId: number, options?: any): AxiosPromise<void> {
+            return localVarFp.deleteMacAddress(macAddressId, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary 指定したデバイスの情報を取得
          * @param {number} deviceId デバイスID
          * @param {Device} [device] 
@@ -1310,6 +1420,30 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
  * @extends {BaseAPI}
  */
 export class SettingApi extends BaseAPI {
+    /**
+     * 
+     * @summary 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
+     * @param {number} deviceId デバイスID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SettingApi
+     */
+    public deleteDevice(deviceId: number, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).deleteDevice(deviceId, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @summary 指定したMACアドレス削除
+     * @param {number} macAddressId MACアドレスID
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SettingApi
+     */
+    public deleteMacAddress(macAddressId: number, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).deleteMacAddress(macAddressId, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @summary 指定したデバイスの情報を取得

@@ -102,6 +102,22 @@ paths:
       tags:
       - setting
   /api/setting/device/{device_id}:
+    delete:
+      description: ""
+      operationId: deleteDevice
+      parameters:
+      - description: デバイスID
+        in: path
+        name: device_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+      summary: 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
+      tags:
+      - setting
     get:
       description: ""
       operationId: getDevice
@@ -160,6 +176,22 @@ paths:
       tags:
       - setting
   /api/setting/mac_address/{mac_address_id}:
+    delete:
+      description: ""
+      operationId: deleteMacAddress
+      parameters:
+      - description: MACアドレスID
+        in: path
+        name: mac_address_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          description: OK
+      summary: 指定したMACアドレス削除
+      tags:
+      - setting
     get:
       description: ""
       operationId: getMacAddress

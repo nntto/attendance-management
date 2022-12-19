@@ -117,6 +117,15 @@ paths:
           application/json:
             schema:
               $ref: "./requestBody/device.yaml"
+    delete:
+      summary: 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
+      tags:
+        - setting
+      operationId: deleteDevice
+      description: ""
+      responses:
+        "200":
+          description: OK
   "/api/setting/device":
     post:
       summary: 新しいデバイスを追加
@@ -163,6 +172,15 @@ paths:
           application/json:
             schema:
               $ref: "./components/mac_address.yaml"
+    delete:
+      summary: 指定したMACアドレス削除
+      tags:
+        - setting
+      operationId: deleteMacAddress
+      description: ""
+      responses:
+        "200":
+          description: OK
   "/api/setting/mac_address":
     post:
       summary: 新しいMACアドレスを追加
