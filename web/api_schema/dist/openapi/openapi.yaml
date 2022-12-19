@@ -104,7 +104,7 @@ paths:
   /api/setting/device/{device_id}:
     put:
       description: ""
-      operationId: putDevices
+      operationId: putDevice
       parameters:
       - description: デバイスID
         in: path
@@ -121,6 +121,21 @@ paths:
         "200":
           description: OK
       summary: 指定したデバイスの情報を変更
+      tags:
+      - setting
+  /api/setting/device:
+    post:
+      description: ""
+      operationId: postDevice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/device'
+      responses:
+        "200":
+          description: OK
+      summary: 新しいデバイスを追加
       tags:
       - setting
 components:
@@ -234,18 +249,6 @@ components:
           description: デバイスの名前
           example: 僕のiphone
           type: string
-        networkId:
-          description: 接続先のネットワークのID
-          type: integer
-        macAddress:
-          description: デバイスのmacaddress
-          example: 00:03:93:00:00:00
-          type: string
-        lastConnectedAt:
-          description: デバイスの最終接続日時
-          format: date-time
-          type: string
-          x-faker: datatype.datetime
       type: object
     room:
       properties:

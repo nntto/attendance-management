@@ -70,24 +70,6 @@ export interface Device {
      * @memberof Device
      */
     'name'?: string;
-    /**
-     * 接続先のネットワークのID
-     * @type {number}
-     * @memberof Device
-     */
-    'networkId'?: number;
-    /**
-     * デバイスのmacaddress
-     * @type {string}
-     * @memberof Device
-     */
-    'macAddress'?: string;
-    /**
-     * デバイスの最終接続日時
-     * @type {string}
-     * @memberof Device
-     */
-    'lastConnectedAt'?: string;
 }
 /**
  * 
@@ -843,15 +825,49 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @summary 新しいデバイスを追加
+         * @param {Device} [device] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDevice: async (device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/setting/device`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(device, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
          * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putDevices: async (deviceId: number, device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putDevice: async (deviceId: number, device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deviceId' is not null or undefined
-            assertParamExists('putDevices', 'deviceId', deviceId)
+            assertParamExists('putDevice', 'deviceId', deviceId)
             const localVarPath = `/api/setting/device/{device_id}`
                 .replace(`{${"device_id"}}`, encodeURIComponent(String(deviceId)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -951,14 +967,25 @@ export const SettingApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @summary 新しいデバイスを追加
+         * @param {Device} [device] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async postDevice(device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDevice(device, options);
+            return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
+        },
+        /**
+         * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
          * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putDevices(deviceId: number, device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putDevices(deviceId, device, options);
+        async putDevice(deviceId: number, device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putDevice(deviceId, device, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1005,14 +1032,24 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @summary 新しいデバイスを追加
+         * @param {Device} [device] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        postDevice(device?: Device, options?: any): AxiosPromise<void> {
+            return localVarFp.postDevice(device, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
          * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putDevices(deviceId: number, device?: Device, options?: any): AxiosPromise<void> {
-            return localVarFp.putDevices(deviceId, device, options).then((request) => request(axios, basePath));
+        putDevice(deviceId: number, device?: Device, options?: any): AxiosPromise<void> {
+            return localVarFp.putDevice(deviceId, device, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1061,6 +1098,18 @@ export class SettingApi extends BaseAPI {
 
     /**
      * 
+     * @summary 新しいデバイスを追加
+     * @param {Device} [device] 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     * @memberof SettingApi
+     */
+    public postDevice(device?: Device, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).postDevice(device, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @summary 指定したデバイスの情報を変更
      * @param {number} deviceId デバイスID
      * @param {Device} [device] 
@@ -1068,8 +1117,8 @@ export class SettingApi extends BaseAPI {
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public putDevices(deviceId: number, device?: Device, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).putDevices(deviceId, device, options).then((request) => request(this.axios, this.basePath));
+    public putDevice(deviceId: number, device?: Device, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).putDevice(deviceId, device, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -93,7 +93,22 @@ paths:
       summary: 指定したデバイスの情報を変更
       tags:
         - setting
-      operationId: putDevices
+      operationId: putDevice
+      description: ""
+      responses:
+        "200":
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "./requestBody/device.yaml"
+  "/api/setting/device":
+    post:
+      summary: 新しいデバイスを追加
+      tags:
+        - setting
+      operationId: postDevice
       description: ""
       responses:
         "200":

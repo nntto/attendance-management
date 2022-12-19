@@ -1,0 +1,41 @@
+import { PrismaClient } from '@prisma/client'
+import type { NextApiRequest, NextApiResponse } from 'next'
+
+const prisma = new PrismaClient()
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  const { method } = req
+  const deviceId = Number(req.query.deviceId)
+
+  if (!deviceId || Array.isArray(deviceId)) {
+    res.status(400).end('Invalid deviceId')
+    return
+  }
+
+  if (method === 'GET') {
+    const device = await prisma.device.findMany({
+      where: {
+        id: deviceId,
+      },
+    })
+    res.status(200).json(device)
+  } else if (method === 'PUT') {
+    try {
+      console.log(req.body)
+      const device = await prisma.device.update({
+        where: {
+          id: deviceId,
+        },
+        data: req.body,
+      })
+      res.status(200).json(device)
+    } catch (e: unknown) {
+      if (e instanceof Error) {
+        console.log(e)
+        res.status(400).end(e.message)
+      }
+    }
+  } else {
+    res.status(405).end('Method Not Allowed')
+  }
+}
