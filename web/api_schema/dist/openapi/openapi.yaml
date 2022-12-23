@@ -48,7 +48,7 @@ paths:
         name: user_id
         required: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           content:
@@ -68,7 +68,7 @@ paths:
         name: user_id
         required: true
         schema:
-          type: integer
+          type: string
       requestBody:
         content:
           application/json:
@@ -90,7 +90,7 @@ paths:
         name: user_id
         required: true
         schema:
-          type: integer
+          type: string
       responses:
         "200":
           content:
@@ -257,7 +257,7 @@ components:
       name: user_id
       required: true
       schema:
-        type: integer
+        type: string
     device_id:
       description: デバイスID
       in: path

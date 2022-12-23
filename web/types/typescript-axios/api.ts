@@ -864,11 +864,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevices: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDevices: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('getDevices', 'userId', userId)
             const localVarPath = `/api/setting/devices/{user_id}`
@@ -936,11 +936,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 指定したユーザーの情報を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUser: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('getUser', 'userId', userId)
             const localVarPath = `/api/setting/user/{user_id}`
@@ -1114,12 +1114,12 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 指定したユーザーの情報を更新
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {User1} [user1] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser: async (userId: number, user1?: User1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUser: async (userId: string, user1?: User1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('updateUser', 'userId', userId)
             const localVarPath = `/api/setting/user/{user_id}`
@@ -1196,11 +1196,11 @@ export const SettingApiFp = function(configuration?: Configuration) {
         /**
          * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDevices(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDeviceInner>>> {
+        async getDevices(userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDeviceInner>>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDevices(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1219,11 +1219,11 @@ export const SettingApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 指定したユーザーの情報を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUser(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+        async getUser(userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1276,12 +1276,12 @@ export const SettingApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 指定したユーザーの情報を更新
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {User1} [user1] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(userId: number, user1?: User1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateUser(userId: string, user1?: User1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userId, user1, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1329,11 +1329,11 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
         /**
          * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevices(userId: number, options?: any): AxiosPromise<Array<UserDeviceInner>> {
+        getDevices(userId: string, options?: any): AxiosPromise<Array<UserDeviceInner>> {
             return localVarFp.getDevices(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1350,11 +1350,11 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 指定したユーザーの情報を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser(userId: number, options?: any): AxiosPromise<User> {
+        getUser(userId: string, options?: any): AxiosPromise<User> {
             return localVarFp.getUser(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1402,12 +1402,12 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 指定したユーザーの情報を更新
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {User1} [user1] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(userId: number, user1?: User1, options?: any): AxiosPromise<void> {
+        updateUser(userId: string, user1?: User1, options?: any): AxiosPromise<void> {
             return localVarFp.updateUser(userId, user1, options).then((request) => request(axios, basePath));
         },
     };
@@ -1460,12 +1460,12 @@ export class SettingApi extends BaseAPI {
     /**
      * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
      * @summary 指定したユーザーの持つデバイス一覧を取得
-     * @param {number} userId ユーザーID
+     * @param {string} userId ユーザーID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public getDevices(userId: number, options?: AxiosRequestConfig) {
+    public getDevices(userId: string, options?: AxiosRequestConfig) {
         return SettingApiFp(this.configuration).getDevices(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1485,12 +1485,12 @@ export class SettingApi extends BaseAPI {
     /**
      * 
      * @summary 指定したユーザーの情報を取得
-     * @param {number} userId ユーザーID
+     * @param {string} userId ユーザーID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public getUser(userId: number, options?: AxiosRequestConfig) {
+    public getUser(userId: string, options?: AxiosRequestConfig) {
         return SettingApiFp(this.configuration).getUser(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1547,13 +1547,13 @@ export class SettingApi extends BaseAPI {
     /**
      * 
      * @summary 指定したユーザーの情報を更新
-     * @param {number} userId ユーザーID
+     * @param {string} userId ユーザーID
      * @param {User1} [user1] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public updateUser(userId: number, user1?: User1, options?: AxiosRequestConfig) {
+    public updateUser(userId: string, user1?: User1, options?: AxiosRequestConfig) {
         return SettingApiFp(this.configuration).updateUser(userId, user1, options).then((request) => request(this.axios, this.basePath));
     }
 }
