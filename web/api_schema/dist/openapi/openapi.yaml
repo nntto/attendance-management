@@ -73,7 +73,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/user_1'
+              $ref: '#/components/schemas/user_dynamic_props'
       responses:
         "200":
           description: OK
@@ -128,13 +128,12 @@ paths:
         required: true
         schema:
           type: integer
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/device'
       responses:
         "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/device'
           description: OK
       summary: 指定したデバイスの情報を取得
       tags:
@@ -153,7 +152,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/device'
+              $ref: '#/components/schemas/device_dynamic_props'
       responses:
         "200":
           description: OK
@@ -168,7 +167,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/device'
+              $ref: '#/components/schemas/device_dynamic_props'
       responses:
         "200":
           description: OK
@@ -312,11 +311,17 @@ components:
       - toId
       type: object
     user:
+      allOf:
+      - $ref: '#/components/schemas/user_allOf'
+      - $ref: '#/components/schemas/user_dynamic_props'
+      required:
+      - grade
+      - iconUrl
+      - id
+      - name
+      type: object
+    user_dynamic_props:
       properties:
-        id:
-          description: ユーザーの識別ID
-          readOnly: true
-          type: string
         name:
           description: ユーザーの名前
           type: string
@@ -338,23 +343,6 @@ components:
           description: ユーザーのプロフィール画像
           type: string
           x-faker: image.imageUrl
-      required:
-      - grade
-      - iconUrl
-      - id
-      - name
-      type: object
-    user_1:
-      properties:
-        name:
-          description: ユーザーの名前
-          type: string
-        grade:
-          description: ユーザーの学年
-          type: string
-        iconUrl:
-          description: ユーザーのプロフィール画像
-          type: string
       type: object
     user_device:
       properties:
@@ -367,14 +355,24 @@ components:
       - rooms
       type: object
     device:
+      allOf:
+      - $ref: '#/components/schemas/device_allOf'
+      - $ref: '#/components/schemas/device_dynamic_props'
+      required:
+      - id
+      - name
+      - userId
+      type: object
+    device_dynamic_props:
       properties:
         userId:
           description: デバイスを所持しているユーザーのID
-          type: integer
+          type: string
         name:
           description: デバイスの名前
           example: 僕のiphone
           type: string
+          x-faker: commerce.productMaterial
       type: object
     mac_address:
       allOf:
@@ -439,25 +437,6 @@ components:
       - id
       - userId
       type: object
-    device_1:
-      properties:
-        id:
-          description: デバイスの識別ID
-          readOnly: true
-          type: integer
-        userId:
-          description: デバイスを所持しているユーザーのID
-          type: string
-        name:
-          description: デバイスの名前
-          example: 僕のiphone
-          type: string
-          x-faker: commerce.productMaterial
-      required:
-      - id
-      - name
-      - userId
-      type: object
     network:
       properties:
         id:
@@ -513,6 +492,14 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
+    user_allOf:
+      properties:
+        id:
+          description: ユーザーの識別ID
+          readOnly: true
+          type: string
+      type: object
+      example: null
     user_device_rooms_inner_allOf_devices_inner_allOf_addresses_inner_allOf:
       properties:
         network:
@@ -537,7 +524,7 @@ components:
       type: object
     user_device_rooms_inner_allOf_devices_inner:
       allOf:
-      - $ref: '#/components/schemas/device_1'
+      - $ref: '#/components/schemas/device'
       - $ref: '#/components/schemas/user_device_rooms_inner_allOf_devices_inner_allOf'
     user_device_rooms_inner_allOf:
       properties:
@@ -553,6 +540,14 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/user_device_rooms_inner_allOf'
+    device_allOf:
+      properties:
+        id:
+          description: デバイスの識別ID
+          readOnly: true
+          type: integer
+      type: object
+      example: null
     mac_address_allOf:
       properties:
         id:

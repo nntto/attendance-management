@@ -67,8 +67,7 @@ paths:
         content:
           application/json:
             schema:
-                $ref: "./requestBody/user.yaml"
-                required:
+                $ref: "./components/user_dynamic_props.yaml"
 
   "/api/setting/devices/{user_id}":
     parameters:
@@ -98,11 +97,10 @@ paths:
       responses:
         "200":
           description: OK
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "./requestBody/device.yaml"
+          content:
+            application/json:
+              schema:
+                $ref: './components/device.yaml'
     put:
       summary: 指定したデバイスの情報を変更
       tags:
@@ -116,7 +114,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./requestBody/device.yaml"
+              $ref: "./components/device_dynamic_props.yaml"
     delete:
       summary: 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
       tags:
@@ -140,7 +138,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./requestBody/device.yaml"
+              $ref: "./components/device_dynamic_props.yaml"
   "/api/setting/mac_address/{mac_address_id}":
     parameters:
       - $ref: "./parameters/mac_address_id.yaml"

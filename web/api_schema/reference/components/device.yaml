@@ -1,17 +1,11 @@
 type: object
-properties:
-  id:
-    type: integer
-    description: デバイスの識別ID
-    readOnly: true
-  userId:
-    type: string
-    description: デバイスを所持しているユーザーのID
-  name:
-    type: string
-    description: デバイスの名前
-    example: 僕のiphone
-    x-faker: commerce.productMaterial
+allOf:
+- properties:
+    id:
+      type: integer
+      description: デバイスの識別ID
+      readOnly: true
+- $ref: "./device_dynamic_props.yaml"
 required:
   - id
   - userId

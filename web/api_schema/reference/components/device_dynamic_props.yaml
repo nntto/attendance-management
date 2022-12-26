@@ -1,9 +1,10 @@
 type: object
 properties:
   userId:
-    type: integer
+    type: string
     description: デバイスを所持しているユーザーのID
   name:
     type: string
     description: デバイスの名前
     example: 僕のiphone
+    x-faker: commerce.productMaterial
