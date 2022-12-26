@@ -10,7 +10,7 @@ export default function NetworkAndMacAddress({
   macAddress?: MacAddress
 }) {
   const settingApi = new SettingApi()
-  const [macAddressIsValid, setMacAddressIsValid] = useState(false)
+  const [macAddressIsValid, setMacAddressIsValid] = useState(true)
   const reg = /^(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}$/
 
   useEffect(() => {
