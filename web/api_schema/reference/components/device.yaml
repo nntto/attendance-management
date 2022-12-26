@@ -12,16 +12,7 @@ properties:
     description: デバイスの名前
     example: 僕のiphone
     x-faker: commerce.productMaterial
-  networkId:
-    type: integer
-    description: 接続先のネットワークのID
-  macAddress:
-    type: string
-    description: デバイスのmacaddress
-    x-faker: internet.mac
 required:
   - id
   - userId
   - name
-  - networkId
-  - macAddress

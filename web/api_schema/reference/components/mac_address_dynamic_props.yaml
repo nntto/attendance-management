@@ -1,0 +1,12 @@
+type: object
+properties:
+  address:
+    type: string
+    description: デバイスのmisaddress
+    x-faker: internet.mac
+  networkId:
+    type: integer
+    description: 接続先のネットワークのID
+  deviceId:
+    type: integer
+    description: デバイスの識別ID

@@ -6,6 +6,7 @@ required:
 properties:
   inRoom:
     type: array
+    maxItems: 4
     items:
       allOf:
         - $ref: "../components/room.yaml"
@@ -15,6 +16,7 @@ properties:
           properties:
             users:
               type: array
+              maxItems: 10
               items:
                 allOf:
                   - $ref: "../components/user.yaml"
@@ -34,6 +36,7 @@ properties:
                         x-faker: datatype.datetime
   outRoom:
     type: array
+    maxItems: 10
     items:
       allOf:
         - $ref: "../components/user.yaml"

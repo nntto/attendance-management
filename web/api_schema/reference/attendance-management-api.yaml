@@ -171,7 +171,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./components/mac_address.yaml"
+              $ref: "./components/mac_address_dynamic_props.yaml"
     delete:
       summary: 指定したMACアドレス削除
       tags:

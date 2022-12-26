@@ -227,7 +227,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/mac_address'
+              $ref: '#/components/schemas/mac_address_dynamic_props'
       responses:
         "200":
           description: OK
@@ -278,10 +278,12 @@ components:
         inRoom:
           items:
             $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner'
+          maxItems: 4
           type: array
         outRoom:
           items:
             $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner'
+          maxItems: 10
           type: array
       required:
       - inRoom
@@ -355,9 +357,15 @@ components:
           type: string
       type: object
     user_device:
-      items:
-        $ref: '#/components/schemas/user_device_inner'
-      type: array
+      properties:
+        rooms:
+          items:
+            $ref: '#/components/schemas/user_device_rooms_inner'
+          maxItems: 4
+          type: array
+      required:
+      - rooms
+      type: object
     device:
       properties:
         userId:
@@ -369,13 +377,21 @@ components:
           type: string
       type: object
     mac_address:
+      allOf:
+      - $ref: '#/components/schemas/mac_address_allOf'
+      - $ref: '#/components/schemas/mac_address_dynamic_props'
+      required:
+      - address
+      - deviceId
+      - id
+      - lastConnectedAt
+      - macAddressId
+      - networkId
+      type: object
+    mac_address_dynamic_props:
       properties:
-        id:
-          description: MacAddressの識別ID
-          readOnly: true
-          type: integer
         address:
-          description: デバイスのmacaddress
+          description: デバイスのmisaddress
           type: string
           x-faker: internet.mac
         networkId:
@@ -384,17 +400,6 @@ components:
         deviceId:
           description: デバイスの識別ID
           type: integer
-        lastConnectedAt:
-          description: 最終接続日時
-          format: date-time
-          readOnly: true
-          type: string
-          x-faker: datatype.datetime
-      required:
-      - address
-      - deviceId
-      - lastConnectedAt
-      - networkId
       type: object
     room:
       properties:
@@ -448,18 +453,9 @@ components:
           example: 僕のiphone
           type: string
           x-faker: commerce.productMaterial
-        networkId:
-          description: 接続先のネットワークのID
-          type: integer
-        macAddress:
-          description: デバイスのmacaddress
-          type: string
-          x-faker: internet.mac
       required:
       - id
-      - macAddress
       - name
-      - networkId
       - userId
       type: object
     network:
@@ -508,6 +504,7 @@ components:
         users:
           items:
             $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf_users_inner'
+          maxItems: 10
           type: array
       required:
       - users
@@ -516,37 +513,57 @@ components:
       allOf:
       - $ref: '#/components/schemas/room'
       - $ref: '#/components/schemas/inroom_and_outroom_users_inRoom_inner_allOf'
-    user_device_inner_allOf_devices_inner_allOf_addresses_inner_allOf:
+    user_device_rooms_inner_allOf_devices_inner_allOf_addresses_inner_allOf:
       properties:
         network:
           $ref: '#/components/schemas/network'
         macAddress:
           $ref: '#/components/schemas/mac_address'
+      required:
+      - network
       type: object
-    user_device_inner_allOf_devices_inner_allOf_addresses_inner:
+    user_device_rooms_inner_allOf_devices_inner_allOf_addresses_inner:
       allOf:
-      - $ref: '#/components/schemas/user_device_inner_allOf_devices_inner_allOf_addresses_inner_allOf'
-    user_device_inner_allOf_devices_inner_allOf:
+      - $ref: '#/components/schemas/user_device_rooms_inner_allOf_devices_inner_allOf_addresses_inner_allOf'
+    user_device_rooms_inner_allOf_devices_inner_allOf:
       properties:
         addresses:
           items:
-            $ref: '#/components/schemas/user_device_inner_allOf_devices_inner_allOf_addresses_inner'
+            $ref: '#/components/schemas/user_device_rooms_inner_allOf_devices_inner_allOf_addresses_inner'
+          maxItems: 8
           type: array
+      required:
+      - addresses
       type: object
-    user_device_inner_allOf_devices_inner:
+    user_device_rooms_inner_allOf_devices_inner:
       allOf:
       - $ref: '#/components/schemas/device_1'
-      - $ref: '#/components/schemas/user_device_inner_allOf_devices_inner_allOf'
-    user_device_inner_allOf:
+      - $ref: '#/components/schemas/user_device_rooms_inner_allOf_devices_inner_allOf'
+    user_device_rooms_inner_allOf:
       properties:
         devices:
           items:
-            $ref: '#/components/schemas/user_device_inner_allOf_devices_inner'
+            $ref: '#/components/schemas/user_device_rooms_inner_allOf_devices_inner'
+          maxItems: 5
           type: array
       required:
       - devices
       type: object
-    user_device_inner:
+    user_device_rooms_inner:
       allOf:
       - $ref: '#/components/schemas/room'
-      - $ref: '#/components/schemas/user_device_inner_allOf'
+      - $ref: '#/components/schemas/user_device_rooms_inner_allOf'
+    mac_address_allOf:
+      properties:
+        id:
+          description: MacAddressの識別ID
+          readOnly: true
+          type: integer
+        lastConnectedAt:
+          description: 最終接続日時
+          format: date-time
+          readOnly: true
+          type: string
+          x-faker: datatype.datetime
+      type: object
+      example: null
