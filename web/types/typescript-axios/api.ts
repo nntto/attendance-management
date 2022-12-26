@@ -1074,11 +1074,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 新しいMACアドレスを追加
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMacAddress: async (macAddress?: MacAddress, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMacAddress: async (macAddressDynamicProps?: MacAddressDynamicProps, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/setting/mac_address`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1098,7 +1098,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(macAddress, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(macAddressDynamicProps, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1303,19 +1303,19 @@ export const SettingApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Device>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.postDevice(deviceDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 新しいMACアドレスを追加
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMacAddress(macAddress?: MacAddress, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMacAddress(macAddress, options);
+        async postMacAddress(macAddressDynamicProps?: MacAddressDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MacAddress>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMacAddress(macAddressDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
@@ -1432,18 +1432,18 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: any): AxiosPromise<void> {
+        postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: any): AxiosPromise<Device> {
             return localVarFp.postDevice(deviceDynamicProps, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 新しいMACアドレスを追加
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMacAddress(macAddress?: MacAddress, options?: any): AxiosPromise<void> {
-            return localVarFp.postMacAddress(macAddress, options).then((request) => request(axios, basePath));
+        postMacAddress(macAddressDynamicProps?: MacAddressDynamicProps, options?: any): AxiosPromise<MacAddress> {
+            return localVarFp.postMacAddress(macAddressDynamicProps, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -1576,13 +1576,13 @@ export class SettingApi extends BaseAPI {
     /**
      * 
      * @summary 新しいMACアドレスを追加
-     * @param {MacAddress} [macAddress] 
+     * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public postMacAddress(macAddress?: MacAddress, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).postMacAddress(macAddress, options).then((request) => request(this.axios, this.basePath));
+    public postMacAddress(macAddressDynamicProps?: MacAddressDynamicProps, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).postMacAddress(macAddressDynamicProps, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

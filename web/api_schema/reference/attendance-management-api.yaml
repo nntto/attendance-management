@@ -134,6 +134,10 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: './components/device.yaml'
       requestBody:
         content:
           application/json:
@@ -189,8 +193,12 @@ paths:
       responses:
         "200":
           description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "./components/mac_address.yaml"
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "./components/mac_address.yaml"
+              $ref: "./components/mac_address_dynamic_props.yaml"

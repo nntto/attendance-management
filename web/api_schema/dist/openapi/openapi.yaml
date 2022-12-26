@@ -170,6 +170,10 @@ paths:
               $ref: '#/components/schemas/device_dynamic_props'
       responses:
         "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/device'
           description: OK
       summary: 新しいデバイスを追加
       tags:
@@ -241,9 +245,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/mac_address'
+              $ref: '#/components/schemas/mac_address_dynamic_props'
       responses:
         "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/mac_address'
           description: OK
       summary: 新しいMACアドレスを追加
       tags:
