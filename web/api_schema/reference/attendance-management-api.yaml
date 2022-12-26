@@ -202,3 +202,5 @@ paths:
           application/json:
             schema:
               $ref: "./components/mac_address_dynamic_props.yaml"
+              required:
+                - userId

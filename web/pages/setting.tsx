@@ -1,4 +1,5 @@
-import { TextField } from '@mui/material'
+import { Button, TextField } from '@mui/material'
+import cloneDeep from 'lodash/cloneDeep'
 import { NextPage } from 'next'
 import { useEffect, useState } from 'react'
 import NetworkAndMacAddress from '../components/molecules/networkAndMacAddress'
@@ -9,16 +10,16 @@ const Setting: NextPage = () => {
   const settingApi = new SettingApi()
 
   // TODO: ログイン中のユーザーのデータを取得
+  const userId = '3'
   useEffect(() => {
-    settingApi.getDevices('3').then((res) => {
+    settingApi.getDevices(userId).then((res) => {
       setUserDevices(res.data)
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
   return (
     <div>
-      {userDevices.rooms.map((room) => (
+      {userDevices.rooms.map((room, roomIndex) => (
         <div key={room.id}>
           <h1>部屋：{room.name}</h1>
           {room.devices.map((device) => (
@@ -41,6 +42,19 @@ const Setting: NextPage = () => {
               ))}
             </div>
           ))}
+          <Button
+            variant='contained'
+            onClick={() => {
+              settingApi.postDevice({ userId }).then((res) => {
+                const newDevice = res.data
+                const newUserDevices = cloneDeep(userDevices)
+                newUserDevices.rooms[roomIndex].devices.push({ ...newDevice, addresses: [] })
+                setUserDevices(newUserDevices)
+              })
+            }}
+          >
+            デバイスを追加
+          </Button>
         </div>
       ))}
     </div>
