@@ -25,7 +25,7 @@ export default function RoomSetting({
             id={String(device.id)}
             defaultValue={device.name}
           />
-          <NetworkAndMacAddressSetting addresses={device.addresses} />
+          <NetworkAndMacAddressSetting deviceId={device.id} addresses={device.addresses} />
         </div>
       ))}
       <Button

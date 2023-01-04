@@ -1,39 +1,27 @@
-import { Grid } from '@mui/material'
-import React from 'react'
-import { SettingApi, UserDeviceRoomsInnerAllOfDevicesInner } from '../../types/typescript-axios'
+import { Button, Grid } from '@mui/material'
+import React, { useEffect } from 'react'
+import {
+  MacAddress,
+  SettingApi,
+  UserDeviceRoomsInnerAllOfDevicesInner,
+} from '../../types/typescript-axios'
 import SettingMacAddress from '../atoms/SettingMacAddress'
 
 export default function NetworkAndMacAddressSetting({
   addresses,
+  deviceId,
 }: {
   addresses: UserDeviceRoomsInnerAllOfDevicesInner['addresses']
+  deviceId: number
 }) {
+  const settingApi = new SettingApi()
+  addresses[1].macAddress = undefined
+
   return (
     <div>
       {addresses.map((address) => (
         <div key={address.network.id}>
-          <Grid container>
-            <Grid item xs={3}>
-              {address.network.name}
-            </Grid>
-            {address.macAddress ? (
-              <>
-                <Grid item xs={4}>
-                  <SettingMacAddress macAddress={address.macAddress} />
-                </Grid>
-                <Grid item xs={3}>
-                  {address.macAddress.lastConnectedAt}
-                </Grid>
-                <Grid item xs={2}>
-                  削除
-                </Grid>
-              </>
-            ) : (
-              <Grid item xs={9}>
-                追加
-              </Grid>
-            )}
-          </Grid>
+          <SettingMacAddress address={address} deviceId={deviceId} />
         </div>
       ))}
     </div>
