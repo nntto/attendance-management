@@ -17,7 +17,7 @@ export default function RoomSetting({
       {latestDevices.map((device) => (
         <div key={device.id}>
           <TextField
-            onChange={(e) => {
+            onChange={(e: { target: { value: any } }) => {
               settingApi.putDevice(device.id, { name: e.target.value })
             }}
             variant='filled'
