@@ -51,7 +51,15 @@ export default function SettingMacAddress({
               {macAddress.lastConnectedAt}
             </Grid>
             <Grid item xs={2}>
-              <Button>削除</Button>
+              <Button
+                onClick={() => {
+                  settingApi.deleteMacAddress(macAddress.id).then((res) => {
+                    setMacAddress(undefined)
+                  })
+                }}
+              >
+                削除
+              </Button>
             </Grid>
           </>
         ) : (
