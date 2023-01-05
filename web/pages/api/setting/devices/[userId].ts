@@ -12,40 +12,40 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return
   }
 
-  if (method === 'GET') {
-    const rooms = await prisma.room.findMany()
-    const devices = await prisma.device.findMany({
-      where: {
-        userId: userId,
-      },
-      include: {
-        MacAddress: true,
-      },
-    })
-    const networks = await prisma.network.findMany()
-    const user = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    })
-    res.status(200).json(
-      rooms.map((room) => {
-        const roomNetworks = networks.filter((network) => network.roomId === room.id)
-        return {
-          ...room,
-          devices: devices.map((device) => ({
-            ...device,
-            MacAddress: undefined,
-            addresses: roomNetworks.map((roomNetwork) => ({
-              network: roomNetwork,
-              macAddress: device.MacAddress.find((m) => m.networkId === roomNetwork.id),
+  try {
+    if (method === 'GET') {
+      const rooms = await prisma.room.findMany()
+      const devices = await prisma.device.findMany({
+        where: {
+          userId: userId,
+        },
+        include: {
+          MacAddress: true,
+        },
+      })
+      const networks = await prisma.network.findMany()
+      const user = await prisma.user.findUnique({
+        where: {
+          id: userId,
+        },
+      })
+      res.status(200).json(
+        rooms.map((room) => {
+          const roomNetworks = networks.filter((network) => network.roomId === room.id)
+          return {
+            ...room,
+            devices: devices.map((device) => ({
+              ...device,
+              MacAddress: undefined,
+              addresses: roomNetworks.map((roomNetwork) => ({
+                network: roomNetwork,
+                macAddress: device.MacAddress.find((m) => m.networkId === roomNetwork.id),
+              })),
             })),
-          })),
-        }
-      }),
-    )
-  } else if (method === 'PUT') {
-    try {
+          }
+        }),
+      )
+    } else if (method === 'PUT') {
       const user = await prisma.user.update({
         where: {
           id: userId,
@@ -53,12 +53,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: JSON.parse(req.body),
       })
       res.status(200).json(user)
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        res.status(400).end(e.message)
-      }
+    } else {
+      res.status(405).end('Method Not Allowed')
     }
-  } else {
-    res.status(405).end('Method Not Allowed')
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      res.status(400).end(e.message)
+    }
   }
 }

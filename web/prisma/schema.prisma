@@ -99,7 +99,7 @@ model MacAddress {
   networkId       Int?     @map("network_id")
   Network         Network? @relation(fields: [networkId], references: [id])
   deviceId        Int?     @map("device_id")
-  Device          Device?  @relation(fields: [deviceId], references: [id])
+  Device          Device?  @relation(fields: [deviceId], references: [id], onDelete: Cascade)
   lastConnectedAt DateTime @default(now()) @map("last_connected_at")
 
   @@index([networkId])
@@ -112,7 +112,7 @@ model Nickname {
   fromId   String @map("from_id")
   toId     String @map("to_id")
   nickname String
-  User     User   @relation(fields: [toId], references: [id])
+  User     User   @relation(fields: [toId], references: [id], onDelete: Cascade)
 
   @@index([toId])
   @@map("nicknames")

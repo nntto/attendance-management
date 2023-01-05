@@ -12,15 +12,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return
   }
 
-  if (method === 'GET') {
-    const macAddress = await prisma.macAddress.findUnique({
-      where: {
-        id: macAddressId,
-      },
-    })
-    res.status(200).json(macAddress)
-  } else if (method === 'PUT') {
-    try {
+  try {
+    if (method === 'GET') {
+      const macAddress = await prisma.macAddress.findUnique({
+        where: {
+          id: macAddressId,
+        },
+      })
+      res.status(200).json(macAddress)
+    } else if (method === 'PUT') {
       console.log(req.body)
       const macAddress = await prisma.macAddress.update({
         where: {
@@ -29,14 +29,21 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         data: req.body,
       })
       res.status(200).json(macAddress)
-    } catch (e: unknown) {
-      if (e instanceof Error) {
-        console.log(e)
-        res.status(400).end(e.message)
-      }
-      res.status(400).end()
+    } else if (method === 'DELETE') {
+      await prisma.macAddress.delete({
+        where: {
+          id: macAddressId,
+        },
+      })
+      res.status(200).end('Delete Complete')
+    } else {
+      res.status(405).end('Method Not Allowed')
     }
-  } else {
-    res.status(405).end('Method Not Allowed')
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      console.log(e)
+      res.status(400).end(e.message)
+    }
+    res.status(400).end()
   }
 }
