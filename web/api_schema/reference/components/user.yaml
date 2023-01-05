@@ -1,21 +1,11 @@
 type: object
-properties:
-  id:
-    type: string
-    description: ユーザーの識別ID
-    readOnly: true
-  name:
-    type: string
-    description: ユーザーの名前
-    x-faker: name.findName
-  grade:
-    type: string
-    description: ユーザーの学年
-    enum: [B1,B2,B3,B4,M1,M2,D1,D2,D3]
-  iconUrl: 
-    type: string 
-    description: ユーザーのプロフィール画像
-    x-faker: image.imageUrl
+allOf:
+- properties:
+    id:
+      type: string
+      description: ユーザーの識別ID
+      readOnly: true
+- $ref: "./user_dynamic_props.yaml"
 required:
   - id
   - name

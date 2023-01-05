@@ -59,54 +59,55 @@ export interface Comment {
  */
 export interface Device {
     /**
-     * デバイスを所持しているユーザーのID
-     * @type {number}
-     * @memberof Device
-     */
-    'userId'?: number;
-    /**
-     * デバイスの名前
-     * @type {string}
-     * @memberof Device
-     */
-    'name'?: string;
-}
-/**
- * 
- * @export
- * @interface Device1
- */
-export interface Device1 {
-    /**
      * デバイスの識別ID
      * @type {number}
-     * @memberof Device1
+     * @memberof Device
      */
     'id': number;
     /**
      * デバイスを所持しているユーザーのID
      * @type {string}
-     * @memberof Device1
+     * @memberof Device
      */
     'userId': string;
     /**
      * デバイスの名前
      * @type {string}
-     * @memberof Device1
+     * @memberof Device
      */
     'name': string;
+}
+/**
+ * 
+ * @export
+ * @interface DeviceAllOf
+ */
+export interface DeviceAllOf {
     /**
-     * 接続先のネットワークのID
+     * デバイスの識別ID
      * @type {number}
-     * @memberof Device1
+     * @memberof DeviceAllOf
      */
-    'networkId': number;
+    'id'?: number;
+}
+/**
+ * 
+ * @export
+ * @interface DeviceDynamicProps
+ */
+export interface DeviceDynamicProps {
     /**
-     * デバイスのmacaddress
+     * デバイスを所持しているユーザーのID
      * @type {string}
-     * @memberof Device1
+     * @memberof DeviceDynamicProps
      */
-    'macAddress': string;
+    'userId'?: string;
+    /**
+     * デバイスの名前
+     * @type {string}
+     * @memberof DeviceDynamicProps
+     */
+    'name'?: string;
 }
 /**
  * 
@@ -279,9 +280,15 @@ export interface MacAddress {
      * @type {number}
      * @memberof MacAddress
      */
-    'id'?: number;
+    'id': number;
     /**
-     * デバイスのmacaddress
+     * 最終接続日時
+     * @type {string}
+     * @memberof MacAddress
+     */
+    'lastConnectedAt': string;
+    /**
+     * デバイスのmisaddress
      * @type {string}
      * @memberof MacAddress
      */
@@ -298,12 +305,50 @@ export interface MacAddress {
      * @memberof MacAddress
      */
     'deviceId': number;
+}
+/**
+ * 
+ * @export
+ * @interface MacAddressAllOf
+ */
+export interface MacAddressAllOf {
+    /**
+     * MacAddressの識別ID
+     * @type {number}
+     * @memberof MacAddressAllOf
+     */
+    'id'?: number;
     /**
      * 最終接続日時
      * @type {string}
-     * @memberof MacAddress
+     * @memberof MacAddressAllOf
      */
-    'lastConnectedAt': string;
+    'lastConnectedAt'?: string;
+}
+/**
+ * 
+ * @export
+ * @interface MacAddressDynamicProps
+ */
+export interface MacAddressDynamicProps {
+    /**
+     * デバイスのmisaddress
+     * @type {string}
+     * @memberof MacAddressDynamicProps
+     */
+    'address'?: string;
+    /**
+     * 接続先のネットワークのID
+     * @type {number}
+     * @memberof MacAddressDynamicProps
+     */
+    'networkId'?: number;
+    /**
+     * デバイスの識別ID
+     * @type {number}
+     * @memberof MacAddressDynamicProps
+     */
+    'deviceId'?: number;
 }
 /**
  * 
@@ -429,160 +474,189 @@ export type UserGradeEnum = typeof UserGradeEnum[keyof typeof UserGradeEnum];
 /**
  * 
  * @export
- * @interface User1
+ * @interface UserAllOf
  */
-export interface User1 {
+export interface UserAllOf {
     /**
-     * ユーザーの名前
+     * ユーザーの識別ID
      * @type {string}
-     * @memberof User1
+     * @memberof UserAllOf
      */
-    'name'?: string;
-    /**
-     * ユーザーの学年
-     * @type {string}
-     * @memberof User1
-     */
-    'grade'?: string;
-    /**
-     * ユーザーのプロフィール画像
-     * @type {string}
-     * @memberof User1
-     */
-    'iconUrl'?: string;
+    'id'?: string;
 }
 /**
  * 
  * @export
- * @interface UserDeviceInner
+ * @interface UserDevice
  */
-export interface UserDeviceInner {
+export interface UserDevice {
+    /**
+     * 
+     * @type {Array<UserDeviceRoomsInner>}
+     * @memberof UserDevice
+     */
+    'rooms': Array<UserDeviceRoomsInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceRoomsInner
+ */
+export interface UserDeviceRoomsInner {
     /**
      * 部屋の識別ID
      * @type {number}
-     * @memberof UserDeviceInner
+     * @memberof UserDeviceRoomsInner
      */
     'id': number;
     /**
      * 部屋の名前
      * @type {string}
-     * @memberof UserDeviceInner
+     * @memberof UserDeviceRoomsInner
      */
     'name': string;
     /**
      * 
-     * @type {Array<UserDeviceInnerAllOfDevicesInner>}
-     * @memberof UserDeviceInner
+     * @type {Array<UserDeviceRoomsInnerAllOfDevicesInner>}
+     * @memberof UserDeviceRoomsInner
      */
-    'devices': Array<UserDeviceInnerAllOfDevicesInner>;
+    'devices': Array<UserDeviceRoomsInnerAllOfDevicesInner>;
 }
 /**
  * 
  * @export
- * @interface UserDeviceInnerAllOf
+ * @interface UserDeviceRoomsInnerAllOf
  */
-export interface UserDeviceInnerAllOf {
+export interface UserDeviceRoomsInnerAllOf {
     /**
      * 
-     * @type {Array<UserDeviceInnerAllOfDevicesInner>}
-     * @memberof UserDeviceInnerAllOf
+     * @type {Array<UserDeviceRoomsInnerAllOfDevicesInner>}
+     * @memberof UserDeviceRoomsInnerAllOf
      */
-    'devices': Array<UserDeviceInnerAllOfDevicesInner>;
+    'devices': Array<UserDeviceRoomsInnerAllOfDevicesInner>;
 }
 /**
  * 
  * @export
- * @interface UserDeviceInnerAllOfDevicesInner
+ * @interface UserDeviceRoomsInnerAllOfDevicesInner
  */
-export interface UserDeviceInnerAllOfDevicesInner {
+export interface UserDeviceRoomsInnerAllOfDevicesInner {
     /**
      * デバイスの識別ID
      * @type {number}
-     * @memberof UserDeviceInnerAllOfDevicesInner
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInner
      */
     'id': number;
     /**
      * デバイスを所持しているユーザーのID
      * @type {string}
-     * @memberof UserDeviceInnerAllOfDevicesInner
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInner
      */
     'userId': string;
     /**
      * デバイスの名前
      * @type {string}
-     * @memberof UserDeviceInnerAllOfDevicesInner
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInner
      */
     'name': string;
     /**
-     * 接続先のネットワークのID
-     * @type {number}
-     * @memberof UserDeviceInnerAllOfDevicesInner
+     * 
+     * @type {Array<UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner>}
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInner
      */
-    'networkId': number;
+    'addresses': Array<UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceRoomsInnerAllOfDevicesInnerAllOf
+ */
+export interface UserDeviceRoomsInnerAllOfDevicesInnerAllOf {
     /**
-     * デバイスのmacaddress
+     * 
+     * @type {Array<UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner>}
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInnerAllOf
+     */
+    'addresses': Array<UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner>;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner
+ */
+export interface UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner {
+    /**
+     * 
+     * @type {Network}
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner
+     */
+    'network': Network;
+    /**
+     * 
+     * @type {MacAddress}
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner
+     */
+    'macAddress'?: MacAddress;
+}
+/**
+ * 
+ * @export
+ * @interface UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
+ */
+export interface UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInnerAllOf {
+    /**
+     * 
+     * @type {Network}
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
+     */
+    'network': Network;
+    /**
+     * 
+     * @type {MacAddress}
+     * @memberof UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
+     */
+    'macAddress'?: MacAddress;
+}
+/**
+ * 
+ * @export
+ * @interface UserDynamicProps
+ */
+export interface UserDynamicProps {
+    /**
+     * ユーザーの名前
      * @type {string}
-     * @memberof UserDeviceInnerAllOfDevicesInner
+     * @memberof UserDynamicProps
      */
-    'macAddress': string;
+    'name'?: string;
     /**
-     * 
-     * @type {Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>}
-     * @memberof UserDeviceInnerAllOfDevicesInner
+     * ユーザーの学年
+     * @type {string}
+     * @memberof UserDynamicProps
      */
-    'addresses'?: Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>;
+    'grade'?: UserDynamicPropsGradeEnum;
+    /**
+     * ユーザーのプロフィール画像
+     * @type {string}
+     * @memberof UserDynamicProps
+     */
+    'iconUrl'?: string;
 }
-/**
- * 
- * @export
- * @interface UserDeviceInnerAllOfDevicesInnerAllOf
- */
-export interface UserDeviceInnerAllOfDevicesInnerAllOf {
-    /**
-     * 
-     * @type {Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>}
-     * @memberof UserDeviceInnerAllOfDevicesInnerAllOf
-     */
-    'addresses'?: Array<UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner>;
-}
-/**
- * 
- * @export
- * @interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner
- */
-export interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner {
-    /**
-     * 
-     * @type {Network}
-     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner
-     */
-    'network'?: Network;
-    /**
-     * 
-     * @type {MacAddress}
-     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInner
-     */
-    'macAddress'?: MacAddress;
-}
-/**
- * 
- * @export
- * @interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
- */
-export interface UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf {
-    /**
-     * 
-     * @type {Network}
-     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
-     */
-    'network'?: Network;
-    /**
-     * 
-     * @type {MacAddress}
-     * @memberof UserDeviceInnerAllOfDevicesInnerAllOfAddressesInnerAllOf
-     */
-    'macAddress'?: MacAddress;
-}
+
+export const UserDynamicPropsGradeEnum = {
+    B1: 'B1',
+    B2: 'B2',
+    B3: 'B3',
+    B4: 'B4',
+    M1: 'M1',
+    M2: 'M2',
+    D1: 'D1',
+    D2: 'D2',
+    D3: 'D3'
+} as const;
+
+export type UserDynamicPropsGradeEnum = typeof UserDynamicPropsGradeEnum[keyof typeof UserDynamicPropsGradeEnum];
+
 
 /**
  * RoomsApi - axios parameter creator
@@ -827,11 +901,10 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 指定したデバイスの情報を取得
          * @param {number} deviceId デバイスID
-         * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevice: async (deviceId: number, device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDevice: async (deviceId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deviceId' is not null or undefined
             assertParamExists('getDevice', 'deviceId', deviceId)
             const localVarPath = `/api/setting/device/{device_id}`
@@ -849,12 +922,9 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(device, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -864,11 +934,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevices: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getDevices: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('getDevices', 'userId', userId)
             const localVarPath = `/api/setting/devices/{user_id}`
@@ -936,11 +1006,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 指定したユーザーの情報を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser: async (userId: number, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getUser: async (userId: string, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('getUser', 'userId', userId)
             const localVarPath = `/api/setting/user/{user_id}`
@@ -970,11 +1040,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 新しいデバイスを追加
-         * @param {Device} [device] 
+         * @param {DeviceDynamicProps} [deviceDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDevice: async (device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postDevice: async (deviceDynamicProps?: DeviceDynamicProps, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/setting/device`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -994,7 +1064,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(device, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(deviceDynamicProps, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1004,11 +1074,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 新しいMACアドレスを追加
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMacAddress: async (macAddress?: MacAddress, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        postMacAddress: async (macAddressDynamicProps?: MacAddressDynamicProps, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/setting/mac_address`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -1028,7 +1098,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(macAddress, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(macAddressDynamicProps, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1039,11 +1109,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
-         * @param {Device} [device] 
+         * @param {DeviceDynamicProps} [deviceDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putDevice: async (deviceId: number, device?: Device, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putDevice: async (deviceId: number, deviceDynamicProps?: DeviceDynamicProps, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'deviceId' is not null or undefined
             assertParamExists('putDevice', 'deviceId', deviceId)
             const localVarPath = `/api/setting/device/{device_id}`
@@ -1066,7 +1136,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(device, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(deviceDynamicProps, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1077,11 +1147,11 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
          * 
          * @summary 指定したMACアドレスの情報を変更
          * @param {number} macAddressId MACアドレスID
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMacAddress: async (macAddressId: number, macAddress?: MacAddress, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        putMacAddress: async (macAddressId: number, macAddressDynamicProps?: MacAddressDynamicProps, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'macAddressId' is not null or undefined
             assertParamExists('putMacAddress', 'macAddressId', macAddressId)
             const localVarPath = `/api/setting/mac_address/{mac_address_id}`
@@ -1104,7 +1174,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(macAddress, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(macAddressDynamicProps, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1114,12 +1184,12 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @summary 指定したユーザーの情報を更新
-         * @param {number} userId ユーザーID
-         * @param {User1} [user1] 
+         * @param {string} userId ユーザーID
+         * @param {UserDynamicProps} [userDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser: async (userId: number, user1?: User1, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateUser: async (userId: string, userDynamicProps?: UserDynamicProps, options: AxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'userId' is not null or undefined
             assertParamExists('updateUser', 'userId', userId)
             const localVarPath = `/api/setting/user/{user_id}`
@@ -1142,7 +1212,7 @@ export const SettingApiAxiosParamCreator = function (configuration?: Configurati
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(user1, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(userDynamicProps, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -1185,22 +1255,21 @@ export const SettingApiFp = function(configuration?: Configuration) {
          * 
          * @summary 指定したデバイスの情報を取得
          * @param {number} deviceId デバイスID
-         * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDevice(deviceId: number, device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getDevice(deviceId, device, options);
+        async getDevice(deviceId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Device>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getDevice(deviceId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getDevices(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Array<UserDeviceInner>>> {
+        async getDevices(userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<UserDevice>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getDevices(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
@@ -1219,70 +1288,70 @@ export const SettingApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @summary 指定したユーザーの情報を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getUser(userId: number, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
+        async getUser(userId: string, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<User>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getUser(userId, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 新しいデバイスを追加
-         * @param {Device} [device] 
+         * @param {DeviceDynamicProps} [deviceDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postDevice(device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postDevice(device, options);
+        async postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<Device>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postDevice(deviceDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 新しいMACアドレスを追加
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async postMacAddress(macAddress?: MacAddress, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.postMacAddress(macAddress, options);
+        async postMacAddress(macAddressDynamicProps?: MacAddressDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<MacAddress>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.postMacAddress(macAddressDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
-         * @param {Device} [device] 
+         * @param {DeviceDynamicProps} [deviceDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putDevice(deviceId: number, device?: Device, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putDevice(deviceId, device, options);
+        async putDevice(deviceId: number, deviceDynamicProps?: DeviceDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putDevice(deviceId, deviceDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 指定したMACアドレスの情報を変更
          * @param {number} macAddressId MACアドレスID
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async putMacAddress(macAddressId: number, macAddress?: MacAddress, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.putMacAddress(macAddressId, macAddress, options);
+        async putMacAddress(macAddressId: number, macAddressDynamicProps?: MacAddressDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.putMacAddress(macAddressId, macAddressDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
         /**
          * 
          * @summary 指定したユーザーの情報を更新
-         * @param {number} userId ユーザーID
-         * @param {User1} [user1] 
+         * @param {string} userId ユーザーID
+         * @param {UserDynamicProps} [userDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateUser(userId: number, user1?: User1, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userId, user1, options);
+        async updateUser(userId: string, userDynamicProps?: UserDynamicProps, options?: AxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateUser(userId, userDynamicProps, options);
             return createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration);
         },
     }
@@ -1319,21 +1388,20 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
          * 
          * @summary 指定したデバイスの情報を取得
          * @param {number} deviceId デバイスID
-         * @param {Device} [device] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevice(deviceId: number, device?: Device, options?: any): AxiosPromise<void> {
-            return localVarFp.getDevice(deviceId, device, options).then((request) => request(axios, basePath));
+        getDevice(deviceId: number, options?: any): AxiosPromise<Device> {
+            return localVarFp.getDevice(deviceId, options).then((request) => request(axios, basePath));
         },
         /**
          * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
          * @summary 指定したユーザーの持つデバイス一覧を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getDevices(userId: number, options?: any): AxiosPromise<Array<UserDeviceInner>> {
+        getDevices(userId: string, options?: any): AxiosPromise<UserDevice> {
             return localVarFp.getDevices(userId, options).then((request) => request(axios, basePath));
         },
         /**
@@ -1350,65 +1418,65 @@ export const SettingApiFactory = function (configuration?: Configuration, basePa
         /**
          * 
          * @summary 指定したユーザーの情報を取得
-         * @param {number} userId ユーザーID
+         * @param {string} userId ユーザーID
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getUser(userId: number, options?: any): AxiosPromise<User> {
+        getUser(userId: string, options?: any): AxiosPromise<User> {
             return localVarFp.getUser(userId, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 新しいデバイスを追加
-         * @param {Device} [device] 
+         * @param {DeviceDynamicProps} [deviceDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postDevice(device?: Device, options?: any): AxiosPromise<void> {
-            return localVarFp.postDevice(device, options).then((request) => request(axios, basePath));
+        postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: any): AxiosPromise<Device> {
+            return localVarFp.postDevice(deviceDynamicProps, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 新しいMACアドレスを追加
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        postMacAddress(macAddress?: MacAddress, options?: any): AxiosPromise<void> {
-            return localVarFp.postMacAddress(macAddress, options).then((request) => request(axios, basePath));
+        postMacAddress(macAddressDynamicProps?: MacAddressDynamicProps, options?: any): AxiosPromise<MacAddress> {
+            return localVarFp.postMacAddress(macAddressDynamicProps, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 指定したデバイスの情報を変更
          * @param {number} deviceId デバイスID
-         * @param {Device} [device] 
+         * @param {DeviceDynamicProps} [deviceDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putDevice(deviceId: number, device?: Device, options?: any): AxiosPromise<void> {
-            return localVarFp.putDevice(deviceId, device, options).then((request) => request(axios, basePath));
+        putDevice(deviceId: number, deviceDynamicProps?: DeviceDynamicProps, options?: any): AxiosPromise<void> {
+            return localVarFp.putDevice(deviceId, deviceDynamicProps, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 指定したMACアドレスの情報を変更
          * @param {number} macAddressId MACアドレスID
-         * @param {MacAddress} [macAddress] 
+         * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        putMacAddress(macAddressId: number, macAddress?: MacAddress, options?: any): AxiosPromise<void> {
-            return localVarFp.putMacAddress(macAddressId, macAddress, options).then((request) => request(axios, basePath));
+        putMacAddress(macAddressId: number, macAddressDynamicProps?: MacAddressDynamicProps, options?: any): AxiosPromise<void> {
+            return localVarFp.putMacAddress(macAddressId, macAddressDynamicProps, options).then((request) => request(axios, basePath));
         },
         /**
          * 
          * @summary 指定したユーザーの情報を更新
-         * @param {number} userId ユーザーID
-         * @param {User1} [user1] 
+         * @param {string} userId ユーザーID
+         * @param {UserDynamicProps} [userDynamicProps] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateUser(userId: number, user1?: User1, options?: any): AxiosPromise<void> {
-            return localVarFp.updateUser(userId, user1, options).then((request) => request(axios, basePath));
+        updateUser(userId: string, userDynamicProps?: UserDynamicProps, options?: any): AxiosPromise<void> {
+            return localVarFp.updateUser(userId, userDynamicProps, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -1448,24 +1516,23 @@ export class SettingApi extends BaseAPI {
      * 
      * @summary 指定したデバイスの情報を取得
      * @param {number} deviceId デバイスID
-     * @param {Device} [device] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public getDevice(deviceId: number, device?: Device, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).getDevice(deviceId, device, options).then((request) => request(this.axios, this.basePath));
+    public getDevice(deviceId: number, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).getDevice(deviceId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
      * @summary 指定したユーザーの持つデバイス一覧を取得
-     * @param {number} userId ユーザーID
+     * @param {string} userId ユーザーID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public getDevices(userId: number, options?: AxiosRequestConfig) {
+    public getDevices(userId: string, options?: AxiosRequestConfig) {
         return SettingApiFp(this.configuration).getDevices(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
@@ -1485,76 +1552,76 @@ export class SettingApi extends BaseAPI {
     /**
      * 
      * @summary 指定したユーザーの情報を取得
-     * @param {number} userId ユーザーID
+     * @param {string} userId ユーザーID
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public getUser(userId: number, options?: AxiosRequestConfig) {
+    public getUser(userId: string, options?: AxiosRequestConfig) {
         return SettingApiFp(this.configuration).getUser(userId, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 新しいデバイスを追加
-     * @param {Device} [device] 
+     * @param {DeviceDynamicProps} [deviceDynamicProps] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public postDevice(device?: Device, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).postDevice(device, options).then((request) => request(this.axios, this.basePath));
+    public postDevice(deviceDynamicProps?: DeviceDynamicProps, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).postDevice(deviceDynamicProps, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 新しいMACアドレスを追加
-     * @param {MacAddress} [macAddress] 
+     * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public postMacAddress(macAddress?: MacAddress, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).postMacAddress(macAddress, options).then((request) => request(this.axios, this.basePath));
+    public postMacAddress(macAddressDynamicProps?: MacAddressDynamicProps, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).postMacAddress(macAddressDynamicProps, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 指定したデバイスの情報を変更
      * @param {number} deviceId デバイスID
-     * @param {Device} [device] 
+     * @param {DeviceDynamicProps} [deviceDynamicProps] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public putDevice(deviceId: number, device?: Device, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).putDevice(deviceId, device, options).then((request) => request(this.axios, this.basePath));
+    public putDevice(deviceId: number, deviceDynamicProps?: DeviceDynamicProps, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).putDevice(deviceId, deviceDynamicProps, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 指定したMACアドレスの情報を変更
      * @param {number} macAddressId MACアドレスID
-     * @param {MacAddress} [macAddress] 
+     * @param {MacAddressDynamicProps} [macAddressDynamicProps] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public putMacAddress(macAddressId: number, macAddress?: MacAddress, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).putMacAddress(macAddressId, macAddress, options).then((request) => request(this.axios, this.basePath));
+    public putMacAddress(macAddressId: number, macAddressDynamicProps?: MacAddressDynamicProps, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).putMacAddress(macAddressId, macAddressDynamicProps, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
      * @summary 指定したユーザーの情報を更新
-     * @param {number} userId ユーザーID
-     * @param {User1} [user1] 
+     * @param {string} userId ユーザーID
+     * @param {UserDynamicProps} [userDynamicProps] 
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      * @memberof SettingApi
      */
-    public updateUser(userId: number, user1?: User1, options?: AxiosRequestConfig) {
-        return SettingApiFp(this.configuration).updateUser(userId, user1, options).then((request) => request(this.axios, this.basePath));
+    public updateUser(userId: string, userDynamicProps?: UserDynamicProps, options?: AxiosRequestConfig) {
+        return SettingApiFp(this.configuration).updateUser(userId, userDynamicProps, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

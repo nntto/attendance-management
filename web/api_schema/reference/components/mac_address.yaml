@@ -1,26 +1,19 @@
 type: object
-properties:
-  id:
-    type: integer
-    description: MacAddressの識別ID
-    readOnly: true
-  address:
-    type: string
-    description: デバイスのmacaddress
-    x-faker: internet.mac
-  networkId:
-    type: integer
-    description: 接続先のネットワークのID
-  deviceId:
-    type: integer
-    description: デバイスの識別ID
-  lastConnectedAt:
-    type: string
-    format: date-time
-    description: 最終接続日時
-    x-faker: datatype.datetime
-    readOnly: true
+allOf:
+- properties:
+    id:
+      type: integer
+      description: MacAddressの識別ID
+      readOnly: true
+    lastConnectedAt:
+      type: string
+      format: date-time
+      description: 最終接続日時
+      x-faker: datatype.datetime
+      readOnly: true
+- $ref: "./mac_address_dynamic_props.yaml"
 required:
+  - id
   - macAddressId
   - address
   - networkId

@@ -1,25 +1,37 @@
-type: array
-items:
-  allOf:
-    - $ref: "../components/room.yaml"
-    - type: object
-      required:
-        - devices
-      properties:
-        devices:
-          type: array
-          items:
-            allOf:
-              - $ref: "../components/device.yaml"
-              - type: object
-                properties:
-                  addresses:
-                    type: array
-                    items:
-                      allOf:
-                        - type: object
-                          properties:
-                            network:
-                              $ref: "../components/network.yaml"
-                            macAddress:
-                              $ref: "../components/mac_address.yaml"
+type: object
+required:
+  - rooms
+properties:
+  rooms:
+    type: array
+    maxItems: 4
+    items:
+      allOf:
+        - $ref: "../components/room.yaml"
+        - type: object
+          required:
+            - devices
+          properties:
+            devices:
+              type: array
+              maxItems: 5
+              items:
+                allOf:
+                  - $ref: "../components/device.yaml"
+                  - type: object
+                    required:
+                        - addresses
+                    properties:
+                      addresses:
+                        type: array
+                        maxItems: 8
+                        items:
+                          allOf:
+                            - type: object
+                              required:
+                                - network
+                              properties:
+                                network:
+                                  $ref: "../components/network.yaml"
+                                macAddress:
+                                  $ref: "../components/mac_address.yaml"
