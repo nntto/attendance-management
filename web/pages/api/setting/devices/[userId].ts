@@ -29,8 +29,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
           id: userId,
         },
       })
-      res.status(200).json(
-        rooms.map((room) => {
+      res.status(200).json({
+        rooms: rooms.map((room) => {
           const roomNetworks = networks.filter((network) => network.roomId === room.id)
           return {
             ...room,
@@ -44,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             })),
           }
         }),
-      )
+      })
     } else if (method === 'PUT') {
       const user = await prisma.user.update({
         where: {
