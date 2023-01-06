@@ -1,4 +1,4 @@
-import { Button, TextField } from '@mui/material'
+import { Button, Stack, TextField } from '@mui/material'
 import { useState } from 'react'
 import { Network, SettingApi, UserDeviceRoomsInner } from '../../types/typescript-axios'
 import NetworkAndMacAddressSetting from '../molecules/SettingDeviceAddresses'
@@ -16,17 +16,32 @@ export default function RoomSetting({
   const settingApi = new SettingApi()
   return (
     <div>
-      {latestDevices.map((device) => (
+      {latestDevices.map((device, deviceIndex) => (
         <div key={device.id}>
-          <TextField
-            onChange={(e: { target: { value: any } }) => {
-              settingApi.putDevice(device.id, { name: e.target.value })
-            }}
-            variant='filled'
-            label='デバイス名'
-            id={String(device.id)}
-            defaultValue={device.name}
-          />
+          <Stack direction='row' spacing={3}>
+            <TextField
+              onChange={(e: { target: { value: any } }) => {
+                settingApi.putDevice(device.id, { name: e.target.value })
+              }}
+              variant='filled'
+              label='デバイス名'
+              id={String(device.id)}
+              defaultValue={device.name}
+            />
+            <Button
+              onClick={() => {
+                settingApi.deleteDevice(device.id).then(() => {
+                  setLatestDevices(
+                    latestDevices.filter(
+                      (_, latestDeviceIndex) => latestDeviceIndex !== deviceIndex,
+                    ),
+                  )
+                })
+              }}
+            >
+              デバイスを削除
+            </Button>
+          </Stack>
           <NetworkAndMacAddressSetting deviceId={device.id} addresses={device.addresses} />
         </div>
       ))}
