@@ -31,7 +31,7 @@ const Setting: NextPage = () => {
             key={room.id}
             devices={room.devices}
             userId={userId}
-            networks={networks}
+            networks={networks.filter((network) => network.roomId === room.id)}
           ></RoomSetting>
         </div>
       ))}
