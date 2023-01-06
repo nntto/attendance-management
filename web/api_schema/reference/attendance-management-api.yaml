@@ -1,77 +1,77 @@
 openapi: 3.0.0
 info:
   title: attendance-management-api
-  version: "1.0"
+  version: '1.0'
 servers:
-  - url: "http://localhost:4010"
+  - url: 'http://localhost:4010'
 tags:
   - name: rooms
     description: 在室一覧(/rooms)ページで用いるAPI群
   - name: setting
     description: ユーザー情報設定(/setting)ページで用いるAPI群
 paths:
-  "/api/rooms/users":
+  '/api/rooms/users':
     get:
       tags:
         - rooms
       summary: 各部屋のユーザーとニックネームを取得
       operationId: getUsersInRoom
-      description: "部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．"
+      description: '部屋情報と各部屋にいるユーザー一覧，ニックネーム，最新のコメントを取得．inRoomには，デバイスの最終接続日時が2分以内のユーザー一覧を部屋ごとに提示(デバイスのlastConnectedAtを参考に計算する)．outRoomには，inRoomではないユーザー一覧を提示する．'
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: './responses/inroom_and_outroom_users.yaml'
-  "/api/rooms/nickname":
+  '/api/rooms/nickname':
     put:
-      tags: 
+      tags:
         - rooms
       summary: ニックネームを新たに設定，または更新
       operationId: createUserNickname
       responses:
-        "200":
+        '200':
           description: OK
       requestBody:
         content:
           application/json:
             schema:
-                $ref: "./components/nickname.yaml"
-  "/api/setting/user/{user_id}":
+              $ref: './components/nickname.yaml'
+  '/api/setting/user/{user_id}':
     parameters:
-      - $ref: "./parameters/user_id.yaml"
+      - $ref: './parameters/user_id.yaml'
     get:
       summary: 指定したユーザーの情報を取得
       tags:
         - setting
       operationId: getUser
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "./components/user.yaml"
+                $ref: './components/user.yaml'
     put:
       summary: 指定したユーザーの情報を更新
       tags:
         - setting
       operationId: updateUser
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
       requestBody:
         content:
           application/json:
             schema:
-                $ref: "./components/user_dynamic_props.yaml"
+              $ref: './components/user_dynamic_props.yaml'
 
-  "/api/setting/devices/{user_id}":
+  '/api/setting/devices/{user_id}':
     parameters:
-      - $ref: "./parameters/user_id.yaml"
+      - $ref: './parameters/user_id.yaml'
     get:
       summary: 指定したユーザーの持つデバイス一覧を取得
       tags:
@@ -79,23 +79,23 @@ paths:
       operationId: getDevices
       description: 部屋ごとのデバイスリストと，ネットワーク，MACアドレスを返す
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
                 $ref: './responses/user_device.yaml'
-  "/api/setting/device/{device_id}":
+  '/api/setting/device/{device_id}':
     parameters:
-      - $ref: "./parameters/device_id.yaml"
+      - $ref: './parameters/device_id.yaml'
     get:
       summary: 指定したデバイスの情報を取得
       tags:
         - setting
       operationId: getDevice
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -106,33 +106,33 @@ paths:
       tags:
         - setting
       operationId: putDevice
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "./components/device_dynamic_props.yaml"
+              $ref: './components/device_dynamic_props.yaml'
     delete:
       summary: 指定したデバイスを削除．この時，デバイスに紐づけられたMACアドレスも全て削除する．
       tags:
         - setting
       operationId: deleteDevice
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
-  "/api/setting/device":
+  '/api/setting/device':
     post:
       summary: 新しいデバイスを追加
       tags:
         - setting
       operationId: postDevice
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
@@ -142,65 +142,82 @@ paths:
         content:
           application/json:
             schema:
-              $ref: "./components/device_dynamic_props.yaml"
-  "/api/setting/mac_address/{mac_address_id}":
+              $ref: './components/device_dynamic_props.yaml'
+  '/api/setting/mac_address/{mac_address_id}':
     parameters:
-      - $ref: "./parameters/mac_address_id.yaml"
+      - $ref: './parameters/mac_address_id.yaml'
     get:
       summary: 指定したMACアドレスの情報を取得
       tags:
         - setting
       operationId: getMacAddress
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "./components/mac_address.yaml"
+              $ref: './components/mac_address.yaml'
     put:
       summary: 指定したMACアドレスの情報を変更
       tags:
         - setting
       operationId: putMacAddress
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "./components/mac_address_dynamic_props.yaml"
+              $ref: './components/mac_address_dynamic_props.yaml'
     delete:
       summary: 指定したMACアドレス削除
       tags:
         - setting
       operationId: deleteMacAddress
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
-  "/api/setting/mac_address":
+  '/api/setting/mac_address':
     post:
       summary: 新しいMACアドレスを追加
       tags:
         - setting
       operationId: postMacAddress
-      description: ""
+      description: ''
       responses:
-        "200":
+        '200':
           description: OK
           content:
             application/json:
               schema:
-                $ref: "./components/mac_address.yaml"
+                $ref: './components/mac_address.yaml'
       requestBody:
         content:
           application/json:
             schema:
-              $ref: "./components/mac_address_dynamic_props.yaml"
+              $ref: './components/mac_address_dynamic_props.yaml'
               required:
                 - userId
+  '/api/setting/networks':
+    get:
+      tags:
+        - setting
+      summary: 登録されているネットワークの一覧を返す
+      operationId: getNetworks
+      description:
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 6
+                items:
+                  $ref: './components/network.yaml'

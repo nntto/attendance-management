@@ -256,6 +256,22 @@ paths:
       summary: 新しいMACアドレスを追加
       tags:
       - setting
+  /api/setting/networks:
+    get:
+      operationId: getNetworks
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/network'
+                maxItems: 6
+                type: array
+          description: OK
+      summary: 登録されているネットワークの一覧を返す
+      tags:
+      - setting
 components:
   parameters:
     user_id:
@@ -407,6 +423,24 @@ components:
           description: デバイスの識別ID
           type: integer
       type: object
+    network:
+      properties:
+        id:
+          description: ネットワークの識別ID
+          type: integer
+        roomId:
+          description: ネットワークの置かれている部屋のID
+          type: integer
+        name:
+          description: ネットワークの名前
+          example: wifi-a
+          type: string
+          x-faker: system.networkInterface
+      required:
+      - id
+      - name
+      - roomId
+      type: object
     room:
       properties:
         id:
@@ -444,24 +478,6 @@ components:
       - createdAt
       - id
       - userId
-      type: object
-    network:
-      properties:
-        id:
-          description: ネットワークの識別ID
-          type: integer
-        roomId:
-          description: ネットワークの置かれている部屋のID
-          type: integer
-        name:
-          description: ネットワークの名前
-          example: wifi-a
-          type: string
-          x-faker: system.networkInterface
-      required:
-      - id
-      - name
-      - roomId
       type: object
     inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf:
       properties:
