@@ -15,7 +15,6 @@ export default function NetworkAndMacAddressSetting({
   deviceId: number
 }) {
   const settingApi = new SettingApi()
-  addresses[1].macAddress = undefined
 
   return (
     <div>

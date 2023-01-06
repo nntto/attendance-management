@@ -1,14 +1,16 @@
 import { Button, TextField } from '@mui/material'
 import { useState } from 'react'
-import { SettingApi, UserDeviceRoomsInner } from '../../types/typescript-axios'
+import { Network, SettingApi, UserDeviceRoomsInner } from '../../types/typescript-axios'
 import NetworkAndMacAddressSetting from '../molecules/SettingDeviceAddresses'
 
 export default function RoomSetting({
   devices,
   userId,
+  networks,
 }: {
   devices: UserDeviceRoomsInner['devices']
   userId: string
+  networks: Network[]
 }) {
   const [latestDevices, setLatestDevices] = useState(devices)
   const settingApi = new SettingApi()
@@ -33,7 +35,13 @@ export default function RoomSetting({
         onClick={() => {
           settingApi.postDevice({ userId }).then((res) => {
             const newDevice = res.data
-            setLatestDevices([...latestDevices, { ...newDevice, addresses: [] }])
+            setLatestDevices([
+              ...latestDevices,
+              {
+                ...newDevice,
+                addresses: networks.map((network) => ({ network: network, macAddress: undefined })),
+              },
+            ])
           })
         }}
       >
