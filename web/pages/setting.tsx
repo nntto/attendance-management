@@ -60,6 +60,16 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   }
 
   const userId = session.user?.sub
+
+  if (!userId) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
   return {
     props: {
       userId,
