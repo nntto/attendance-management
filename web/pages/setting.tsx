@@ -1,11 +1,9 @@
 import { GetServerSideProps } from 'next'
 import { unstable_getServerSession } from 'next-auth'
-import { getSession, useSession } from 'next-auth/react'
-import { ReactElement, useEffect, useState } from 'react'
-import useSWR from 'swr'
+import { ReactElement, useState } from 'react'
 import Layout from '../components/Layout'
 import RoomSetting from '../components/organisms/SettingRoomDevices'
-import { Network, SettingApi, UserDevice } from '../types/typescript-axios'
+import { Device, Network, UserDevice } from '../types/typescript-axios'
 import { NextPageWithLayout } from './_app'
 import { authOptions } from './api/auth/[...nextauth]'
 import { getUserDevices } from './api/setting/devices/[userId]'
@@ -16,19 +14,38 @@ const Setting: NextPageWithLayout<{
   userDevices: UserDevice
   networks: Network[]
 }> = ({ userId, userDevices, networks }) => {
-  // const settingApi = new SettingApi()
-  // const { data: userDevices } = useSWR(userId ? 'api/userDevices' : null, () =>
-  //   settingApi.getDevices(userId).then((res) => res.data),
-  // )
-  // const { data: networks } = useSWR('api/networks', () =>
-  //   settingApi.getNetworks().then((res) => res.data),
-  // )
+  const [rooms, setRooms] = useState(userDevices.rooms)
+  const pushDevice = (newDevice: Device, filteredNetworks: Network[]) => {
+    setRooms((prevRooms) =>
+      prevRooms.map((room) => ({
+        ...room,
+        devices: [
+          ...room.devices,
+          {
+            ...newDevice,
+            addresses: filteredNetworks.map((network) => ({
+              network: network,
+              macAddress: undefined,
+            })),
+          },
+        ],
+      })),
+    )
+  }
 
-  // if (!userDevices || !networks) return <p>loading</p>
+  console.log(rooms)
+  const deleteDevice = (deviceIndex: number) => {
+    setRooms(
+      rooms.map((room) => ({
+        ...room,
+        devices: room.devices.filter((_, latestDeviceIndex) => latestDeviceIndex !== deviceIndex),
+      })),
+    )
+  }
 
   return (
     <div>
-      {userDevices.rooms.map((room) => (
+      {rooms.map((room) => (
         <div key={room.id}>
           <h1>部屋：{room.name}</h1>
           <RoomSetting
@@ -36,6 +53,8 @@ const Setting: NextPageWithLayout<{
             devices={room.devices}
             userId={userId}
             networks={networks.filter((network) => network.roomId === room.id)}
+            pushDevice={pushDevice}
+            deleteDevice={deleteDevice}
           ></RoomSetting>
         </div>
       ))}

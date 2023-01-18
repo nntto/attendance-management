@@ -1,22 +1,24 @@
 import { Button, Stack, TextField } from '@mui/material'
-import { useState } from 'react'
-import { Network, SettingApi, UserDeviceRoomsInner } from '../../types/typescript-axios'
+import { Device, Network, SettingApi, UserDeviceRoomsInner } from '../../types/typescript-axios'
 import NetworkAndMacAddressSetting from '../molecules/SettingDeviceAddresses'
 
 export default function RoomSetting({
   devices,
   userId,
   networks,
+  pushDevice,
+  deleteDevice,
 }: {
   devices: UserDeviceRoomsInner['devices']
   userId: string
   networks: Network[]
+  pushDevice: (newDevice: Device, filteredNetworks: Network[]) => void
+  deleteDevice: (deviceIndex: number) => void
 }) {
-  const [latestDevices, setLatestDevices] = useState(devices)
   const settingApi = new SettingApi()
   return (
     <div>
-      {latestDevices.map((device, deviceIndex) => (
+      {devices.map((device, deviceIndex) => (
         <div key={device.id}>
           <Stack direction='row' spacing={3}>
             <TextField
@@ -31,11 +33,7 @@ export default function RoomSetting({
             <Button
               onClick={() => {
                 settingApi.deleteDevice(device.id).then(() => {
-                  setLatestDevices(
-                    latestDevices.filter(
-                      (_, latestDeviceIndex) => latestDeviceIndex !== deviceIndex,
-                    ),
-                  )
+                  deleteDevice(deviceIndex)
                 })
               }}
             >
@@ -50,13 +48,7 @@ export default function RoomSetting({
         onClick={() => {
           settingApi.postDevice({ userId }).then((res) => {
             const newDevice = res.data
-            setLatestDevices([
-              ...latestDevices,
-              {
-                ...newDevice,
-                addresses: networks.map((network) => ({ network: network, macAddress: undefined })),
-              },
-            ])
+            pushDevice(newDevice, networks)
           })
         }}
       >
