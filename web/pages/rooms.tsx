@@ -1,14 +1,14 @@
 import { Container } from '@mui/material'
-import { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { ReactElement } from 'react'
 import useSWR from 'swr'
-import Header from '../components/organisms/Header'
+import Layout from '../components/Layout'
 import RoomTable from '../components/organisms/roomTable'
 import { InroomAndOutroomUsers, RoomsApi } from '../types/typescript-axios'
+import { NextPageWithLayout } from './_app'
 
-const Rooms: NextPage = () => {
+const Rooms: NextPageWithLayout = () => {
   const roomsApi = new RoomsApi()
-  const { data, error } = useSWR<InroomAndOutroomUsers>(
+  const { data } = useSWR<InroomAndOutroomUsers>(
     'getUsersInRoom()',
     () => roomsApi.getUsersInRoom().then((res) => res.data),
     {
@@ -18,7 +18,6 @@ const Rooms: NextPage = () => {
   )
   return (
     <>
-      <Header />
       <Container>
         <h1>在室</h1>
         {(data?.inRoom || []).map((room) => (
@@ -35,5 +34,7 @@ const Rooms: NextPage = () => {
     </>
   )
 }
+
+Rooms.getLayout = (page: ReactElement) => <Layout>{page}</Layout>
 
 export default Rooms

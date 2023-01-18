@@ -1,26 +1,30 @@
-import { Button, TextField } from '@mui/material'
-import cloneDeep from 'lodash/cloneDeep'
-import { NextPage } from 'next'
-import { useEffect, useState } from 'react'
+import { GetServerSideProps } from 'next'
+import { unstable_getServerSession } from 'next-auth'
+import { getSession, useSession } from 'next-auth/react'
+import { ReactElement, useEffect, useState } from 'react'
+import useSWR from 'swr'
+import Layout from '../components/Layout'
 import RoomSetting from '../components/organisms/SettingRoomDevices'
-import { Network, RoomsApi, SettingApi, UserDevice } from '../types/typescript-axios'
+import { Network, SettingApi, UserDevice } from '../types/typescript-axios'
+import { NextPageWithLayout } from './_app'
+import { authOptions } from './api/auth/[...nextauth]'
+import { getUserDevices } from './api/setting/devices/[userId]'
+import { getNetworks } from './api/setting/networks'
 
-const Setting: NextPage = () => {
-  const [userDevices, setUserDevices] = useState<UserDevice>({ rooms: [] })
-  const [networks, setNetworks] = useState<Network[]>([])
-  const settingApi = new SettingApi()
+const Setting: NextPageWithLayout<{
+  userId: string
+  userDevices: UserDevice
+  networks: Network[]
+}> = ({ userId, userDevices, networks }) => {
+  // const settingApi = new SettingApi()
+  // const { data: userDevices } = useSWR(userId ? 'api/userDevices' : null, () =>
+  //   settingApi.getDevices(userId).then((res) => res.data),
+  // )
+  // const { data: networks } = useSWR('api/networks', () =>
+  //   settingApi.getNetworks().then((res) => res.data),
+  // )
 
-  // TODO: ログイン中のユーザーのデータを取得
-  const userId = '3'
-  useEffect(() => {
-    settingApi.getDevices(userId).then((res) => {
-      setUserDevices(res.data)
-    })
-    settingApi.getNetworks().then((res) => {
-      setNetworks(res.data)
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // if (!userDevices || !networks) return <p>loading</p>
 
   return (
     <div>
@@ -39,4 +43,38 @@ const Setting: NextPage = () => {
   )
 }
 
+Setting.getLayout = (page: ReactElement) => <Layout>{page}</Layout>
+
 export default Setting
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const session = await unstable_getServerSession(context.req, context.res, authOptions)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  const userId = session.user?.sub
+
+  if (!userId) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: {
+      userId,
+      userDevices: JSON.parse(JSON.stringify(await getUserDevices(userId))),
+      networks: await getNetworks(),
+    },
+  }
+}

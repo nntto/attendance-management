@@ -3,13 +3,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 const prisma = new PrismaClient()
 
+export async function getNetworks() {
+  return prisma.network.findMany()
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
 
   try {
     if (method === 'GET') {
-      const network = await prisma.network.findMany()
-      res.status(200).json(network)
+      res.status(200).json(await getNetworks())
     } else {
       res.status(405).end('Method Not Allowed')
     }
