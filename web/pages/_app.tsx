@@ -1,9 +1,12 @@
 import '../styles/globals.css'
+import CssBaseline from '@mui/material/CssBaseline'
+import { ThemeProvider, createTheme } from '@mui/material/styles'
+import useMediaQuery from '@mui/material/useMediaQuery'
 import type { NextPage } from 'next'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
-import type { ReactElement, ReactNode } from 'react'
+import { ReactElement, ReactNode, useMemo } from 'react'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -18,10 +21,24 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<{ session: Session }
   // そうでない場合はそのまま出力
   const getLayout = Component.getLayout ?? ((page) => page)
 
+  const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
+  const theme = useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode: prefersDarkMode ? 'dark' : 'light',
+        },
+      }),
+    [prefersDarkMode],
+  )
+
   return (
-    <SessionProvider session={pageProps.session}>
-      {getLayout(<Component {...pageProps} />)}
-    </SessionProvider>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <SessionProvider session={pageProps.session}>
+        {getLayout(<Component {...pageProps} />)}
+      </SessionProvider>
+    </ThemeProvider>
   )
 }
 
