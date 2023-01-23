@@ -1,19 +1,22 @@
+import { TextField } from '@mui/material'
 import { GetServerSideProps } from 'next'
-import { unstable_getServerSession } from 'next-auth'
+import { unstable_getServerSession, User } from 'next-auth'
 import { ReactElement, useState } from 'react'
 import Layout from '../components/Layout'
 import RoomSetting from '../components/organisms/SettingRoomDevices'
-import { Device, Network, UserDevice } from '../types/typescript-axios'
+import { Device, Network, SettingApi, UserDevice } from '../types/typescript-axios'
 import { NextPageWithLayout } from './_app'
 import { authOptions } from './api/auth/[...nextauth]'
 import { getUserDevices } from './api/setting/devices/[userId]'
 import { getNetworks } from './api/setting/networks'
+import { getUser } from './api/setting/user/[userId]'
 
 const Setting: NextPageWithLayout<{
   userId: string
   userDevices: UserDevice
   networks: Network[]
-}> = ({ userId, userDevices, networks }) => {
+  user: User
+}> = ({ user, userId, userDevices, networks }) => {
   const [rooms, setRooms] = useState(userDevices.rooms)
   const pushDevice = (newDevice: Device, filteredNetworks: Network[]) => {
     setRooms((prevRooms) =>
@@ -43,8 +46,19 @@ const Setting: NextPageWithLayout<{
     )
   }
 
+  const settingApi = new SettingApi()
   return (
     <div>
+      <h1>ユーザー情報</h1>
+      <TextField
+        onChange={(e: { target: { value: any } }) => {
+          settingApi.updateUser(userId, { name: e.target.value })
+        }}
+        variant='filled'
+        label='ユーザー名'
+        id='userName'
+        defaultValue={user.name}
+      />
       {rooms.map((room) => (
         <div key={room.id}>
           <h1>部屋：{room.name}</h1>
@@ -93,6 +107,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
     props: {
       userId,
       userDevices: JSON.parse(JSON.stringify(await getUserDevices(userId))),
+      user: JSON.parse(JSON.stringify(await getUser(userId))),
       networks: await getNetworks(),
     },
   }

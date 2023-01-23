@@ -3,6 +3,15 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 
 const prisma = new PrismaClient()
 
+export async function getUser(userId: string) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: userId,
+    },
+  })
+  return user
+}
+
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
   const userId = req.query.userId
@@ -13,11 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   }
 
   if (method === 'GET') {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: userId,
-      },
-    })
+    const user = await getUser(userId)
 
     if (user === null) {
       res.status(404).end('User NotFound')
