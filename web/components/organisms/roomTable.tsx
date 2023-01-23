@@ -26,25 +26,25 @@ export default function RoomTable(props: {
   const { users } = props
   return (
     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 650 }} aria-label='simple table'>
+      <Table aria-label='simple table'>
         <TableHead>
           <TableRow>
-            <TableCell>学年</TableCell>
+            {/* <TableCell>学年</TableCell> */}
             <TableCell align='right'>名前</TableCell>
-            <TableCell align='right'>ニックネーム</TableCell>
-            <TableCell align='right'>コメント</TableCell>
+            {/* <TableCell align='right'>ニックネーム</TableCell> */}
+            {/* <TableCell align='right'>コメント</TableCell> */}
             <TableCell align='right'>最終接続日時</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {users.map((row) => (
             <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell component='th' scope='row'>
+              {/* <TableCell component='th' scope='row'>
                 {row.grade}
-              </TableCell>
+              </TableCell> */}
               <TableCell align='right'>{row.name}</TableCell>
-              <TableCell align='right'>{row.nickname?.nickname}</TableCell>
-              <TableCell align='right'>{row.comment?.comment}</TableCell>
+              {/* <TableCell align='right'>{row.nickname?.nickname}</TableCell> */}
+              {/* <TableCell align='right'>{row.comment?.comment}</TableCell> */}
               <TableCell align='right'>{row.lastConnectedAt}</TableCell>
             </TableRow>
           ))}
