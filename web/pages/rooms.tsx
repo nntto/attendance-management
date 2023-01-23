@@ -17,21 +17,19 @@ const Rooms: NextPageWithLayout = () => {
     },
   )
   return (
-    <>
-      <Container>
-        <h1>在室</h1>
-        {(data?.inRoom || []).map((room) => (
-          <div key={room.id}>
-            <h2 key={room.id}>{room.name}</h2>
-            <RoomTable users={room.users} />
-          </div>
-        ))}
-        <h1>不在</h1>
-        <div key={'不在'}>
-          <RoomTable users={data?.outRoom || []} />
+    <div>
+      <h1>在室</h1>
+      {(data?.inRoom || []).map((room) => (
+        <div key={room.id}>
+          <h2 key={room.id}>{room.name}</h2>
+          <RoomTable users={room.users} />
         </div>
-      </Container>
-    </>
+      ))}
+      <h1>不在</h1>
+      <div key={'不在'}>
+        <RoomTable users={data?.outRoom || []} />
+      </div>
+    </div>
   )
 }
 
