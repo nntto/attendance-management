@@ -1,4 +1,4 @@
-import { TextField } from '@mui/material'
+import { Paper, TextField } from '@mui/material'
 import { GetServerSideProps } from 'next'
 import { unstable_getServerSession, User } from 'next-auth'
 import { ReactElement, useState } from 'react'
@@ -50,15 +50,17 @@ const Setting: NextPageWithLayout<{
   return (
     <div>
       <h1>ユーザー情報</h1>
-      <TextField
-        onChange={(e: { target: { value: any } }) => {
-          settingApi.updateUser(userId, { name: e.target.value })
-        }}
-        variant='filled'
-        label='ユーザー名'
-        id='userName'
-        defaultValue={user.name}
-      />
+      <Paper sx={{ p: 2, m: 1 }}>
+        <TextField
+          onChange={(e: { target: { value: any } }) => {
+            settingApi.updateUser(userId, { name: e.target.value })
+          }}
+          variant='filled'
+          label='ユーザー名'
+          id='userName'
+          defaultValue={user.name}
+        />
+      </Paper>
       {rooms.map((room) => (
         <div key={room.id}>
           <h1>部屋：{room.name}</h1>

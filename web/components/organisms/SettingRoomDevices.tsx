@@ -1,4 +1,5 @@
-import { Button, Stack, TextField } from '@mui/material'
+import { Button, Paper, Stack, TextField } from '@mui/material'
+import { Box } from '@mui/system'
 import { Device, Network, SettingApi, UserDeviceRoomsInner } from '../../types/typescript-axios'
 import NetworkAndMacAddressSetting from '../molecules/SettingDeviceAddresses'
 
@@ -19,7 +20,7 @@ export default function RoomSetting({
   return (
     <div>
       {devices.map((device, deviceIndex) => (
-        <div key={device.id}>
+        <Paper key={device.id} sx={{ p: 2, m: 1 }}>
           <Stack direction='row' spacing={3}>
             <TextField
               onChange={(e: { target: { value: any } }) => {
@@ -41,19 +42,22 @@ export default function RoomSetting({
             </Button>
           </Stack>
           <NetworkAndMacAddressSetting deviceId={device.id} addresses={device.addresses} />
-        </div>
+        </Paper>
       ))}
-      <Button
-        variant='contained'
-        onClick={() => {
-          settingApi.postDevice({ userId }).then((res) => {
-            const newDevice = res.data
-            pushDevice(newDevice, networks)
-          })
-        }}
-      >
-        デバイスを追加
-      </Button>
+      <Box textAlign='center'>
+        <Button
+          variant='contained'
+          sx={{ m: 1 }}
+          onClick={() => {
+            settingApi.postDevice({ userId }).then((res) => {
+              const newDevice = res.data
+              pushDevice(newDevice, networks)
+            })
+          }}
+        >
+          デバイスを追加
+        </Button>
+      </Box>
     </div>
   )
 }

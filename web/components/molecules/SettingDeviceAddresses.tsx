@@ -1,4 +1,4 @@
-import { Button, Grid } from '@mui/material'
+import { Button, Grid, Paper } from '@mui/material'
 import React, { useEffect } from 'react'
 import {
   MacAddress,
@@ -19,9 +19,9 @@ export default function NetworkAndMacAddressSetting({
   return (
     <div>
       {addresses.map((address) => (
-        <div key={address.network.id}>
+        <Paper sx={{ m: 2, p: 1 }} key={address.network.id}>
           <SettingMacAddress address={address} deviceId={deviceId} />
-        </div>
+        </Paper>
       ))}
     </div>
   )

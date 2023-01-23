@@ -43,8 +43,9 @@ export default function Header() {
             variant='h6'
             noWrap
             component='a'
-            href='/rooms'
+            onClick={() => handler('/rooms')}
             sx={{
+              cursor: 'pointer',
               mr: 2,
               flexGrow: 1,
               fontFamily: 'monospace',

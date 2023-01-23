@@ -1,4 +1,4 @@
-import { Button, Grid, TextField } from '@mui/material'
+import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
 import {
   SettingApi,
@@ -23,12 +23,12 @@ export default function SettingMacAddress({
   return (
     <div>
       <Grid container>
-        <Grid item xs={3}>
+        <Grid item sm={3} xs={12}>
           {address.network.name}
         </Grid>
         {macAddress ? (
           <>
-            <Grid item xs={4}>
+            <Grid item sm={4} xs={5}>
               <TextField
                 error={!macAddressIsValid}
                 onChange={(e: { target: { value: string } }) => {
@@ -47,10 +47,10 @@ export default function SettingMacAddress({
                 helperText={!macAddressIsValid ? '無効なMACアドレス' : ''}
               />
             </Grid>
-            <Grid item xs={3}>
+            <Grid item sm={3} xs={5}>
               {macAddress.lastConnectedAt}
             </Grid>
-            <Grid item xs={2}>
+            <Grid item sm={2} xs={2}>
               <Button
                 onClick={() => {
                   settingApi.deleteMacAddress(macAddress.id).then((res) => {
@@ -63,7 +63,7 @@ export default function SettingMacAddress({
             </Grid>
           </>
         ) : (
-          <Grid item xs={9}>
+          <Grid item sm={8} xs={9}>
             <Button
               onClick={() => {
                 settingApi
