@@ -20,6 +20,13 @@ export const authOptions: NextAuthOptions = {
   secret: SECRET,
   session: { strategy: 'jwt' },
   callbacks: {
+    async signIn({ user, account, profile, email, credentials }) {
+      // 北大ドメイン以外はログインできない
+      if (!profile || !profile.email || !profile.email.endsWith('hokudai.ac.jp')) {
+        return false
+      }
+      return true
+    },
     async jwt({ token, user, account }) {
       let success = user?.id
       if (account && success) {
