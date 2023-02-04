@@ -1,7 +1,5 @@
-import { PrismaClient } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-const prisma = new PrismaClient()
+import { prisma } from '../../../../lib/prisma'
 
 export async function getUser(userId: string) {
   const user = await prisma.user.findUnique({

@@ -1,9 +1,7 @@
-import { PrismaClient, User, Comment, Nickname } from '@prisma/client'
-
+import { User, Comment, Nickname } from '@prisma/client'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import inRoomTime from '../../../functions/inRoom'
-
-const prisma = new PrismaClient()
+import { prisma } from '../../../lib/prisma'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method } = req
