@@ -28,7 +28,7 @@ export default function SettingMacAddress({
         </Grid>
         {macAddress ? (
           <>
-            <Grid item sm={4} xs={5}>
+            <Grid item sm={4} xs={12}>
               <TextField
                 error={!macAddressIsValid}
                 onChange={(e: { target: { value: string } }) => {
@@ -47,10 +47,10 @@ export default function SettingMacAddress({
                 helperText={!macAddressIsValid ? '無効なMACアドレス' : ''}
               />
             </Grid>
-            <Grid item sm={3} xs={5}>
+            <Grid item sm={3} xs={12}>
               {macAddress.lastConnectedAt}
             </Grid>
-            <Grid item sm={2} xs={2}>
+            <Grid item sm={2} xs={12}>
               <Button
                 onClick={() => {
                   settingApi.deleteMacAddress(macAddress.id).then((res) => {
