@@ -272,6 +272,19 @@ paths:
       summary: 登録されているネットワークの一覧を返す
       tags:
       - setting
+  /api/update_last_connected_at:
+    put:
+      description: ""
+      operationId: updateLastConnectedAt
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/updateLastConnectedAt_request'
+      responses:
+        "200":
+          description: OK
+      summary: MACアドレスの最終接続日時を更新する
 components:
   parameters:
     user_id:
@@ -413,7 +426,7 @@ components:
     mac_address_dynamic_props:
       properties:
         address:
-          description: デバイスのmisaddress
+          description: デバイスのmacaddress
           type: string
           x-faker: internet.mac
         networkId:
@@ -478,6 +491,19 @@ components:
       - createdAt
       - id
       - userId
+      type: object
+    updateLastConnectedAt_request:
+      properties:
+        roomId:
+          description: 部屋の識別ID
+          readOnly: true
+          type: integer
+        macAddresses:
+          items:
+            description: デバイスのmacaddress
+            type: string
+            x-faker: internet.mac
+          type: array
       type: object
     inroom_and_outroom_users_inRoom_inner_allOf_users_inner_allOf:
       properties:

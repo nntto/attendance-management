@@ -221,3 +221,27 @@ paths:
                 maxItems: 6
                 items:
                   $ref: './components/network.yaml'
+  '/api/update_last_connected_at':
+    put:
+      summary: MACアドレスの最終接続日時を更新する
+      operationId: updateLastConnectedAt
+      description: ""
+      responses:
+        '200':
+          description: OK
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                roomId:
+                  type: integer
+                  description: 部屋の識別ID
+                  readOnly: true
+                macAddresses:
+                  type: array
+                  items:
+                    type: string
+                    description: デバイスのmacaddress
+                    x-faker: internet.mac
