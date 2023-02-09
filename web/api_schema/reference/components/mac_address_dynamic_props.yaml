@@ -2,7 +2,7 @@ type: object
 properties:
   address:
     type: string
-    description: デバイスのmisaddress
+    description: デバイスのmacaddress
     x-faker: internet.mac
   networkId:
     type: integer
