@@ -38,10 +38,9 @@ export default function RoomTable(props: {
         </TableHead>
         <TableBody>
           {users.map((row) => {
+            const timeZoneAdjustment = (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000
             const jstLastConnectedAt = row.lastConnectedAt
-              ? new Date(
-                  new Date(row.lastConnectedAt) + (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000,
-                )
+              ? new Date(new Date(row.lastConnectedAt).getTime() + timeZoneAdjustment)
               : null
             return (
               <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
