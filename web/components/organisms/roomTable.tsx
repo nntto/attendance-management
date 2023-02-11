@@ -6,6 +6,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import * as React from 'react'
+import { jstDate } from '../../functions/jst'
 import { InroomAndOutroomUsers } from '../../types/typescript-axios'
 
 function createData(name: string, calories: number, fat: number, carbs: number, protein: number) {
@@ -38,10 +39,6 @@ export default function RoomTable(props: {
         </TableHead>
         <TableBody>
           {users.map((row) => {
-            const timeZoneAdjustment = (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000
-            const jstLastConnectedAt = row.lastConnectedAt
-              ? new Date(new Date(row.lastConnectedAt).getTime() + timeZoneAdjustment)
-              : null
             return (
               <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
                 {/* <TableCell component='th' scope='row'>
@@ -50,7 +47,11 @@ export default function RoomTable(props: {
                 <TableCell align='right'>{row.name}</TableCell>
                 {/* <TableCell align='right'>{row.nickname?.nickname}</TableCell> */}
                 {/* <TableCell align='right'>{row.comment?.comment}</TableCell> */}
-                <TableCell align='right'>{jstLastConnectedAt?.toLocaleString()}</TableCell>
+                <TableCell align='right'>
+                  {row.lastConnectedAt
+                    ? jstDate(new Date(row.lastConnectedAt)).toLocaleString()
+                    : null}
+                </TableCell>
               </TableRow>
             )
           })}

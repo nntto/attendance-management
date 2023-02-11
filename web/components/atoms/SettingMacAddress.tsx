@@ -1,5 +1,6 @@
 import { Button, Grid, Stack, TextField, Typography } from '@mui/material'
 import React, { useEffect, useState } from 'react'
+import { jstDate } from '../../functions/jst'
 import {
   SettingApi,
   UserDeviceRoomsInnerAllOfDevicesInnerAllOfAddressesInner,
@@ -48,7 +49,7 @@ export default function SettingMacAddress({
               />
             </Grid>
             <Grid item sm={3} xs={12}>
-              {macAddress.lastConnectedAt}
+              {jstDate(new Date(macAddress.lastConnectedAt)).toLocaleString()}
             </Grid>
             <Grid item sm={2} xs={12}>
               <Button
