@@ -37,17 +37,23 @@ export default function RoomTable(props: {
           </TableRow>
         </TableHead>
         <TableBody>
-          {users.map((row) => (
-            <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              {/* <TableCell component='th' scope='row'>
+          {users.map((row) => {
+            const timeZoneAdjustment = (new Date().getTimezoneOffset() + 9 * 60) * 60 * 1000
+            const jstLastConnectedAt = row.lastConnectedAt
+              ? new Date(new Date(row.lastConnectedAt).getTime() + timeZoneAdjustment)
+              : null
+            return (
+              <TableRow key={row.name} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                {/* <TableCell component='th' scope='row'>
                 {row.grade}
               </TableCell> */}
-              <TableCell align='right'>{row.name}</TableCell>
-              {/* <TableCell align='right'>{row.nickname?.nickname}</TableCell> */}
-              {/* <TableCell align='right'>{row.comment?.comment}</TableCell> */}
-              <TableCell align='right'>{row.lastConnectedAt}</TableCell>
-            </TableRow>
-          ))}
+                <TableCell align='right'>{row.name}</TableCell>
+                {/* <TableCell align='right'>{row.nickname?.nickname}</TableCell> */}
+                {/* <TableCell align='right'>{row.comment?.comment}</TableCell> */}
+                <TableCell align='right'>{jstLastConnectedAt?.toLocaleString()}</TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </TableContainer>
