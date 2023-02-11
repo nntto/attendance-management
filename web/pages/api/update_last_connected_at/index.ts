@@ -3,11 +3,12 @@ import { prisma } from '../../../lib/prisma'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { method, body } = req
-  const { roomId, macAddresses }: { roomId: number; macAddresses: string[] } = JSON.parse(body)
+  const { roomId, macAddresses }: { roomId: number; macAddresses: string[] } = JSON.parse(
+    JSON.stringify(body),
+  )
 
   if (method === 'PUT') {
     try {
-      console.log(body)
       await prisma.macAddress.updateMany({
         where: {
           address: { in: macAddresses },
