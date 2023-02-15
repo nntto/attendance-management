@@ -17,8 +17,13 @@ export default function SettingMacAddress({
   const [macAddress, setMacAddress] = useState(address.macAddress)
   const [macAddressIsValid, setMacAddressIsValid] = useState(true)
   const reg = /^(?:[0-9a-fA-F]{2}:){5}[0-9a-fA-F]{2}$/
+
+  const [date, setDate] = useState<string | undefined>(undefined)
   useEffect(() => {
     setMacAddressIsValid(reg.test(macAddress?.address || ''))
+    if (macAddress) {
+      setDate(jstDate(new Date(macAddress.lastConnectedAt)).toLocaleString())
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [macAddress])
   return (
@@ -49,7 +54,7 @@ export default function SettingMacAddress({
               />
             </Grid>
             <Grid item sm={3} xs={12}>
-              {jstDate(new Date(macAddress.lastConnectedAt)).toLocaleString()}
+              <Typography>{date}</Typography>
             </Grid>
             <Grid item sm={2} xs={12}>
               <Button
