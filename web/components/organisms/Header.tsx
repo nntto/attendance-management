@@ -33,8 +33,6 @@ export default function Header() {
     setAnchorElUser(null)
   }
 
-  if (status === 'loading') return <p>Loading...</p>
-
   return (
     <AppBar position='static'>
       <Container maxWidth='xl'>

@@ -6,7 +6,9 @@ import type { NextPage } from 'next'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
-import { ReactElement, ReactNode, useMemo } from 'react'
+import { Router } from 'next/router'
+import { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react'
+import LoadingOverlay from '../components/LoadingOverlay'
 
 export type NextPageWithLayout<P = {}, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
@@ -32,8 +34,27 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<{ session: Session }
     [prefersDarkMode],
   )
 
+  // SSRページへ移動する際に発生するローディング画面を表示するために必要
+  const [isLoading, setIsLoading] = useState(false)
+
+  useEffect(() => {
+    const startLoading = () => setIsLoading(true)
+    const stopLoading = () => setIsLoading(false)
+
+    Router.events.on('routeChangeStart', startLoading)
+    Router.events.on('routeChangeComplete', stopLoading)
+    Router.events.on('routeChangeError', stopLoading)
+
+    return () => {
+      Router.events.off('routeChangeStart', startLoading)
+      Router.events.off('routeChangeComplete', stopLoading)
+      Router.events.off('routeChangeError', stopLoading)
+    }
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
+      {isLoading && <LoadingOverlay />}
       <CssBaseline />
       <SessionProvider session={pageProps.session}>
         {getLayout(<Component {...pageProps} />)}
