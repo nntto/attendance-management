@@ -3,8 +3,6 @@
 # ./.envファイルを読み込んで変数として参照できるようにする
 source ./.env
 
-CMD_MYSQL="mysql --defaults-extra-file=./etc/.conf -e "
-
 url="$BASE_URL/api/update_last_connected_at"
 
 output=$(sudo arp-scan -l | grep '^192' | awk '{ print $2 }')
