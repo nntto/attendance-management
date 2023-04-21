@@ -24,6 +24,10 @@ brew install watch
 brew install arp-scan
 ```
 
+4. macbook が自動でスリープしないように設定
+   <img width="657" alt="image" src="https://user-images.githubusercontent.com/53688020/233282695-a42eea4c-1a5a-43b1-aafe-2bc57e8002e5.png">
+   「ディスプレイがオフの時にコンピュータを自動でスリープさせない」を ON にする．
+
 ### 使い方．
 
 1. .env.example のコピーを作成し，.env にリネームした後，必要な情報を記述

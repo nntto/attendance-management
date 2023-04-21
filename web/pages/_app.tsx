@@ -6,6 +6,7 @@ import type { NextPage } from 'next'
 import { Session } from 'next-auth'
 import { SessionProvider } from 'next-auth/react'
 import type { AppProps } from 'next/app'
+import Head from 'next/head'
 import { Router } from 'next/router'
 import { ReactElement, ReactNode, useEffect, useMemo, useState } from 'react'
 import LoadingOverlay from '../components/LoadingOverlay'
@@ -54,6 +55,11 @@ function MyApp({ Component, pageProps }: AppPropsWithLayout<{ session: Session }
 
   return (
     <ThemeProvider theme={theme}>
+      <Head>
+        <title>IKN在室情報</title>
+        <meta name='description' content='ated by create next app' />
+        <link rel='icon' href='/favicon.ico' />
+      </Head>
       {isLoading && <LoadingOverlay />}
       <CssBaseline />
       <SessionProvider session={pageProps.session}>
